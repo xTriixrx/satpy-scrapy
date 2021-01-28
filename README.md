@@ -40,10 +40,10 @@ Here is an .gif file created by satellite images scraped by this program from Ja
 
 ### Future Satellite Support
 
- * METEOSAT-8 (41.5 degree)
- * METEOSAT-10 (0 degree)
- * DISCOVR
- * GEO-KOMPSAT-2A
- * INSAT-3D
- * INSAT-3DR
+ * METEOSAT-8 (41.5 degree) 3K images
+ * METEOSAT-10 (0 degree) 3K images
+ * DISCOVR 2048px x 2048px images
+ * GEO-KOMPSAT-2A 600px x 600px images
+ * INSAT-3D 827px x 887px images
+ * INSAT-3DR 827px x 887px images
  * Others potentially (FY-2/FY-4, Elektro-L1 (archive))

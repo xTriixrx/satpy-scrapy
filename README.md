@@ -28,13 +28,19 @@ Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this prog
 The Tor client can be installed on multiple operating systems and each installation may vary. For instance to install the Tor client on Mac OS, you can use Homebrew using the 'brew install tor' command. To install the Tor client I would suggest looking up the specific instructions for your operating system. Once installed, on Linux and Mac OS the torrc configuration file should be located
 at /usr/local/etc/tor/torrc. Before editing this file you should have a password hashed by tor with the following command saved: tor --hashed-password "your-pw-here". Save the output as you will need
 to store this in your torrc configuration file. When you open the torrc file you will need to uncomment the following lines:
+</p>
+
  * ControlPort 9051
  * HashedControlPassword YOUR-HASH-GOES-HERE
 
+<p align="center">
 And add the following lines at the bottom of the file if you would like to use a specific country as your end point:
+</p>
+
  * ExitNodes {us}
  * StrictNodes 1
 
+<p align="center">
 You can test your Tor client configuration by running the tor_check.py program with your tor password by editing line 37 of the program. After you run the program you should see 2 different IP addresses which are not your own IP address. With that taken care of you are now ready to use satpy-scrapy!
 </p>
 

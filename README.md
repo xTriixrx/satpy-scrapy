@@ -85,12 +85,10 @@ Long Arguments
 
 ## Dependencies
 
-<p align="center">
  * BeautifulSoup 4
  * Requests v2.24
  * Stem v1.8
  * Pytz v2020.1
-</p>
 
 ### Future Satellite Support
 

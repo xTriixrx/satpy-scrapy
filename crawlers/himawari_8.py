@@ -31,6 +31,7 @@ class HIMAWARI_8(SatelliteCrawler):
 
         super().__init__(url, satellite)
 
+
     def get_links(self, pw):
         """
         Implemented abstract public method which performs HIMAWARI-8 specific base page extraction and extraction

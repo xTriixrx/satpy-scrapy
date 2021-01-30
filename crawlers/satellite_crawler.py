@@ -22,7 +22,7 @@ class SatelliteCrawler(Crawler):
 
     @author Vincent.Nigro
     @version 0.0.1
-    @modified 1/27/21
+    @modified 1/29/21
     """
     
     # Supported satellite names
@@ -31,6 +31,7 @@ class SatelliteCrawler(Crawler):
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     FENGYUN_4A_NAME = 'FENGYUN-4A'
+    GEO_KOMPSAT_2A_NAME = 'GEO-KOMPSAT-2A'
 
     def __init__(self, url, satellite):
         """

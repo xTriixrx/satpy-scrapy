@@ -4,17 +4,18 @@ import getopt
 import logging
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
+from crawlers.gk_2a import GEO_KOMPSAT_2A
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.fengyun_4a import FENGYUN_4A
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), HIMAWARI-8, FENGYUN-4A, and ELEKTRO-L2.
+GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, and ELEKTRO-L2.
 
  @author Vincent Nigro
  @version 0.0.1
- @modified 1/27/21
+ @modified 1/29/21
 """
 
 def generate_utc_range_30_step(utcrange):
@@ -92,7 +93,7 @@ def help_logger():
 
     print("Satellite Hi-Res IMG Scraper By Vincent Nigro")
     print("Version: 1.0.0")
-    print("Last Modified: 1/27/21")
+    print("Last Modified: 1/29/21")
     print("")
     print("This program extracts the latest high resolution images from various sources using the Tor Network.")
     print("")
@@ -111,6 +112,9 @@ def help_logger():
     print("To extract the latest FENGYUN-4A image")
     print("\tpython3 satpy-scrapy.py -f4a --tor-password=\"password\"")
     print("")
+    print("To extract the latest GK2A images")
+    print("\tpython3 satpy-scrapy.py -gk2a --tor-password=\"password\"")
+    print("")
     print("To extract the latest ELEKTRO-L2 image")
     print("\tpython3 satpy-scrapy.py -k")
     print("")
@@ -121,7 +125,7 @@ def help_logger():
     print("\tpython3 satpy-scrapy.py -k --day=\"25\" --utcrange=\"0000-2300\"")
     print("")
     print("To extract the latest FENGYUN-4A images within a UTC range")
-    print("\tpython3 satpy-scrapy.py -f4a --utcrange=\"0000-2330\" --tor-password=\"password\"")
+    print("\tpython3 satpy-scrapy.py -f4a --utcrange=\"0000-2300\" --tor-password=\"password\"")
     print("")
     print("To extract 'GeoColor' GOES-EAST image(s)")
     print("\tpython3 satpy-scrapy.py -e --images=\"GeoColor\" --tor-password=\"password\"")
@@ -131,6 +135,9 @@ def help_logger():
     print("")
     print("To extract 'GeoColor' and 'Derived Motion Winds' GOES-EAST images")
     print("\tpython3 satpy-scrapy.py -e --images=\"GeoColor \\\"Derived Motion Winds\\\"\" --tor-password=\"password\"")
+    print("")
+    print("To extract 'Natural Color' and 'True Color' GK2A images")
+    print("\tpython3 satpy-scrapy.py -gk2a --images=\"\\\"Natural Color\\\" \\\"True Color\\\"\" --tor-password=\"password\"")
     print("")
     print("To extract 'Natural Color' and 'True Color' HIMAWARI-8 images")
     print("\tpython3 satpy-scrapy.py -m --images=\"\\\"Natural Color\\\" \\\"GeoColor\\\"\" --tor-password=\"password\"")
@@ -149,10 +156,21 @@ def filter_logger():
         "Band 14", "Band 15", "Band 16"
     ]
 
+    gk2a_filter_options = \
+    [
+        'VIS 0.47µm', 'VIS 0.51µm', 'VIS 0.64µm', 'VIS 0.86µm', 'NIR 1.37µm', 'NIR 1.6µm', 'SWIR 3.8µm', 'WV 6.3µm',
+        'WV 6.9µm', 'WV 7.3µm', 'IR 8.7µm', 'IR 9.6µm', 'IR 10.5µm', 'IR 11.2µm', 'IR 12.3µm', 'IR 13.3µm', 'True Color',
+        'Natural Color', 'AirMass RGB', 'Dust RGB', 'Daynight RGB', 'Fog RGB', 'Storm RGB', 'Snowfog RGB', 'Cloud RGB', 
+        'Ash RGB', 'Enhanced IR WV 6.3µm', 'Enhanced IR WV 6.9µm', 'Enhanced IR WV 7.3µm', 'Enhanced IR 10.5µm'
+    ]
+
     himawari_filter_options = ["Natural Color", "Geocolor", "RGB Airmass", "Band 3"]
 
     print("Filter options for GOES-EAST & GOES-WEST")
     print(*goes_filter_options, sep='\n')
+    print("")
+    print("Filter options for GEO-KOMPSAT-2A")
+    print(*gk2a_filter_options, sep='\n')
     print("")
     print("Filter options for HIMAWARI-8")
     print(*himawari_filter_options, sep='\n')
@@ -171,13 +189,11 @@ def handle_arguments(argv):
     utc_range = ''
     elektro_day = ''
     tor_password = ''
-    elektro_year = ''
-    elektro_month = ''
     elektro_pass = False
     fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, '-wehmkf:', 
+        opts, args = getopt.getopt(argv, '-wehmkf:g:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images=', 'tor-password='])
         
         for opt, arg in opts:
@@ -241,7 +257,12 @@ def handle_arguments(argv):
                     utc_range), img_types, tor_password
             elif opt == '-f':
                 if arg == '4a':
-                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME, utc_range), img_types, tor_password
+                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME, utc_range), \
+                        img_types, tor_password
+            elif opt == '-g':
+                if arg == 'k2a':
+                    return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_DIRECTORY), \
+                        img_types, tor_password
         
     except getopt.GetoptError as e:
         logging.exception(e)
@@ -254,9 +275,9 @@ def handle_arguments(argv):
 def main(argv):
     """
     Main program which executes the anonymous extraction of GOES-16, GOES-17, HIMAWARI-8,
-    FY-4A, and ELEKTRO-L2 high resolution images. By default, the resolution for GOES vehicles is
-    set to the 10848x10848 resolution, FENGYUN-4A is typically just under 3k images, and the HIMAWARI
-    images are either 11000x11000 or 5500x5500.
+    FY-4A, GK2A, and ELEKTRO-L2 high resolution images. By default, the resolution for GOES vehicles is
+    set to the 10848x10848 resolution, FENGYUN-4A is typically just under 3k images, GK2A typically are under
+    1500x1500 and the HIMAWARI-8 images are either 11000x11000 or 5500x5500.
   
     To view configuration options, either run this program with the -h/--help flag or 
     view the help_logger() function above which describes examples and how to use this

@@ -6,15 +6,20 @@ satpy-scraper is a modular, protocol based high resolution satellite image scrap
 
 The --images= and --tor-password= arguments should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
 
+ * python3 satpy-scrapy.py -h
+ * python3 satpy-scrapy.py --help
+ * python3 satpy-scrapy.py --filters
  * python3 satpy-scrapy.py -e --tor-password="password"
  * python3 satpy-scrapy.py -w --tor-password="password"
  * python3 satpy-scrapy.py -m --tor-password="password"
  * python3 satpy-scrapy.py -k --utcrange="0000-2300"
  * python3 satpy-scrapy.py -f4a --tor-password="password"
+ * python3 satpy-scrapy.py -gk2a --tor-password="password"
  * python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
  * python3 satpy-scrapy.py -e --images="GeoColor" --tor-password="password"
  * python3 satpy-scrapy.py -f4a --utcrange="0000-2300" --tor-password="password"
  * python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\"" --tor-password="password"
+ * python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\"" --tor-password="password"
  * python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\"" --tor-password="password"
  * python3 satpy-scrapy.py -m --images="\"Natural Color\" \"GeoColor\"" --tor-password="password"
 
@@ -52,33 +57,43 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center">GOES-16, formerly known as GOES-R before reaching geostationary orbit, is the first of the GOES-R series of Geostationary Operational Environmental Satellite (GOES) operated by NASA and the National Oceanic and Atmospheric Administration (NOAA).</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210231620_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210231620_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260420_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260420_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 
 ### GOES-WEST (NOAA/GOES-17)
 
 <p align="center">GOES-17 (formerly GOES-S) is the second of the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA).</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 
 ### Elektro-L2
 
 <p align="center">The Electro-L satellite is Russia's second high-altitude weather observatory, coming after a troubled mission launched in 1994 that never achieved all of its goals The next-generation Electro-L program faced years of delays because of interruptions in funding. The Electro-L spacecraft will function for up to 10 years, collecting weather imagery several times per hour with visible and infrared cameras.</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/210126_1600_original_RGB.jpg" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/210126_1600_original_RGB.jpg" /></p>
 
 ### HIMAWARI-8
 
 <p align="center">Himawari 8 (ひまわり8号) is a Japanese weather satellite, the 8th of the Himawari geostationary weather satellites operated by the Japan Meteorological Agency. Himawari-8 will be succeeded by Himawari-9 which is currently in standby mode, until 2022.</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/full_disk_ahi_natural_color_20210126023000.jpg" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/full_disk_ahi_natural_color_20210126023000.jpg" /></p>
 
 ### Fengyun 4A
 
 <p align="center">Fengyun-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after Fengyun-2 satellite series.</p>
 
-<!--<p align="center"> <img src="" /> </p>-->
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/00.jpg" /> </p>
+
+### GEO-KOMPSAT-2A
+
+<p align="center">GEO-KOMPSAT 2A is a South Korean geostationary meteorological satellite developed by KARI. It is one component of the two satellite GEO-KOMPSAT 2 program.
+
+The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the meteorological GEO-KOMPSAT-2A (GK2A) and the ocean monitoring GEO-KOMPSAT-2B (GK2B) sharing the same satellite bus. The lifetime of both satellites will be no less than 10 years.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 
 ## Command Line Arguments
 
@@ -89,6 +104,7 @@ Short Arguments
    * '-m': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
    * '-k': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
    * '-f4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
+   * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
 
 Long Arguments
    * '--help': Triggers help logging function.
@@ -108,9 +124,8 @@ Long Arguments
 ### Future Satellite Support
 
  * METEOSAT-8 (41.5 degree) 3K images
- * METEOSAT-10 (0 degree) 3K images
+ * METEOSAT-11 (0 degree) 3K images
  * DISCOVR 2048px x 2048px images
- * GEO-KOMPSAT-2A 600px x 600px images
  * INSAT-3D 827px x 887px images
  * INSAT-3DR 827px x 887px images
  * Others potentially (FY-2, Elektro-L1 (archive))

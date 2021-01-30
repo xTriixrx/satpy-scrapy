@@ -6,7 +6,7 @@ class Crawler:
 
     @author Vincent.Nigro
     @version 0.0.1
-    @modified 1/24/21
+    @modified 1/29/21
     """
 
     # Standard crawler fields
@@ -21,8 +21,10 @@ class Crawler:
     TR_ELEMENT = 'tr'
     TD_ELEMENT = 'td'
     DIV_ELEMENT = 'div'
+    IMG_ELEMENT = 'img'
 
     # HTML Element Attributes
+    SRC_ATTRIBUTE = 'src'
     HREF_ATTRIBUTE = 'href'
     TITLE_ATTRIBUTE = 'title'
     CLASS_ATTRIBUTE = 'class'

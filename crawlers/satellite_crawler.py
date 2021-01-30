@@ -30,6 +30,7 @@ class SatelliteCrawler(Crawler):
     GOES_WEST_NAME = 'GOES-WEST'
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
+    FENGYUN_4A_NAME = 'FENGYUN-4A'
 
     def __init__(self, url, satellite):
         """
@@ -240,6 +241,9 @@ class SatelliteCrawler(Crawler):
         logger = get_logger()
         logger.propagate = False
 
+        if not os.path.exists(logpath):
+            os.makedirs(logpath)
+        
         # Initialize root logging
         logging.basicConfig(filename=logpath + logfile, level=logging.DEBUG, \
         format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')  

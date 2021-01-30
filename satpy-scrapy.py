@@ -6,19 +6,51 @@ from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
+from crawlers.fengyun_4a import FENGYUN_4A
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), HIMAWARI-8, and ELEKTRO-L2.
+GOES-WEST (GOES-17), HIMAWARI-8, FENGYUN-4A, and ELEKTRO-L2.
 
  @author Vincent Nigro
  @version 0.0.1
  @modified 1/27/21
 """
 
-def generate_utc_range(utcrange):
+def generate_utc_range_30_step(utcrange):
     """
     A function which generates a list of UTC times in steps of 30 minutes, which starts at the first argument
+    of the UTC range from the command line, and ends at the second argument of the UTC range from the same command line
+    argument.
+
+    @param utcrange: str - A string containing a start and stop UTC time in a range with a '-' as the delimiter.
+    @return utc_range: [] An list containing an enumerated set of utc times separated by a half hour.
+    """
+
+    utc_range = []
+    start = utcrange[0]
+    stop = utcrange[-1]
+    
+    current = start
+    
+    while current != stop:
+        utc_range.append(current)
+        if current[-2:] == '00':
+            current = current[:2]
+            current += '30'
+        else:
+            hour = "{:02d}".format((int(current[:2]) + 1))
+            current = '00'
+            current = hour + current
+
+    utc_range.append(current)
+
+    return utc_range
+
+
+def generate_utc_range_15_step(utcrange):
+    """
+    A function which generates a list of UTC times in steps of 15 minutes, which starts at the first argument
     of the UTC range from the command line, and ends at the second argument of the UTC range from the same command line
     argument.
 
@@ -36,7 +68,13 @@ def generate_utc_range(utcrange):
         utc_range.append(current)
         if current[-2:] == '00':
             current = current[:2]
+            current += '15'
+        elif current[-2:] == '15':
+            current = current[:2]
             current += '30'
+        elif current[-2:] == '30':
+            current = current[:2]
+            current += '45'
         else:
             hour = "{:02d}".format((int(current[:2]) + 1))
             current = '00'
@@ -70,6 +108,9 @@ def help_logger():
     print("To extract all the latest HIMAWARI-8 images")
     print("\tpython3 satpy-scrapy.py -m --tor-password=\"password\"")
     print("")
+    print("To extract the latest FENGYUN-4A image")
+    print("\tpython3 satpy-scrapy.py -f4a --tor-password=\"password\"")
+    print("")
     print("To extract the latest ELEKTRO-L2 image")
     print("\tpython3 satpy-scrapy.py -k")
     print("")
@@ -78,6 +119,9 @@ def help_logger():
     print("")
     print("To extract the latest ELEKTRO-L2 images within a UTC range for a day in the current month")
     print("\tpython3 satpy-scrapy.py -k --day=\"25\" --utcrange=\"0000-2300\"")
+    print("")
+    print("To extract the latest FENGYUN-4A images within a UTC range")
+    print("\tpython3 satpy-scrapy.py -f4a --utcrange=\"0000-2330\" --tor-password=\"password\"")
     print("")
     print("To extract 'GeoColor' GOES-EAST image(s)")
     print("\tpython3 satpy-scrapy.py -e --images=\"GeoColor\" --tor-password=\"password\"")
@@ -124,17 +168,18 @@ def handle_arguments(argv):
     """
 
     img_types = []
+    utc_range = ''
     elektro_day = ''
     tor_password = ''
     elektro_year = ''
     elektro_month = ''
     elektro_pass = False
-    elektro_utc_range = ''
+    fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, 'wehmk', 
+        opts, args = getopt.getopt(argv, '-wehmkf:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images=', 'tor-password='])
-
+        
         for opt, arg in opts:
             if opt == '-h' or opt == '--help':
                 help_logger()
@@ -144,6 +189,9 @@ def handle_arguments(argv):
                 sys.exit(0)
             elif opt == '-k':
                 elektro_pass = True
+            elif opt == '-f':
+                if arg == '4a':
+                    fengyun_4a_pass = True
                 
         if not elektro_pass:
             try:
@@ -154,17 +202,25 @@ def handle_arguments(argv):
                 logging.error(tor_error)
                 print(tor_error)
                 sys.exit(1)
+            
+            if fengyun_4a_pass:
+                try:
+                    utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
+                    utc_range = generate_utc_range_15_step(utc_range)
+                except Exception as e:
+                    no_range = 'No --utcrange parameter was given to Fengyun-4A image pull iteration.'
+                    logging.info(no_range)
         else:
             try:
                 elektro_day = [arg for opt, arg in opts if opt == '--day'][0]
             except Exception as e:
-                no_day = 'No --day parameter was given to Elektro-L image pull iteration.'
+                no_day = 'No --day parameter was given to Elektro-L2 image pull iteration.'
                 logging.info(no_day)
             try:
-                elektro_utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
-                elektro_utc_range = generate_utc_range(elektro_utc_range)
+                utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
+                utc_range = generate_utc_range_30_step(utc_range)
             except Exception as e:
-                no_range = 'No --range parameter was given to Elektro-L image pull iteration.'
+                no_range = 'No --utcrange parameter was given to Elektro-L2 image pull iteration.'
                 logging.info(no_range)
 
         img_types = [arg for opt, arg in opts if opt == '--images']
@@ -182,7 +238,10 @@ def handle_arguments(argv):
                 return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types, tor_password
             elif opt == '-k':
                 return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, elektro_day, 
-                    elektro_utc_range), img_types, tor_password
+                    utc_range), img_types, tor_password
+            elif opt == '-f':
+                if arg == '4a':
+                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME, utc_range), img_types, tor_password
         
     except getopt.GetoptError as e:
         logging.exception(e)
@@ -195,8 +254,9 @@ def handle_arguments(argv):
 def main(argv):
     """
     Main program which executes the anonymous extraction of GOES-16, GOES-17, HIMAWARI-8,
-    and ELEKTRO-L2 high resolution images. By default, the resolution for GOES vehicles is
-    set to the 10848x10848 resolution and the HIMAWARI images are either 11000x11000 or 5500x5500.
+    FY-4A, and ELEKTRO-L2 high resolution images. By default, the resolution for GOES vehicles is
+    set to the 10848x10848 resolution, FENGYUN-4A is typically just under 3k images, and the HIMAWARI
+    images are either 11000x11000 or 5500x5500.
   
     To view configuration options, either run this program with the -h/--help flag or 
     view the help_logger() function above which describes examples and how to use this

@@ -4,14 +4,16 @@
 
 satpy-scraper is a modular, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
 
-The --images= and --tor-password= arguments should not be used for the ELEKTRO-L2 satellite and the --day= and --utcrange= arguments should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
+The --images= and --tor-password= arguments should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
 
  * python3 satpy-scrapy.py -e --tor-password="password"
  * python3 satpy-scrapy.py -w --tor-password="password"
  * python3 satpy-scrapy.py -m --tor-password="password"
  * python3 satpy-scrapy.py -k --utcrange="0000-2300"
+ * python3 satpy-scrapy.py -f4a --tor-password="password"
  * python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
  * python3 satpy-scrapy.py -e --images="GeoColor" --tor-password="password"
+ * python3 satpy-scrapy.py -f4a --utcrange="0000-2300" --tor-password="password"
  * python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\"" --tor-password="password"
  * python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\"" --tor-password="password"
  * python3 satpy-scrapy.py -m --images="\"Natural Color\" \"GeoColor\"" --tor-password="password"
@@ -72,6 +74,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/full_disk_ahi_natural_color_20210126023000.jpg" /> </p>
 
+### Fengyun 4A
+
+<p align="center">Fengyun-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after Fengyun-2 satellite series.</p>
+
+<!--<p align="center"> <img src="" /> </p>-->
+
 ## Command Line Arguments
 
 Short Arguments
@@ -80,13 +88,14 @@ Short Arguments
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
    * '-m': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
    * '-k': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
+   * '-f4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
 
 Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
    * '--tor-password=': Sets the users tor password to extract images for non FTP server based vehicles.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
-   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server.
+   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server or for the FENGYUN-4A crawler.
    * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 FTP server. 
 
 ## Dependencies
@@ -104,4 +113,4 @@ Long Arguments
  * GEO-KOMPSAT-2A 600px x 600px images
  * INSAT-3D 827px x 887px images
  * INSAT-3DR 827px x 887px images
- * Others potentially (FY-2/FY-4, Elektro-L1 (archive))
+ * Others potentially (FY-2, Elektro-L1 (archive))

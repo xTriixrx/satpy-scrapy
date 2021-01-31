@@ -47,172 +47,92 @@ def merge_images_vertically(imgs, filename):
 def main(argv):
     """
     """
-    bands = {}
 
-    band0 = []
-    band1 = []
-    band2 = []
-    band3 = []
-    band4 = []
-    band5 = []
-    band6 = []
-    band7 = []
-    band8 = []
-    band9 = []
-    band10 = []
-    band11 = []
-    band12 = []
-    band13 = []
-    band14 = []
-    band15 = []
+    bands = []
+    dimension = ''
+    destination = ''
+    band_images = []
     image_range = []
+    PATCH_SIZE = 688
+    image_name = '20210131180000.jpg'
 
     try:
-        destination = ''
-        opts, args = getopt.getopt(argv, '', ['destination='])
-        print(opts)
+        opts, args = getopt.getopt(argv, '', ['destination=', 'dimension='])
         
         for opt, arg in opts:
             if opt == '--destination':
                 destination = arg
+            elif opt == '--dimension':
+                dimension = int(arg)
     except Exception as e:
         print(e)
         sys.exit(1)
     
     if destination == '':
         raise ValueError('Destination argument was not provided and should not be \'\'.')
+    elif dimension == '':
+        raise ValueError('Dimension argument was not provided and should not be \'\' (either 16 or 8).')
     
     flatten_command = 'find ' + destination + ' -mindepth 2 -type f -exec mv \'{}\' ' + destination + ' \;'
-    print(flatten_command)
     
-    #os.system(flatten_command)
+    os.system(flatten_command)
+    
     destination = destination.replace('\"', '')
     for entry in os.scandir('.' + os.sep + destination):
         if os.path.isdir(entry.path) and not os.listdir(entry.path):
             os.rmdir(entry.path)
     
-    for i in range(0, 16):
-        for j in range(0, 16):
+    for i in range(0, dimension):
+        bands.append([])
+        band_images.append([])
+        for j in range(0, dimension):
             if i > 9 and j < 10:
-                image_range.append('0' + str(i) +  '_00' + str(j) + '.png')
+                image_range.append('0' + str(i) + '_00' + str(j) + '.png')
             elif i > 9 and j > 9:
-                image_range.append('0' + str(i) +  '_0' + str(j) + '.png')
+                image_range.append('0' + str(i) + '_0' + str(j) + '.png')
             elif i < 10 and j < 10:
-                image_range.append('00' + str(i) +  '_00' + str(j) + '.png')
+                image_range.append('00' + str(i) + '_00' + str(j) + '.png')
             elif i < 10 and j > 9:
-                image_range.append('00' + str(i) +  '_0' + str(j) + '.png')
+                image_range.append('00' + str(i) + '_0' + str(j) + '.png')
     
+    count = 0
+    intra_count = 0
+    # Build destinations to images for each set of bands
     for img in image_range:
         vals = img.split('_')
 
-        if vals[0] == '000':
-            band0.append(destination + os.sep + img)
-        elif vals[0] == '001':
-            band1.append(destination + os.sep + img)
-        elif vals[0] == '002':
-            band2.append(destination + os.sep + img)
-        elif vals[0] == '003':
-            band3.append(destination + os.sep + img)
-        elif vals[0] == '004':
-            band4.append(destination + os.sep + img)
-        elif vals[0] == '005':
-            band5.append(destination + os.sep + img)
-        elif vals[0] == '006':
-            band6.append(destination + os.sep + img)
-        elif vals[0] == '007':
-            band7.append(destination + os.sep + img)
-        elif vals[0] == '008':
-            band8.append(destination + os.sep + img)
-        elif vals[0] == '009':
-            band9.append(destination + os.sep + img)
-        elif vals[0] == '010':
-            band10.append(destination + os.sep + img)
-        elif vals[0] == '011':
-            band11.append(destination + os.sep + img)
-        elif vals[0] == '012':
-            band12.append(destination + os.sep + img)
-        elif vals[0] == '013':
-            band13.append(destination + os.sep + img)
-        elif vals[0] == '014':
-            band14.append(destination + os.sep + img)
-        elif vals[0] == '015':
-            band15.append(destination + os.sep + img)
-        
-    #list of images
-    print(band0)
-    print(band1)
-    print(band2)
-    print(band3)
-    print(band4)
-    print(band5)
-    print(band6)
-    print(band7)
-    print(band8)
-    print(band9)
-    print(band10)
-    print(band11)
-    print(band12)
-    print(band13)
-    print(band14)
-    print(band15)
-    
-    # open images files
-    band_0_imgs = [Image.open(im) for im in band0]
-    band_1_imgs = [Image.open(im) for im in band1]
-    band_2_imgs = [Image.open(im) for im in band2]
-    band_3_imgs = [Image.open(im) for im in band3]
-    band_4_imgs = [Image.open(im) for im in band4]
-    band_5_imgs = [Image.open(im) for im in band5]
-    band_6_imgs = [Image.open(im) for im in band6]
-    band_7_imgs = [Image.open(im) for im in band7]
-    band_8_imgs = [Image.open(im) for im in band8]
-    band_9_imgs = [Image.open(im) for im in band9]
-    band_10_imgs = [Image.open(im) for im in band10]
-    band_11_imgs = [Image.open(im) for im in band11]
-    band_12_imgs = [Image.open(im) for im in band12]
-    band_13_imgs = [Image.open(im) for im in band13]
-    band_14_imgs = [Image.open(im) for im in band14]
-    band_15_imgs = [Image.open(im) for im in band15]
-    
-    merge_images_horizontally(band_0_imgs, destination + os.sep + 'band0.jpg')
-    merge_images_horizontally(band_1_imgs, destination + os.sep + 'band1.jpg')
-    merge_images_horizontally(band_2_imgs, destination + os.sep + 'band2.jpg')
-    merge_images_horizontally(band_3_imgs, destination + os.sep + 'band3.jpg')
-    merge_images_horizontally(band_4_imgs, destination + os.sep + 'band4.jpg')
-    merge_images_horizontally(band_5_imgs, destination + os.sep + 'band5.jpg')
-    merge_images_horizontally(band_6_imgs, destination + os.sep + 'band6.jpg')
-    merge_images_horizontally(band_7_imgs, destination + os.sep + 'band7.jpg')
-    merge_images_horizontally(band_8_imgs, destination + os.sep + 'band8.jpg')
-    merge_images_horizontally(band_9_imgs, destination + os.sep + 'band9.jpg')
-    merge_images_horizontally(band_10_imgs, destination + os.sep + 'band10.jpg')
-    merge_images_horizontally(band_11_imgs, destination + os.sep + 'band11.jpg')
-    merge_images_horizontally(band_12_imgs, destination + os.sep + 'band12.jpg')
-    merge_images_horizontally(band_13_imgs, destination + os.sep + 'band13.jpg')
-    merge_images_horizontally(band_14_imgs, destination + os.sep + 'band14.jpg')
-    merge_images_horizontally(band_15_imgs, destination + os.sep + 'band15.jpg')
-    
-    band0_image = Image.open(destination + os.sep + 'band0.jpg')
-    band1_image = Image.open(destination + os.sep + 'band1.jpg')
-    band2_image = Image.open(destination + os.sep + 'band2.jpg')
-    band3_image = Image.open(destination + os.sep + 'band3.jpg')
-    band4_image = Image.open(destination + os.sep + 'band4.jpg')
-    band5_image = Image.open(destination + os.sep + 'band5.jpg')
-    band6_image = Image.open(destination + os.sep + 'band6.jpg')
-    band7_image = Image.open(destination + os.sep + 'band7.jpg')
-    band8_image = Image.open(destination + os.sep + 'band8.jpg')
-    band9_image = Image.open(destination + os.sep + 'band9.jpg')
-    band10_image = Image.open(destination + os.sep + 'band10.jpg')
-    band11_image = Image.open(destination + os.sep + 'band11.jpg')
-    band12_image = Image.open(destination + os.sep + 'band12.jpg')
-    band13_image = Image.open(destination + os.sep + 'band13.jpg')
-    band14_image = Image.open(destination + os.sep + 'band14.jpg')
-    band15_image = Image.open(destination + os.sep + 'band15.jpg')
+        if count < 10:
+            if vals[0] == '00' + str(count):
+                bands[count].append(destination + os.sep + img)
+        else:
+            if vals[0] == '0' + str(count):
+                bands[count].append(destination + os.sep + img)
 
-    bands = [band0_image, band1_image, band2_image, band3_image, band4_image, band5_image, band6_image, band7_image,
-        band8_image, band9_image, band10_image, band11_image, band12_image, band13_image, band14_image, band15_image]
-    
-    merge_images_vertically(bands, destination + os.sep + '20210131180000.jpg')
+        intra_count += 1
+        if intra_count == dimension:
+            count += 1
+            intra_count = 0
 
+    # Open 688x688 images files and store into each respective band_images[i] list.
+    for i, band_list in enumerate(bands):
+            band_images[i] = [Image.open(im) for im in band_list]
+
+    # Create horizontal bands for each list of images for that row
+    for i in range(0, dimension):
+        merge_images_horizontally(band_images[i], destination + os.sep + 'band' + str(i) + '.jpg')
+
+    # Create list containing stitched horizontal band images.
+    band_horz_images = []
+    for i in range(0, dimension):
+        band_horz_images.append(Image.open(destination + os.sep + 'band' + str(i) + '.jpg'))
+
+    # Merge all horizontal images vertically to build final image.
+    merge_images_vertically(band_horz_images, destination + os.sep + image_name)
+    
+    print(image_name + ' has been created from sub-image directory ' + destination + ' with resolution ' \
+        + str(dimension*PATCH_SIZE) + 'x' + str(dimension*PATCH_SIZE) + '.')
+
+    # Delete all png and band images that built final image.
     rm_png_command = 'rm \"' + destination + '\"' + os.sep + '*.png'
     rm_bands_command = 'rm \"' + destination + '\"' + os.sep + 'band*'
     os.system(rm_png_command)

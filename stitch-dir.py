@@ -47,7 +47,8 @@ def merge_images_vertically(imgs, filename):
 def main(argv):
     """
     """
-    
+    bands = {}
+
     band0 = []
     band1 = []
     band2 = []
@@ -214,7 +215,6 @@ def main(argv):
 
     rm_png_command = 'rm \"' + destination + '\"' + os.sep + '*.png'
     rm_bands_command = 'rm \"' + destination + '\"' + os.sep + 'band*'
-    
     os.system(rm_png_command)
     os.system(rm_bands_command)
 

@@ -1,10 +1,12 @@
 import os
 import sys
 import time
+import signal
 import shutil
 import logging
 import zipfile
 import requests
+import multitasking
 from stem import Signal
 from datetime import date
 from contextlib import closing
@@ -22,7 +24,7 @@ class SatelliteCrawler(Crawler):
 
     @author Vincent.Nigro
     @version 0.0.1
-    @modified 1/29/21
+    @modified 1/31/21
     """
     
     # Supported satellite names
@@ -32,6 +34,9 @@ class SatelliteCrawler(Crawler):
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     FENGYUN_4A_NAME = 'FENGYUN-4A'
     GEO_KOMPSAT_2A_NAME = 'GEO-KOMPSAT-2A'
+    
+    # kill all tasks on ctrl-c
+    signal.signal(signal.SIGINT, multitasking.killall)
 
     def __init__(self, url, satellite):
         """
@@ -49,6 +54,7 @@ class SatelliteCrawler(Crawler):
         self.__initialize_logging()
 
 
+    @multitasking.task
     def download_images(self, links, pw):
         """
         A generic function which accepts a dictionary of links where each entry is a key-value mapping of 
@@ -66,6 +72,12 @@ class SatelliteCrawler(Crawler):
 
         # For each link, extract and name img dir as title
         for title, link in links.items():
+            starting_info = 'Thread ' + title + ' has started download...'
+            print(starting_info)
+            logging.info(starting_info)
+            
+            failed_download = False
+
             # Create file name derived from link path
             filename = link.split("/")[-1]
 
@@ -108,20 +120,27 @@ class SatelliteCrawler(Crawler):
                 
                         # if file is zipped, unzip and remove zip file
                         if (self.ZIP_EXTENSION in filename):
-                            with zipfile.ZipFile(path, 'r') as ref:
-                                logging.info("Downloaded file was zipped, extracting to " + dir_path + ".")
-                                ref.extractall(dir_path)
-                                ref.close()
-                    
-                            logging.info("Removing zipped file located at " + path + ".")
-                            os.remove(path)
+                            try:
+                                with zipfile.ZipFile(path, 'r') as ref:
+                                    logging.info("Downloaded file was zipped, extracting to " + dir_path + ".")
+                                    ref.extractall(dir_path)
+                                    ref.close()
+                        
+                                logging.info("Removing zipped file located at " + path + ".")
+                                os.remove(path)
+                            except Exception as e:
+                                print(e)
+                                logging.error(e)
+                                failed_download = True
                     else:
                         failed_download_log = title + " failed to download."
                         logging.info(failed_download_log)
                         print(failed_download_log)
-                downloaded_log = title + " has downloaded."
-                logging.info(downloaded_log)
-                print(downloaded_log)
+                
+                if not failed_download:
+                    downloaded_log = title + " has downloaded."
+                    logging.info(downloaded_log)
+                    print(downloaded_log)
             else:
                 already_downloaded_log = "An image for " + title + " has already been downloaded."
                 logging.info(already_downloaded_log)

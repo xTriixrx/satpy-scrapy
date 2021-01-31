@@ -2,6 +2,7 @@ import sys
 import shlex
 import getopt
 import logging
+import multitasking
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
 from crawlers.gk_2a import GEO_KOMPSAT_2A
@@ -15,7 +16,7 @@ GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, and ELEKTRO-L2.
 
  @author Vincent Nigro
  @version 0.0.1
- @modified 1/29/21
+ @modified 1/31/21
 """
 
 def generate_utc_range_30_step(utcrange):
@@ -296,13 +297,27 @@ def main(argv):
             links = {title:link for (title,link) in links.items() if any(x in title for x in img_titles)}
 
         if links != {}:
-            # Performs either Tor HTTP/HTTPs web scrape or FTP protocol to extract image from FTP server
-            satellite.download_images(links, tor_pw)
+            dict_list = []
+            
+            # Separate each key/value pair into its own dictionary
+            for key, value in links.items():
+                link = {}
+                link[key] = value
+                dict_list.append(link)
+            
+            # .download_images() implicitly spawns threads using @multitasking.task decorator
+            for dictionary in dict_list:
+                # Performs either Tor HTTP/HTTPs web scrape or FTP protocol to extract image from FTP server
+                satellite.download_images(dictionary, tor_pw)
         else:
             err = "No image links were provided to be pulled down."
             logging.info(err)
             print(err)
         
+        # Wait for all downloads to finish 
+        multitasking.wait_for_tasks()
+        
+        # Perform time elapsed calculation.
         satellite.elapsed_time_procedure()
     except Exception as e:
         print(e)

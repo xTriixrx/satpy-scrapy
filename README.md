@@ -2,7 +2,7 @@
 
 <p align="center">
 
-satpy-scraper is a modular, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
+satpy-scraper is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
 
 The --images= and --tor-password= arguments should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
 
@@ -120,6 +120,7 @@ Long Arguments
  * Requests v2.24
  * Stem v1.8
  * Pytz v2020.1
+ * Multitasking v0.0.9
 
 ### Future Satellite Support
 

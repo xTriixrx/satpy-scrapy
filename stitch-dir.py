@@ -3,6 +3,17 @@ import sys
 import getopt
 from PIL import Image
 
+def parse_destination(dest):
+    """
+    This parses the destination path to create the appropriate file name based on date and time.
+    """
+
+    filename = ''
+    destination_components = dest.split('/') 
+    filename += destination_components[1] + ' ' + destination_components[2] + '.jpg'
+    return filename
+
+
 def merge_images_horizontally(imgs, filename):
     """
     This function merges images horizontally.
@@ -51,7 +62,6 @@ def main(argv):
     bands = []
     dimension = ''
     destination = ''
-    band_images = []
     image_range = []
     PATCH_SIZE = 688
     image_name = '20210131180000.jpg'
@@ -72,7 +82,7 @@ def main(argv):
         raise ValueError('Destination argument was not provided and should not be \'\'.')
     elif dimension == '':
         raise ValueError('Dimension argument was not provided and should not be \'\' (either 16 or 8).')
-    
+    image_name = parse_destination(destination)
     flatten_command = 'find ' + destination + ' -mindepth 2 -type f -exec mv \'{}\' ' + destination + ' \;'
     
     os.system(flatten_command)
@@ -84,7 +94,6 @@ def main(argv):
     
     for i in range(0, dimension):
         bands.append([])
-        band_images.append([])
         for j in range(0, dimension):
             if i > 9 and j < 10:
                 image_range.append('0' + str(i) + '_00' + str(j) + '.png')
@@ -113,13 +122,10 @@ def main(argv):
             count += 1
             intra_count = 0
 
-    # Open 688x688 images files and store into each respective band_images[i] list.
+    # Open 688x688 set of images files for current band and stitch together horizontally
     for i, band_list in enumerate(bands):
-            band_images[i] = [Image.open(im) for im in band_list]
-
-    # Create horizontal bands for each list of images for that row
-    for i in range(0, dimension):
-        merge_images_horizontally(band_images[i], destination + os.sep + 'band' + str(i) + '.jpg')
+        images = [Image.open(im) for im in band_list]
+        merge_images_horizontally(images, destination + os.sep + 'band' + str(i) + '.jpg')
 
     # Create list containing stitched horizontal band images.
     band_horz_images = []

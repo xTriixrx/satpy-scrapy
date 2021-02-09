@@ -16,7 +16,7 @@ GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, and ELEKTRO-L2.
 
  @author Vincent Nigro
  @version 0.0.1
- @modified 1/31/21
+ @modified 2/08/21
 """
 
 def generate_utc_range_30_step(utcrange):
@@ -165,7 +165,13 @@ def filter_logger():
         'Ash RGB', 'Enhanced IR WV 6.3µm', 'Enhanced IR WV 6.9µm', 'Enhanced IR WV 7.3µm', 'Enhanced IR 10.5µm'
     ]
 
-    himawari_filter_options = ["Natural Color", "Geocolor", "RGB Airmass", "Band 3"]
+    himawari_filter_options = \
+    [
+        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10', 'Band 11',
+        'Band 12', 'Band 13', 'Band 14', 'Band 15', 'Band 16', 'GeoColor', 'Shortwave Albedo', 'Visible Albedo', 'Split Window Difference',
+        'Natural Color', 'RGB AirMass', 'Day Cloud Phase Distinction', 'Dust', 'Fire Temperature', 'Natural Fire Color', 'Ash', 'Sulfur Dioxide',
+        'Cloud-Top Height', 'Cloud Geometric Thickness', 'Cloud Layers', 'Cloud Optical Thickness', 'Cloud Effective Radius', 'Cloud Phase'
+    ]
 
     print("Filter options for GOES-EAST & GOES-WEST")
     print(*goes_filter_options, sep='\n')

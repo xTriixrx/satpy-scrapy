@@ -10,10 +10,11 @@ from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.fengyun_4a import FENGYUN_4A
 from crawlers.meteosat_8 import METEOSAT_8
+from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, and ELEKTRO-L2.
+GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, METEOSAT-8, METEOSAT-11, and ELEKTRO-L2.
 
  @author Vincent Nigro
  @version 0.0.1
@@ -120,6 +121,9 @@ def help_logger():
     print("To extract the latest METEOSAT-8 images")
     print("\tpython3 satpy-scrapy.py -m8 --tor-password=\"password\"")
     print("")
+    print("To extract the latest METEOSAT-11 images")
+    print("\tpython3 satpy-scrapy.py -m11 --tor-password=\"password\"")
+    print("")
     print("To extract the latest ELEKTRO-L2 image")
     print("\tpython3 satpy-scrapy.py -k")
     print("")
@@ -169,7 +173,7 @@ def filter_logger():
         'Ash RGB', 'Enhanced IR WV 6.3µm', 'Enhanced IR WV 6.9µm', 'Enhanced IR WV 7.3µm', 'Enhanced IR 10.5µm'
     ]
     
-    meteosat_8_options = \
+    meteosat_options = \
     [
         'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10', 'Band 11', 'GeoColor',
         'Natural Color', 'RGB AirMass', 'Day Cloud Phase Distinction', 'Nighttime Microphysics', 'Dust', 'Ash'
@@ -192,8 +196,8 @@ def filter_logger():
     print('Filter options for HIMAWARI-8')
     print(*himawari_filter_options, sep='\n')
     print('')
-    print('Filter options for METEOSAT-8')
-    print(*meteosat_8_options, sep='\n')
+    print('Filter options for METEOSAT-8 & METEOSAT-11')
+    print(*meteosat_options, sep='\n')
 
 
 def handle_arguments(argv):
@@ -285,7 +289,10 @@ def handle_arguments(argv):
             elif opt == '-m':
                 if arg == '8':
                     return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), \
-                        img_types , tor_password
+                        img_types, tor_password
+                elif arg == '11':
+                    return METEOSAT_11(METEOSAT_11.METEOSAT_11_URL, METEOSAT_11.METEOSAT_11_NAME), \
+                        img_types, tor_password
         
     except getopt.GetoptError as e:
         logging.exception(e)
@@ -332,7 +339,7 @@ def main(argv):
                 satellite._renew_connection(tor_pw)
                 tor_pw = ''
             
-            # .download_images() implicitly spawns threads using @multitasking.task decorator
+            # download_images() implicitly spawns threads using @multitasking.task decorator
             for dictionary in dict_list:
                 # Performs either Tor HTTP/HTTPs web scrape or FTP protocol to extract image from FTP server
                 satellite.download_images(dictionary, tor_pw)

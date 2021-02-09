@@ -3,6 +3,11 @@ import sys
 import getopt
 from PIL import Image
 
+def get_num_pixels(filepath):
+    width, height = Image.open(filepath).size
+    
+    return width, height
+
 def parse_destination(dest):
     """
     This parses the destination path to create the appropriate file name based on date and time.
@@ -60,12 +65,14 @@ def main(argv):
     """
     """
 
+    width = 0
     bands = []
+    height = 0
     dimension = ''
     image_name = ''
     destination = ''
     image_range = []
-    PATCH_SIZE = 688
+    first_image = os.sep + '000_000.png'
 
     try:
         opts, args = getopt.getopt(argv, '', ['destination=', 'dimension='])
@@ -85,8 +92,9 @@ def main(argv):
         raise ValueError('Dimension argument was not provided and should not be \'\' (either 16 or 8).')
     
     image_name = parse_destination(destination)
-    flatten_command = 'find ' + destination + ' -mindepth 2 -type f -exec mv \'{}\' ' + destination + ' \;'
     
+    flatten_command = 'find ' + destination + ' -mindepth 2 -type f -exec mv \'{}\' ' + destination + ' \;'
+
     # Execute shell command to extract all image patches to destination location
     os.system(flatten_command)
 
@@ -95,6 +103,9 @@ def main(argv):
     for entry in os.scandir('.' + os.sep + destination):
         if os.path.isdir(entry.path) and not os.listdir(entry.path):
             os.rmdir(entry.path)
+
+    # Get width/height of first image patch
+    width, height = get_num_pixels(destination + first_image)
 
     # Create bands and image_range based on dimension of image.
     for i in range(0, dimension):
@@ -127,7 +138,7 @@ def main(argv):
             count += 1
             intra_count = 0
 
-    # Open 688x688 set of images files for current band and stitch together horizontally
+    # Open set of images files for current band and stitch together horizontally
     for i, band_list in enumerate(bands):
         images = [Image.open(im) for im in band_list]
         merge_images_horizontally(images, destination + os.sep + 'band' + str(i) + '.jpg')
@@ -141,7 +152,7 @@ def main(argv):
     merge_images_vertically(band_horz_images, destination + os.sep + image_name)
     
     print(image_name + ' has been created from sub-image directory ' + destination + ' with resolution ' \
-        + str(dimension*PATCH_SIZE) + 'x' + str(dimension*PATCH_SIZE) + '.')
+        + str(dimension*width) + 'x' + str(dimension*height) + '.')
 
     # Delete all png and band images that built final image.
     rm_png_command = 'rm \"' + destination + '\"' + os.sep + '*.png'

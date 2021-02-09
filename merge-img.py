@@ -55,16 +55,17 @@ def merge_images_vertically(imgs, filename):
     
     new_im.save(filename)
 
+
 def main(argv):
     """
     """
 
     bands = []
     dimension = ''
+    image_name = ''
     destination = ''
     image_range = []
     PATCH_SIZE = 688
-    image_name = '20210131180000.jpg'
 
     try:
         opts, args = getopt.getopt(argv, '', ['destination=', 'dimension='])
@@ -82,16 +83,20 @@ def main(argv):
         raise ValueError('Destination argument was not provided and should not be \'\'.')
     elif dimension == '':
         raise ValueError('Dimension argument was not provided and should not be \'\' (either 16 or 8).')
+    
     image_name = parse_destination(destination)
     flatten_command = 'find ' + destination + ' -mindepth 2 -type f -exec mv \'{}\' ' + destination + ' \;'
     
+    # Execute shell command to extract all image patches to destination location
     os.system(flatten_command)
-    
+
+    # Format destination and remove all empty directories (use to contain each image patch before mv)
     destination = destination.replace('\"', '')
     for entry in os.scandir('.' + os.sep + destination):
         if os.path.isdir(entry.path) and not os.listdir(entry.path):
             os.rmdir(entry.path)
-    
+
+    # Create bands and image_range based on dimension of image.
     for i in range(0, dimension):
         bands.append([])
         for j in range(0, dimension):

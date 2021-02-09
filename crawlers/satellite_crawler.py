@@ -24,7 +24,7 @@ class SatelliteCrawler(Crawler):
 
     @author Vincent.Nigro
     @version 0.0.1
-    @modified 1/31/21
+    @modified 2/08/21
     """
     
     # Supported satellite names

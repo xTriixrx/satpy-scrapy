@@ -32,42 +32,42 @@ It is highly recommended to target a single image type at a time for a given scr
 
 HIMAWARI-8:
 
- * Band 1 (16x16)
- * Band 2 (16x16)
- * Band 3 (16x16)
- * Band 4 (16x16)
- * Band 5 (8x8)
- * Band 6 (8x8)
- * Band 7 (8x8)
- * Band 8 (8x8)
- * Band 9 (8x8)
- * Band 10 (8x8)
- * Band 11 (8x8)
- * Band 12 (8x8)
- * Band 13 (8x8)
- * Band 14 (8x8)
- * Band 15 (8x8)
- * Band 16  (8x8)
- * GeoColor (16x16)
- * Shortwave Albedo (8x8)
- * Visible Albedo (8x8)
- * Split Window Difference (8x8)
- * Natural Color (16x16)
- * RGB AirMass (8x8)
- * Day Cloud Phase Distinction (16x16)
- * Dust (8x8)
- * Fire Temperature (8x8)
- * Natural Fire Color (16x16)
- * Ash (8x8)
- * Sulfur Dioxide (8x8)
- * Cloud-Top Height (8x8)
- * Cloud Geometric Thickness (8x8)
- * Cloud Layers (8x8)
- * Cloud Optical Thickness (8x8)
- * Cloud Effective Radius (8x8)
- * Cloud Phase (8x8)
+ * Band 1 (16x16) - 11008x11008 resolution.
+ * Band 2 (16x16) - 11008x11008 resolution.
+ * Band 3 (16x16) - 11008x11008 resolution.
+ * Band 4 (16x16) - 11008x11008 resolution.
+ * Band 5 (8x8) - 5504x5504 resolution.
+ * Band 6 (8x8) - 5504x5504 resolution.
+ * Band 7 (8x8) - 5504x5504 resolution.
+ * Band 8 (8x8) - 5504x5504 resolution.
+ * Band 9 (8x8) - 5504x5504 resolution.
+ * Band 10 (8x8) - 5504x5504 resolution.
+ * Band 11 (8x8) - 5504x5504 resolution.
+ * Band 12 (8x8) - 5504x5504 resolution.
+ * Band 13 (8x8) - 5504x5504 resolution.
+ * Band 14 (8x8) - 5504x5504 resolution.
+ * Band 15 (8x8) - 5504x5504 resolution.
+ * Band 16  (8x8) - 5504x5504 resolution.
+ * GeoColor (16x16) - 11008x11008 resolution.
+ * Shortwave Albedo (8x8) - 5504x5504 resolution.
+ * Visible Albedo (8x8) - 5504x5504 resolution.
+ * Split Window Difference (8x8) - 5504x5504 resolution.
+ * Natural Color (16x16) - 11008x11008 resolution.
+ * RGB AirMass (8x8) - 5504x5504 resolution.
+ * Day Cloud Phase Distinction (16x16) - 11008x11008 resolution.
+ * Dust (8x8) - 5504x5504 resolution.
+ * Fire Temperature (8x8) - 5504x5504 resolution.
+ * Natural Fire Color (16x16) - 11008x11008 resolution.
+ * Ash (8x8) - 5504x5504 resolution.
+ * Sulfur Dioxide (8x8) - 5504x5504 resolution.
+ * Cloud-Top Height (8x8) - 5504x5504 resolution.
+ * Cloud Geometric Thickness (8x8) - 5504x5504 resolution.
+ * Cloud Layers (8x8) - 5504x5504 resolution.
+ * Cloud Optical Thickness (8x8) - 5504x5504 resolution.
+ * Cloud Effective Radius (8x8) - 5504x5504 resolution.
+ * Cloud Phase (8x8) - 5504x5504 resolution.
 
-Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th - January 27th.
+Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th, 2021 - January 27th, 2021.
 
 </p>
 

@@ -149,7 +149,7 @@ class HIMAWARI_8(SatelliteCrawler):
         utctime = time.utcnow()
         
         # Always take off an hour off time to ensure images will always be available.
-        if utctime.minute >= 0 and utctime.minute <= 10:
+        if utctime.minute >= 0 and utctime.minute <= 9:
             difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
         elif utctime.minute >= 10 and utctime.minute <= 19:

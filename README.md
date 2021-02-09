@@ -9,10 +9,11 @@ The --images= and --tor-password= arguments should not be used for the ELEKTRO-L
  * python3 satpy-scrapy.py -h
  * python3 satpy-scrapy.py --help
  * python3 satpy-scrapy.py --filters
+ * python3 satpy-scrapy.py -k --utcrange="0000-2300"
  * python3 satpy-scrapy.py -e --tor-password="password"
  * python3 satpy-scrapy.py -w --tor-password="password"
- * python3 satpy-scrapy.py -m --tor-password="password"
- * python3 satpy-scrapy.py -k --utcrange="0000-2300"
+ * python3 satpy-scrapy.py -i --tor-password="password"
+ * python3 satpy-scrapy.py -m8 --tor-password="password"
  * python3 satpy-scrapy.py -f4a --tor-password="password"
  * python3 satpy-scrapy.py -gk2a --tor-password="password"
  * python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
@@ -21,9 +22,9 @@ The --images= and --tor-password= arguments should not be used for the ELEKTRO-L
  * python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\"" --tor-password="password"
  * python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\"" --tor-password="password"
  * python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\"" --tor-password="password"
- * python3 satpy-scrapy.py -m --images="\"Natural Color\" \"GeoColor\"" --tor-password="password"
+ * python3 satpy-scrapy.py -i --images="\"Natural Color\" \"GeoColor\"" --tor-password="password"
 
-The merge-img program is a utility program which will merge together patches of a full res image together. Some satellites being queried are written to extract the full resolution patches to be merged together at a later time, rather than downloading a single, low resolution image. Some images provide the full 11008px x 11008px resolution image while others are downscaled to 5500px x 5500px Here are some sample commands for this program:
+The merge-img program is a utility program which will merge together patches of a full res image together. Some satellites being queried are written to extract the full resolution patches to be merged together at a later time, rather than downloading a single, low resolution image. Some images provide the full 11008px x 11008px resolution image while others are downscaled to some other lower resolution. Here are some sample commands for this program:
 
  * python3 merge-img.py --destination="\"HIMAWARI-8/2021-02-08/22-30 UTC/GeoColor\"" --dimension="16"
  * python3 merge-img.py --destination="\"HIMAWARI-8/2021-02-08/22-30 UTC/RGB AirMass\"" --dimension="8"
@@ -66,6 +67,27 @@ HIMAWARI-8:
  * Cloud Optical Thickness (8x8) - 5504x5504 resolution.
  * Cloud Effective Radius (8x8) - 5504x5504 resolution.
  * Cloud Phase (8x8) - 5504x5504 resolution.
+
+METEOSAT-8 (42.0E)
+
+ * Band 1 (8x8) - 3712x3712 resolution.
+ * Band 2 (8x8) - 3712x3712 resolution.
+ * Band 3 (8x8) - 3712x3712 resolution.
+ * Band 4 (8x8) - 3712x3712 resolution.
+ * Band 5 (8x8) - 3712x3712 resolution.
+ * Band 6 (8x8) - 3712x3712 resolution.
+ * Band 7 (8x8) - 3712x3712 resolution.
+ * Band 8 (8x8) - 3712x3712 resolution.
+ * Band 9 (8x8) - 3712x3712 resolution.
+ * Band 10 (8x8) - 3712x3712 resolution.
+ * Band 11 (8x8) - 3712x3712 resolution.
+ * GeoColor (8x8) - 3712x3712 resolution.
+ * Natural Color (8x8) - 3712x3712 resolution.
+ * RGB AirMass (8x8) - 3712x3712 resolution.
+ * Day Cloud Phase Distinction (8x8) - 3712x3712 resolution.
+ * Nighttime Microphysics (8x8) - 3712x3712 resolution.
+ * Dust (8x8) - 3712x3712 resolution.
+ * Ash (8x8) - 3712x3712 resolution.
 
 Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th, 2021 - January 27th, 2021.
 
@@ -139,14 +161,21 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 
+### METEOSAT-8
+
+<p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020[9] and it's availability lifetime will end in 2022.</p>
+
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
+
 ## Command Line Arguments
 
 Short Arguments
    * '-h': Triggers help logging function.
    * '-e': Instantiates GOES-EAST crawler to extract every possible image for this vehicle.
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
-   * '-m': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
+   * '-i': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
    * '-k': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
+   * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
    * '-f4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
    * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
 
@@ -168,7 +197,6 @@ Long Arguments
 
 ### Future Satellite Support
 
- * METEOSAT-8 (41.5 degree) 3K images
  * METEOSAT-11 (0 degree) 3K images
  * DISCOVR 2048px x 2048px images
  * INSAT-3D 827px x 887px images

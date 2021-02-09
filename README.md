@@ -2,7 +2,7 @@
 
 <p align="center">
 
-satpy-scraper is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
+satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
 
 The --images= and --tor-password= arguments should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
 
@@ -22,6 +22,50 @@ The --images= and --tor-password= arguments should not be used for the ELEKTRO-L
  * python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\"" --tor-password="password"
  * python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\"" --tor-password="password"
  * python3 satpy-scrapy.py -m --images="\"Natural Color\" \"GeoColor\"" --tor-password="password"
+
+The merge-img program is a utility program which will merge together patches of a full res image together. Some satellites being queried are written to extract the full resolution patches to be merged together at a later time, rather than downloading a single, low resolution image. Some images provide the full 11008px x 11008px resolution image while others are downscaled to 5500px x 5500px Here are some sample commands for this program:
+
+ * python3 merge-img.py --destination="\"HIMAWARI-8/2021-02-08/22-30 UTC/GeoColor\"" --dimension="16"
+ * python3 merge-img.py --destination="\"HIMAWARI-8/2021-02-08/22-30 UTC/RGB AirMass\"" --dimension="8"
+
+It is highly recommended to target a single image type at a time for a given scraping run as each image requires 256 (16x16) or 64 (8x8) web scraping runs for each image patch. As the number of images increase, the risk of failure exponentially increases along with the number of web scrape requests. It can also be said that the more images scraped in a single run the longer the run will take, so if this is to be automated the chance of missing images increases. Optimally, this would benefit from a mulithreaded, multisystem environment such as a Beowulf cluster. Below here is a list of each satellite that follows this pattern of individual image patches and will need to merge the image patches together, along with the available resolution:
+
+HIMAWARI-8:
+
+ * Band 1 (16x16)
+ * Band 2 (16x16)
+ * Band 3 (16x16)
+ * Band 4 (16x16)
+ * Band 5 (8x8)
+ * Band 6 (8x8)
+ * Band 7 (8x8)
+ * Band 8 (8x8)
+ * Band 9 (8x8)
+ * Band 10 (8x8)
+ * Band 11 (8x8)
+ * Band 12 (8x8)
+ * Band 13 (8x8)
+ * Band 14 (8x8)
+ * Band 15 (8x8)
+ * Band 16  (8x8)
+ * GeoColor (16x16)
+ * Shortwave Albedo (8x8)
+ * Visible Albedo (8x8)
+ * Split Window Difference (8x8)
+ * Natural Color (16x16)
+ * RGB AirMass (8x8)
+ * Day Cloud Phase Distinction (16x16)
+ * Dust (8x8)
+ * Fire Temperature (8x8)
+ * Natural Fire Color (16x16)
+ * Ash (8x8)
+ * Sulfur Dioxide (8x8)
+ * Cloud-Top Height (8x8)
+ * Cloud Geometric Thickness (8x8)
+ * Cloud Layers (8x8)
+ * Cloud Optical Thickness (8x8)
+ * Cloud Effective Radius (8x8)
+ * Cloud Phase (8x8)
 
 Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th - January 27th.
 

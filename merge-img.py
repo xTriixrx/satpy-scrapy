@@ -8,6 +8,7 @@ def get_num_pixels(filepath):
     
     return width, height
 
+
 def parse_destination(dest):
     """
     This parses the destination path to create the appropriate file name based on date and time.

@@ -14,6 +14,7 @@ The --images= and --tor-password= arguments should not be used for the ELEKTRO-L
  * python3 satpy-scrapy.py -w --tor-password="password"
  * python3 satpy-scrapy.py -i --tor-password="password"
  * python3 satpy-scrapy.py -m8 --tor-password="password"
+ * python3 satpy-scrapy.py -m11 --tor-password="password"
  * python3 satpy-scrapy.py -f4a --tor-password="password"
  * python3 satpy-scrapy.py -gk2a --tor-password="password"
  * python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
@@ -68,7 +69,7 @@ HIMAWARI-8:
  * Cloud Effective Radius (8x8) - 5504x5504 resolution.
  * Cloud Phase (8x8) - 5504x5504 resolution.
 
-METEOSAT-8 (42.0E)
+METEOSAT-8 (42.0E) && METEOSAT-11 (0.0)
 
  * Band 1 (8x8) - 3712x3712 resolution.
  * Band 2 (8x8) - 3712x3712 resolution.
@@ -167,6 +168,12 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
 
+### METEOSAT-11
+
+<p align="center">Meteosat-11 is the prime operational geostationary satellite, positioned at 0º and providing full disc imagery every 15 minutes. It also provides Search and Rescue monitoring and Data Collection Platform Relay Service.</p>
+
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 01-00 UTC.jpg" /></p>
+
 ## Command Line Arguments
 
 Short Arguments
@@ -176,6 +183,7 @@ Short Arguments
    * '-i': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
    * '-k': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
    * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
+   * '-m11': Instantiates METEOSAT-11 crawler to extract every possible image for this vehicle.
    * '-f4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
    * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
 
@@ -197,7 +205,6 @@ Long Arguments
 
 ### Future Satellite Support
 
- * METEOSAT-11 (0 degree) 3K images
  * DISCOVR 2048px x 2048px images
  * INSAT-3D 827px x 887px images
  * INSAT-3DR 827px x 887px images

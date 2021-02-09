@@ -289,13 +289,13 @@ def main(argv):
 
     try:
         satellite.create_satellite_directory()
-
+        
         links = satellite.get_links(tor_pw)
         
         # If --images params were given, remove all inappropriate links that were not queried
         if img_titles != []:
             links = {title:link for (title,link) in links.items() if any(x in title for x in img_titles)}
-
+        
         if links != {}:
             dict_list = []
             
@@ -304,6 +304,11 @@ def main(argv):
                 link = {}
                 link[key] = value
                 dict_list.append(link)
+            
+            # Recycle IP once before extracting image set
+            if tor_pw != '':
+                satellite._renew_connection(tor_pw)
+                tor_pw = ''
             
             # .download_images() implicitly spawns threads using @multitasking.task decorator
             for dictionary in dict_list:

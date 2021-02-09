@@ -147,7 +147,7 @@ class SatelliteCrawler(Crawler):
                 print(already_downloaded_log)
 
 
-    def _extract_content(self, link, pw, streaming=False):
+    def _extract_content(self, link, pw='', streaming=False):
         """
         A generic page extraction function utilizing the Tor session and recycling the current IP
         to another once the GET request has been fufilled and returned.
@@ -171,9 +171,10 @@ class SatelliteCrawler(Crawler):
             page = s.get(link)
         s.close()
 
-        # Generate a new Tor IP
-        self._renew_connection(pw)
-        
+        if pw != '':
+            # Generate a new Tor IP
+            self._renew_connection(pw)
+
         return page
 
 
@@ -212,7 +213,9 @@ class SatelliteCrawler(Crawler):
             # send NEWNYM signal to establish a new clean connection through the Tor network
             c.signal(Signal.NEWNYM)
             
-            logging.info("Generated new tor IP...")
+            generated_ip_log = 'Generated new tor IP...'
+            logging.info(generated_ip_log)
+            print(generated_ip_log)
 
 
     def _image_exists(self, title):

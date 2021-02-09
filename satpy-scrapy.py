@@ -9,6 +9,7 @@ from crawlers.gk_2a import GEO_KOMPSAT_2A
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.fengyun_4a import FENGYUN_4A
+from crawlers.meteosat_8 import METEOSAT_8
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
@@ -108,13 +109,16 @@ def help_logger():
     print("\tpython3 satpy-scrapy.py -w --tor-password=\"password\"")
     print("")
     print("To extract all the latest HIMAWARI-8 images")
-    print("\tpython3 satpy-scrapy.py -m --tor-password=\"password\"")
+    print("\tpython3 satpy-scrapy.py -i --tor-password=\"password\"")
     print("")
     print("To extract the latest FENGYUN-4A image")
     print("\tpython3 satpy-scrapy.py -f4a --tor-password=\"password\"")
     print("")
     print("To extract the latest GK2A images")
     print("\tpython3 satpy-scrapy.py -gk2a --tor-password=\"password\"")
+    print("")
+    print("To extract the latest METEOSAT-8 images")
+    print("\tpython3 satpy-scrapy.py -m8 --tor-password=\"password\"")
     print("")
     print("To extract the latest ELEKTRO-L2 image")
     print("\tpython3 satpy-scrapy.py -k")
@@ -141,7 +145,7 @@ def help_logger():
     print("\tpython3 satpy-scrapy.py -gk2a --images=\"\\\"Natural Color\\\" \\\"True Color\\\"\" --tor-password=\"password\"")
     print("")
     print("To extract 'Natural Color' and 'True Color' HIMAWARI-8 images")
-    print("\tpython3 satpy-scrapy.py -m --images=\"\\\"Natural Color\\\" \\\"GeoColor\\\"\" --tor-password=\"password\"")
+    print("\tpython3 satpy-scrapy.py -i --images=\"\\\"Natural Color\\\" \\\"GeoColor\\\"\" --tor-password=\"password\"")
     print("")
 
 
@@ -164,6 +168,12 @@ def filter_logger():
         'Natural Color', 'AirMass RGB', 'Dust RGB', 'Daynight RGB', 'Fog RGB', 'Storm RGB', 'Snowfog RGB', 'Cloud RGB', 
         'Ash RGB', 'Enhanced IR WV 6.3µm', 'Enhanced IR WV 6.9µm', 'Enhanced IR WV 7.3µm', 'Enhanced IR 10.5µm'
     ]
+    
+    meteosat_8_options = \
+    [
+        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10', 'Band 11', 'GeoColor',
+        'Natural Color', 'RGB AirMass', 'Day Cloud Phase Distinction', 'Nighttime Microphysics', 'Dust', 'Ash'
+    ]
 
     himawari_filter_options = \
     [
@@ -173,15 +183,17 @@ def filter_logger():
         'Cloud-Top Height', 'Cloud Geometric Thickness', 'Cloud Layers', 'Cloud Optical Thickness', 'Cloud Effective Radius', 'Cloud Phase'
     ]
 
-    print("Filter options for GOES-EAST & GOES-WEST")
+    print('Filter options for GOES-EAST & GOES-WEST')
     print(*goes_filter_options, sep='\n')
-    print("")
-    print("Filter options for GEO-KOMPSAT-2A")
+    print('')
+    print('Filter options for GEO-KOMPSAT-2A')
     print(*gk2a_filter_options, sep='\n')
-    print("")
-    print("Filter options for HIMAWARI-8")
+    print('')
+    print('Filter options for HIMAWARI-8')
     print(*himawari_filter_options, sep='\n')
-    print("")
+    print('')
+    print('Filter options for METEOSAT-8')
+    print(*meteosat_8_options, sep='\n')
 
 
 def handle_arguments(argv):
@@ -200,7 +212,7 @@ def handle_arguments(argv):
     fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, '-wehmkf:g:', 
+        opts, args = getopt.getopt(argv, '-wehikm:f:g:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images=', 'tor-password='])
         
         for opt, arg in opts:
@@ -257,7 +269,7 @@ def handle_arguments(argv):
                 return GOES_WEST(GOES_WEST.GOES_WEST_URL, GOES_WEST.GOES_WEST_NAME, 10848), img_types, tor_password
             elif opt == '-e':
                 return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types, tor_password
-            elif opt == '-m':
+            elif opt == '-i':
                 return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types, tor_password
             elif opt == '-k':
                 return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, elektro_day, 
@@ -268,8 +280,12 @@ def handle_arguments(argv):
                         img_types, tor_password
             elif opt == '-g':
                 if arg == 'k2a':
-                    return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_DIRECTORY), \
+                    return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), \
                         img_types, tor_password
+            elif opt == '-m':
+                if arg == '8':
+                    return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), \
+                        img_types , tor_password
         
     except getopt.GetoptError as e:
         logging.exception(e)

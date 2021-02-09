@@ -33,6 +33,7 @@ class SatelliteCrawler(Crawler):
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     FENGYUN_4A_NAME = 'FENGYUN-4A'
+    METEOSAT_8_NAME = 'METEOSAT-8'
     GEO_KOMPSAT_2A_NAME = 'GEO-KOMPSAT-2A'
     
     # kill all tasks on ctrl-c

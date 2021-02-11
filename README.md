@@ -210,6 +210,10 @@ Long Arguments
 ### Future Satellite Support
 
  * DISCOVR 2048px x 2048px images
+ * ELEKTRO-L3 11k x 11k images
+ * FY-2G 1125 x 1125px images
+ * EWS-G1 (GOES-13) 1100px x 1100px images
  * INSAT-3D 827px x 887px images
  * INSAT-3DR 827px x 887px images
- * Others potentially (FY-2, Elektro-L1 (archive))
+ * FY-2H 2000px x 1200px images (China/India region)
+ * Others potentially (FY-2, Elektro-L1 (archive 2013-2016))

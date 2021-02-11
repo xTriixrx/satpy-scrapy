@@ -156,7 +156,10 @@ class ELEKTRO_L2(SatelliteCrawler):
         @return path: str - A relative path on the FTP server to be concatenated with base url hostname.
         """
 
-        path = year + '/' + month + '/' + day + '/' + utc + '/' + filename
+        if int(day) <= 9:
+            path = year + '/' + month + '/' + '0' + day + '/' + utc + '/' + filename
+        else:
+            path = year + '/' + month + '/' + day + '/' + utc + '/' + filename
 
         return path
 
@@ -172,7 +175,10 @@ class ELEKTRO_L2(SatelliteCrawler):
         @return filename: str - The filename of current link gen iteration with format: #YYMMDD_UTC_original_RGB.jpg
         """
 
-        filename = year[-2:] + month_digits + day + '_' + utc + '_' + self.JPG_NAME
+        if int(day) <= 9:
+            filename = year[-2:] + month_digits + '0' + day + '_' + utc + '_' + self.JPG_NAME
+        else:
+            filename = year[-2:] + month_digits + day + '_' + utc + '_' + self.JPG_NAME
 
         return filename
 

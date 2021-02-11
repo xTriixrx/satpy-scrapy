@@ -10,6 +10,7 @@ The --images= and --tor-password= arguments should not be used for the ELEKTRO-L
  * python3 satpy-scrapy.py --help
  * python3 satpy-scrapy.py --filters
  * python3 satpy-scrapy.py -k --utcrange="0000-2300"
+ * python3 satpy-scrapy.py -d --tor-password="password"
  * python3 satpy-scrapy.py -e --tor-password="password"
  * python3 satpy-scrapy.py -w --tor-password="password"
  * python3 satpy-scrapy.py -i --tor-password="password"
@@ -19,6 +20,7 @@ The --images= and --tor-password= arguments should not be used for the ELEKTRO-L
  * python3 satpy-scrapy.py -gk2a --tor-password="password"
  * python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
  * python3 satpy-scrapy.py -e --images="GeoColor" --tor-password="password"
+ * python3 satpy-scrapy.py -d --images="\"Enhanced Color\"" --tor-password="password"
  * python3 satpy-scrapy.py -f4a --utcrange="0000-2300" --tor-password="password"
  * python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\"" --tor-password="password"
  * python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\"" --tor-password="password"
@@ -178,10 +180,21 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 01-00 UTC.jpg" /></p>
 
+### DSCOVR
+
+<p align="center">The Deep Space Climate Observatory, or DSCOVR, was launched in February of 2015, and maintains the nation's real-time solar wind monitoring capabilities, which are critical to the accuracy and lead time of NOAA's space weather alerts and forecasts. Without timely and accurate warnings, space weather events—like geomagnetic storms—have the potential to disrupt nearly every major public infrastructure system on Earth, including power grids, telecommunications, aviation and GPS.
+
+The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role in supporting solar wind alerts and warnings from the L1 orbit, which is the neutral gravity point between the Earth and Sun, approximately one million miles from Earth. L1 is a good position from which to monitor the Sun, because the constant stream of particles from the Sun (the solar wind) reaches L1 up to an hour before reaching Earth.</p>
+
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/epic_1b_20210209150054.png" /></p>
+
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/epic_RGB_20210208061925.png" /></p>
+
 ## Command Line Arguments
 
 Short Arguments
    * '-h': Triggers help logging function.
+   * '-d': Instantiates DSCOVR crawler to extract ever possible image for this vehicle.
    * '-e': Instantiates GOES-EAST crawler to extract every possible image for this vehicle.
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
    * '-i': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
@@ -209,7 +222,6 @@ Long Arguments
 
 ### Future Satellite Support
 
- * DISCOVR 2048px x 2048px images
  * ELEKTRO-L3 11k x 11k images
  * FY-2G 1125 x 1125px images
  * EWS-G1 (GOES-13) 1100px x 1100px images

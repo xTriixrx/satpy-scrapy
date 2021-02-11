@@ -3,6 +3,7 @@ import shlex
 import getopt
 import logging
 import multitasking
+from crawlers.dscovr import DSCOVR
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
 from crawlers.gk_2a import GEO_KOMPSAT_2A
@@ -14,11 +15,11 @@ from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, METEOSAT-8, METEOSAT-11, and ELEKTRO-L2.
+GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, METEOSAT-8, METEOSAT-11, DSCOVR, and ELEKTRO-L2.
 
  @author Vincent Nigro
  @version 0.0.1
- @modified 2/08/21
+ @modified 2/10/21
 """
 
 def generate_utc_range_30_step(utcrange):
@@ -112,6 +113,9 @@ def help_logger():
     print("To extract all the latest HIMAWARI-8 images")
     print("\tpython3 satpy-scrapy.py -i --tor-password=\"password\"")
     print("")
+    print("To extract all the latest DSCOVR images")
+    print("\tpython3 satpy-scrapy.py -d --tor-password=\"password\"")
+    print("")
     print("To extract the latest FENGYUN-4A image")
     print("\tpython3 satpy-scrapy.py -f4a --tor-password=\"password\"")
     print("")
@@ -142,6 +146,9 @@ def help_logger():
     print("To extract 'Derived Motion Winds' GOES-WEST image(s)")
     print("\tpython3 satpy-scrapy.py -w --images=\"\\\"Derived Motion Winds\\\"\" --tor-password=\"password\"")
     print("")
+    print("To extract 'Enhanced Color' DSCOVR image(s)")
+    print("\tpython3 satpy-scrapy.py -d --images=\"\\\"Natural Color\\\"\" --tor-password=\"password\"")
+    print("")
     print("To extract 'GeoColor' and 'Derived Motion Winds' GOES-EAST images")
     print("\tpython3 satpy-scrapy.py -e --images=\"GeoColor \\\"Derived Motion Winds\\\"\" --tor-password=\"password\"")
     print("")
@@ -157,6 +164,9 @@ def filter_logger():
     """
     A function called by handle_arguments which provides examples to stdout regarding possible image link filtering.
     """
+
+    dscovr_filter_options = ['Natural Color', 'Enhanced Color']
+
     goes_filter_options = \
     [
         "GeoColor (Captures GLM type too)", "GLM FED+GeoColor", "AirMass RGB", "Sandwich RGB", "Derived Motion Winds",
@@ -198,6 +208,10 @@ def filter_logger():
     print('')
     print('Filter options for METEOSAT-8 & METEOSAT-11')
     print(*meteosat_options, sep='\n')
+    print('')
+    print('Filter options for DSCOVR')
+    print(*dscovr_filter_options, sep='\n')
+    print('')
 
 
 def handle_arguments(argv):
@@ -216,7 +230,7 @@ def handle_arguments(argv):
     fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, '-wehikm:f:g:', 
+        opts, args = getopt.getopt(argv, '-wehikdm:f:g:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images=', 'tor-password='])
         
         for opt, arg in opts:
@@ -269,7 +283,9 @@ def handle_arguments(argv):
             img_types = shlex.split(img_types[0])
 
         for opt, arg in opts:
-            if opt == '-w':
+            if opt == '-d':
+                return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types, tor_password
+            elif opt == '-w':
                 return GOES_WEST(GOES_WEST.GOES_WEST_URL, GOES_WEST.GOES_WEST_NAME, 10848), img_types, tor_password
             elif opt == '-e':
                 return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types, tor_password

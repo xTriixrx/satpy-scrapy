@@ -24,10 +24,11 @@ class SatelliteCrawler(Crawler):
 
     @author Vincent.Nigro
     @version 0.0.1
-    @modified 2/08/21
+    @modified 2/10/21
     """
     
     # Supported satellite names
+    DSCOVR_NAME = 'DSCOVR'
     GOES_EAST_NAME = 'GOES-EAST'
     GOES_WEST_NAME = 'GOES-WEST'
     HIMAWARI_8_NAME = 'HIMAWARI-8'

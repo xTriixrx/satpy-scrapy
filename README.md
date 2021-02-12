@@ -4,28 +4,29 @@
 
 satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
 
-The --images= and --tor-password= arguments should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
+The --images= argument should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
 
- * python3 satpy-scrapy.py -h
- * python3 satpy-scrapy.py --help
- * python3 satpy-scrapy.py --filters
- * python3 satpy-scrapy.py -k --utcrange="0000-2300"
- * python3 satpy-scrapy.py -d --tor-password="password"
- * python3 satpy-scrapy.py -e --tor-password="password"
- * python3 satpy-scrapy.py -w --tor-password="password"
- * python3 satpy-scrapy.py -i --tor-password="password"
- * python3 satpy-scrapy.py -m8 --tor-password="password"
- * python3 satpy-scrapy.py -m11 --tor-password="password"
- * python3 satpy-scrapy.py -f4a --tor-password="password"
- * python3 satpy-scrapy.py -gk2a --tor-password="password"
- * python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
- * python3 satpy-scrapy.py -e --images="GeoColor" --tor-password="password"
- * python3 satpy-scrapy.py -d --images="\"Enhanced Color\"" --tor-password="password"
- * python3 satpy-scrapy.py -f4a --utcrange="0000-2300" --tor-password="password"
- * python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\"" --tor-password="password"
- * python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\"" --tor-password="password"
- * python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\"" --tor-password="password"
- * python3 satpy-scrapy.py -i --images="\"Natural Color\" \"GeoColor\"" --tor-password="password"
+ * sudo python3 satpy-scrapy.py -h
+ * sudo python3 satpy-scrapy.py -d
+ * sudo python3 satpy-scrapy.py -e
+ * sudo python3 satpy-scrapy.py -w
+ * sudo python3 satpy-scrapy.py -i
+ * sudo python3 satpy-scrapy.py -k
+ * sudo python3 satpy-scrapy.py -m8
+ * sudo python3 satpy-scrapy.py -m11
+ * sudo python3 satpy-scrapy.py -f4a
+ * sudo python3 satpy-scrapy.py -gk2a
+ * sudo python3 satpy-scrapy.py --help
+ * sudo python3 satpy-scrapy.py --filters
+ * sudo python3 satpy-scrapy.py -e --images="GeoColor"
+ * sudo python3 satpy-scrapy.py -k --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -f4a --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
+ * sudo python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\""
+ * sudo python3 satpy-scrapy.py -i --images="\"Natural Color\" \"GeoColor\""
+ * sudo python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\""
+ * sudo python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\""
 
 The merge-img program is a utility program which will merge together patches of a full res image together. Some satellites being queried are written to extract the full resolution patches to be merged together at a later time, rather than downloading a single, low resolution image. Some images provide the full 11008px x 11008px resolution image while others are downscaled to some other lower resolution. Here are some sample commands for this program:
 
@@ -117,7 +118,7 @@ And add the following lines at the bottom of the file if you would like to use a
  * StrictNodes 1
 
 <p align="center">
-You can test your Tor client configuration by running the tor_check.py program with your tor password by editing line 37 of the program. After you run the program you should see 2 different IP addresses which are not your own IP address. With that taken care of you are now ready to use satpy-scrapy!
+You can test your Tor client configuration by running the tor_check.py program with your tor password by editing line 37 of the program. After you run the program you should see 2 different IP addresses which are not your own IP address. Now we just need to set up the config file and secret file containing a hashed string. This hashed string should be the hash for your tor password that you have defined for the ControlPort. To generate a hash, use the hasher.py program to produce a hash. Once a hash is produced, copy this and while as the root user create a file that should be only known to you and stored somewhere other than the satpy-scrapy directory location and paste the hash into this file. Once this file is saved, chmod this file as root into a readonly mode (400) such that only the root user can access this special file. Lastly, create a config.xml file within the satpy-scrapy directory as root and populate the fields templated in the example config.xml file. Once the config file is finished being written to, also as root chmod this file to be readonly (400) as well. Enforcing root privileges increases security of storing passwords on the file system and decentralizing the password from a single config file. It is recommended to remove the hasher.py program when finished with setting up the environment. With that taken care of you are now ready to use satpy-scrapy!
 </p>
 
 ## Supported Satellites
@@ -207,7 +208,6 @@ Short Arguments
 Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
-   * '--tor-password=': Sets the users tor password to extract images for non FTP server based vehicles.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
    * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server or for the FENGYUN-4A crawler.
    * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 FTP server. 

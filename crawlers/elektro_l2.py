@@ -7,10 +7,10 @@ from crawlers.satellite_crawler import SatelliteCrawler
 
 class ELEKTRO_L2(SatelliteCrawler):
     """
-    Concrete satellite spider class for ELEKTRO-L-2 which extends the base class, SatelliteCrawler.
+    Concrete satellite spider class for ELEKTRO-L2 which extends the base class, SatelliteCrawler.
     This method of splitting spiders into separate classes will help with keeping longevity of spider 
     runner classes and update issues easier that may occur during website HTML updates. This spider requires
-    using FTP in order to extract the latest hi-res image for the ELEKTRO-L-2 spacecraft via the ntsomz.gptl.ru
+    using FTP in order to extract the latest hi-res image for the ELEKTRO-L2 spacecraft via the ntsomz.gptl.ru
     FTP server.
 
     @author Vincent.Nigro
@@ -30,7 +30,7 @@ class ELEKTRO_L2(SatelliteCrawler):
         an appropriate resolution size to search for during crawl process.
         
         @param url: str - A string containing a full URL path to some website to begin web crawl.
-        @param satellite: str - A string containing a representative name for the HIMAWARI-8 satellite crawler.
+        @param satellite: str - A string containing a representative name for the ELEKTRO-L2 satellite crawler.
         """
 
         super().__init__(url, satellite)
@@ -40,7 +40,7 @@ class ELEKTRO_L2(SatelliteCrawler):
 
     def get_links(self, pw):
         """
-        Implemented abstract public method which performs ELEKTRO-L-2 specific processing for creating the appropriate
+        Implemented abstract public method which performs ELEKTRO-L2 specific processing for creating the appropriate
         time information required for querying the Russian ntsomz.gptl.ru FTP server.
 
         @param pw: str - A string containing the Tor password for the given system configuration.

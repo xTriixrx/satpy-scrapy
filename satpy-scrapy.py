@@ -11,6 +11,7 @@ from crawlers.goes_17 import GOES_WEST
 from crawlers.gk_2a import GEO_KOMPSAT_2A
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
+from crawlers.elektro_l3 import ELEKTRO_L3
 from crawlers.fengyun_4a import FENGYUN_4A
 from crawlers.meteosat_8 import METEOSAT_8
 from crawlers.meteosat_11 import METEOSAT_11
@@ -112,61 +113,67 @@ def help_logger():
     print("This program extracts the latest high resolution images from various sources using the Tor Network.")
     print("")
     print("To printout the available image filters for each satellite")
-    print("\tpython3 satpy-scrapy.py --filters")
+    print("\tsudo python3 satpy-scrapy.py --filters")
     print("")
     print("To extract all the latest GOES-EAST images")
-    print("\tpython3 satpy-scrapy.py -e")
+    print("\tsudo python3 satpy-scrapy.py -e")
     print("")
     print("To extract all the latest GOES-WEST images")
-    print("\tpython3 satpy-scrapy.py -w")
+    print("\tsudo python3 satpy-scrapy.py -w")
     print("")
     print("To extract all the latest HIMAWARI-8 images")
-    print("\tpython3 satpy-scrapy.py -i")
+    print("\tsudo python3 satpy-scrapy.py -i")
     print("")
     print("To extract all the latest DSCOVR images")
-    print("\tpython3 satpy-scrapy.py -d")
+    print("\tsudo python3 satpy-scrapy.py -d")
     print("")
     print("To extract the latest FENGYUN-4A image")
-    print("\tpython3 satpy-scrapy.py -f4a")
+    print("\tsudo python3 satpy-scrapy.py -f4a")
     print("")
     print("To extract the latest GK2A images")
-    print("\tpython3 satpy-scrapy.py -gk2a")
+    print("\tsudo python3 satpy-scrapy.py -gk2a")
     print("")
     print("To extract the latest METEOSAT-8 images")
-    print("\tpython3 satpy-scrapy.py -m8")
+    print("\tsudo python3 satpy-scrapy.py -m8")
     print("")
     print("To extract the latest METEOSAT-11 images")
-    print("\tpython3 satpy-scrapy.py -m11")
+    print("\tsudo python3 satpy-scrapy.py -m11")
     print("")
     print("To extract the latest ELEKTRO-L2 image")
-    print("\tpython3 satpy-scrapy.py -k")
+    print("\tsudo python3 satpy-scrapy.py -k2")
+    print("")
+    print("To extract the latest ELEKTRO-L3 image")
+    print("\tsudo python3 satpy-scrapy.py -k3")
     print("")
     print("To extract the latest ELEKTRO-L2 images within a UTC range")
-    print("\tpython3 satpy-scrapy.py -k --utcrange=\"0000-2300\"")
+    print("\tsudo python3 satpy-scrapy.py -k2 --utcrange=\"0000-2300\"")
     print("")
     print("To extract the latest ELEKTRO-L2 images within a UTC range for a day in the current month")
-    print("\tpython3 satpy-scrapy.py -k --day=\"25\" --utcrange=\"0000-2300\"")
+    print("\tsudo python3 satpy-scrapy.py -k2 --day=\"25\" --utcrange=\"0000-2300\"")
     print("")
     print("To extract the latest FENGYUN-4A images within a UTC range")
-    print("\tpython3 satpy-scrapy.py -f4a --utcrange=\"0000-2300\"")
+    print("\tsudo python3 satpy-scrapy.py -f4a --utcrange=\"0000-2300\"")
     print("")
     print("To extract 'GeoColor' GOES-EAST image(s)")
-    print("\tpython3 satpy-scrapy.py -e --images=\"GeoColor\"")
+    print("\tsudo python3 satpy-scrapy.py -e --images=\"GeoColor\"")
+    print("")
+    print("To extract 'Synthesized Color' ELEKTRO-L3 image(s)")
+    print("\tsudo python3 satpy-scrapy.py -k3 --images=\"Synthesized Color\"")
     print("")
     print("To extract 'Derived Motion Winds' GOES-WEST image(s)")
-    print("\tpython3 satpy-scrapy.py -w --images=\"\\\"Derived Motion Winds\\\"\"")
+    print("\tsudo python3 satpy-scrapy.py -w --images=\"\\\"Derived Motion Winds\\\"\"")
     print("")
     print("To extract 'Enhanced Color' DSCOVR image(s)")
-    print("\tpython3 satpy-scrapy.py -d --images=\"\\\"Natural Color\\\"\"")
+    print("\tsudo python3 satpy-scrapy.py -d --images=\"\\\"Natural Color\\\"\"")
     print("")
     print("To extract 'GeoColor' and 'Derived Motion Winds' GOES-EAST images")
-    print("\tpython3 satpy-scrapy.py -e --images=\"GeoColor \\\"Derived Motion Winds\\\"\"")
+    print("\tsudo python3 satpy-scrapy.py -e --images=\"GeoColor \\\"Derived Motion Winds\\\"\"")
     print("")
     print("To extract 'Natural Color' and 'True Color' GK2A images")
-    print("\tpython3 satpy-scrapy.py -gk2a --images=\"\\\"Natural Color\\\" \\\"True Color\\\"\"")
+    print("\tsudo python3 satpy-scrapy.py -gk2a --images=\"\\\"Natural Color\\\" \\\"True Color\\\"\"")
     print("")
     print("To extract 'Natural Color' and 'True Color' HIMAWARI-8 images")
-    print("\tpython3 satpy-scrapy.py -i --images=\"\\\"Natural Color\\\" \\\"GeoColor\\\"\"")
+    print("\tsudo python3 satpy-scrapy.py -i --images=\"\\\"Natural Color\\\" \\\"GeoColor\\\"\"")
     print("")
 
 
@@ -235,11 +242,11 @@ def handle_arguments(argv):
     img_types = []
     utc_range = ''
     elektro_day = ''
-    elektro_pass = False
+    elektro2_pass = False
     fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, '-wehikdm:f:g:', 
+        opts, args = getopt.getopt(argv, '-wehidk:m:f:g:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images='])
         
         for opt, arg in opts:
@@ -250,12 +257,13 @@ def handle_arguments(argv):
                 filter_logger()
                 sys.exit(0)
             elif opt == '-k':
-                elektro_pass = True
+                if arg == '2':
+                    elektro2_pass = True
             elif opt == '-f':
                 if arg == '4a':
                     fengyun_4a_pass = True
                 
-        if not elektro_pass:
+        if not elektro2_pass:
             if fengyun_4a_pass:
                 try:
                     utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
@@ -292,8 +300,11 @@ def handle_arguments(argv):
             elif opt == '-i':
                 return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
             elif opt == '-k':
-                return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, elektro_day, 
-                    utc_range), img_types
+                if arg == '2':
+                    return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, elektro_day, 
+                        utc_range), img_types
+                elif arg == '3':
+                    return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME), img_types
             elif opt == '-f':
                 if arg == '4a':
                     return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME, utc_range), img_types

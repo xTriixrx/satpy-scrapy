@@ -11,7 +11,8 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -e
  * sudo python3 satpy-scrapy.py -w
  * sudo python3 satpy-scrapy.py -i
- * sudo python3 satpy-scrapy.py -k
+ * sudo python3 satpy-scrapy.py -k2
+ * sudo python3 satpy-scrapy.py -k3
  * sudo python3 satpy-scrapy.py -m8
  * sudo python3 satpy-scrapy.py -m11
  * sudo python3 satpy-scrapy.py -f4a
@@ -19,10 +20,11 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py --help
  * sudo python3 satpy-scrapy.py --filters
  * sudo python3 satpy-scrapy.py -e --images="GeoColor"
- * sudo python3 satpy-scrapy.py -k --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -f4a --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
- * sudo python3 satpy-scrapy.py -k --day="25" --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -k2 --day="25" --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -k3 --images="\"Synthesized Color\""
  * sudo python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\""
  * sudo python3 satpy-scrapy.py -i --images="\"Natural Color\" \"GeoColor\""
  * sudo python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\""
@@ -145,6 +147,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/210126_1600_original_RGB.jpg" /></p>
 
+### Elektro-L3
+
+<p align="center">The third satellite in the series Elektro-L No.3, was launched from Baikonur Cosmodrome on 24 December 2019 at 12:03 UTC by a Proton-M rocket</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2102110630_e3_295.jpg" /></p>
+
 ### HIMAWARI-8
 
 <p align="center">Himawari 8 (ひまわり8号) is a Japanese weather satellite, the 8th of the Himawari geostationary weather satellites operated by the Japan Meteorological Agency. Himawari-8 will be succeeded by Himawari-9 which is currently in standby mode, until 2022.</p>
@@ -160,7 +168,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 ### GEO-KOMPSAT-2A
 
 <p align="center">GEO-KOMPSAT 2A is a South Korean geostationary meteorological satellite developed by KARI. It is one component of the two satellite GEO-KOMPSAT 2 program.
-
 The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the meteorological GEO-KOMPSAT-2A (GK2A) and the ocean monitoring GEO-KOMPSAT-2B (GK2B) sharing the same satellite bus. The lifetime of both satellites will be no less than 10 years.</p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
@@ -199,7 +206,8 @@ Short Arguments
    * '-e': Instantiates GOES-EAST crawler to extract every possible image for this vehicle.
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
    * '-i': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
-   * '-k': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
+   * '-k2': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
+   * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
    * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
    * '-m11': Instantiates METEOSAT-11 crawler to extract every possible image for this vehicle.
    * '-f4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
@@ -222,7 +230,6 @@ Long Arguments
 
 ### Future Satellite Support
 
- * ELEKTRO-L3 11k x 11k images
  * FY-2G 1125 x 1125px images
  * EWS-G1 (GOES-13) 1100px x 1100px images
  * INSAT-3D 827px x 887px images

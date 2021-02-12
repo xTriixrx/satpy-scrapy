@@ -239,7 +239,7 @@ class ELEKTRO_L2(SatelliteCrawler):
 
         @param title: str - A string containing the following standard format: 'TITLE - DATE - HH-MM UTC'
         which describes the image being queried.
-        @return dir_path: str - A directory string containing the following standard format: 'ELEKTRO-L/DATE/HH-MM UTC/TITLE'
+        @return dir_path: str - A directory string containing the following standard format: 'ELEKTRO-L2/DATE/HH-MM UTC/TITLE'
         where the image downloaded should be placed, or already has been placed.
         """
 
@@ -261,24 +261,3 @@ class ELEKTRO_L2(SatelliteCrawler):
 
         if not os.path.exists(self.ELEKTRO_L2_DIRECTORY):
             os.makedirs(self.ELEKTRO_L2_DIRECTORY)
-
-
-    def _create_img_dir(self, title):
-        """
-        Protected abstract method implementation which is called during get_links ELEKTRO-L-2 implementation
-        as it utilizes a FTP server to pull down the latest spacecrafts' images.
-
-        @param title: str - A string containing the following standard format: 'TITLE - DATE - HH-MM UTC'
-        which describes the image being queried.
-        @return dir_path: str - A directory string containing the following standard format: 'ELEKTRO-L-2/DATE/HH-MM UTC/TITLE'
-        where the image downloaded should be placed, or already has been placed.
-        """
-
-        dir_path = ""
-
-        today = re.split(self.TITLE_DELIMITER, title)[1]
-        utctime = re.split(self.TITLE_DELIMITER, title)[-1].replace(":", "-")
-
-        dir_path = self.ELEKTRO_L2_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
-        
-        return dir_path

@@ -1,6 +1,5 @@
 import re
 import os
-import sys
 import pytz
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler

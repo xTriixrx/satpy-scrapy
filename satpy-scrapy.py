@@ -6,6 +6,7 @@ import hashlib
 import multitasking
 from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
+from crawlers.ews_g1 import EWS_G1
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
 from crawlers.gk_2a import GEO_KOMPSAT_2A
@@ -18,11 +19,12 @@ from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, METEOSAT-8, METEOSAT-11, DSCOVR, and ELEKTRO-L2.
+GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2,
+and EWS-G1.
 
  @author Vincent Nigro
  @version 0.0.1
- @modified 2/11/21
+ @modified 2/17/21
 """
 
 ASCII = 'ascii'
@@ -127,6 +129,9 @@ def help_logger():
     print("To extract all the latest DSCOVR images")
     print("\tsudo python3 satpy-scrapy.py -d")
     print("")
+    print("To extract all the latest EWS-G1 images")
+    print("\tsudo python3 satpy-scrapy.py -g1")
+    print("")
     print("To extract the latest FENGYUN-4A image")
     print("\tsudo python3 satpy-scrapy.py -f4a")
     print("")
@@ -144,6 +149,9 @@ def help_logger():
     print("")
     print("To extract the latest ELEKTRO-L3 image")
     print("\tsudo python3 satpy-scrapy.py -k3")
+    print("")
+    print("To extract 'Visible' EWS-G1 images")
+    print("\tsudo python3 satpy-scrapy.py -g1 --images=\"Visible\"")
     print("")
     print("To extract the latest ELEKTRO-L2 images within a UTC range")
     print("\tsudo python3 satpy-scrapy.py -k2 --utcrange=\"0000-2300\"")
@@ -183,6 +191,8 @@ def filter_logger():
     """
 
     dscovr_filter_options = ['Natural Color', 'Enhanced Color']
+
+    ews_g1_filter_options = ['Visible', 'Near IR', 'Water Vapor', 'Longwave IR', 'C02 Longwave IR']
 
     goes_filter_options = \
     [
@@ -228,6 +238,9 @@ def filter_logger():
     print('')
     print('Filter options for DSCOVR')
     print(*dscovr_filter_options, sep='\n')
+    print('')
+    print('Filter options for EWS-G1')
+    print(*ews_g1_filter_options, sep='\n')
     print('')
 
 
@@ -296,7 +309,7 @@ def handle_arguments(argv):
             elif opt == '-w':
                 return GOES_WEST(GOES_WEST.GOES_WEST_URL, GOES_WEST.GOES_WEST_NAME, 10848), img_types
             elif opt == '-e':
-                return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types
+                    return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types
             elif opt == '-i':
                 return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
             elif opt == '-k':
@@ -311,6 +324,8 @@ def handle_arguments(argv):
             elif opt == '-g':
                 if arg == 'k2a':
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types
+                elif arg == '1':
+                    return EWS_G1(EWS_G1.EWS_G1_URL, EWS_G1.EWS_G1_NAME), img_types
             elif opt == '-m':
                 if arg == '8':
                     return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), img_types
@@ -378,10 +393,10 @@ def read_tor_secret():
 def main(argv):
     """
     Main program which executes the anonymous extraction of GOES-16, GOES-17, HIMAWARI-8,
-    FY-4A, GK2A, METEOSAT-8, METEOSAT-11, DSCOVR, and ELEKTRO-L2 high resolution images. By default, 
-    the resolution for GOES vehicles is set to the 10848x10848 resolution, FENGYUN-4A is typically 
-    just under 3k images, GK2A typically are under 1500x1500 and the HIMAWARI-8 images are either 
-    11000x11000 or 5500x5500.
+    FY-4A, GK2A, METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1 high resolution
+    images. By default, the resolution for GOES vehicles is set to the 10848x10848 resolution, 
+    FENGYUN-4A is typically just under 3k images, GK2A typically are under 1500x1500 and the HIMAWARI-8 
+    images are either 11000x11000 or 5500x5500.
   
     To view configuration options, either run this program with the -h/--help flag or 
     view the help_logger() function above which describes examples and how to use this

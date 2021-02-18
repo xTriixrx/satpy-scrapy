@@ -16,14 +16,16 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -k3
  * sudo python3 satpy-scrapy.py -m8
  * sudo python3 satpy-scrapy.py -m11
- * sudo python3 satpy-scrapy.py -f4a
+ * sudo python3 satpy-scrapy.py -fy4a
+ * sudo python3 satpy-scrapy.py -fy2g
  * sudo python3 satpy-scrapy.py -gk2a
  * sudo python3 satpy-scrapy.py --help
  * sudo python3 satpy-scrapy.py --filters
  * sudo python3 satpy-scrapy.py -e --images="GeoColor"
  * sudo python3 satpy-scrapy.py -g1 --images="Visible"
+ * sudo python3 satpy-scrapy.py -fy2g --images="Visible"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
- * sudo python3 satpy-scrapy.py -f4a --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -fy4a --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
  * sudo python3 satpy-scrapy.py -k2 --day="25" --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -k3 --images="\"Synthesized Color\""
@@ -176,6 +178,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/00.jpg" /> </p>
 
+### Fengyun 2G
+
+<p align="center">FENGYUN 2G is a meteorological satellites to provide warnings of weather fronts and tropical cyclones across Asia. FENGYUN 2G will take over for the Fengyun 2E weather observatory at 105 degrees east longitude. China's fleet of Fengyun 2 spacecraft have a similar mission to NOAA's GOES weather satellites in geostationary orbit.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/fy2g_2021048_0530_01_fd.gif" /> </p>
+
 ### GEO-KOMPSAT-2A
 
 <p align="center">GEO-KOMPSAT 2A is a South Korean geostationary meteorological satellite developed by KARI. It is one component of the two satellite GEO-KOMPSAT 2 program.
@@ -222,7 +230,8 @@ Short Arguments
    * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
    * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
    * '-m11': Instantiates METEOSAT-11 crawler to extract every possible image for this vehicle.
-   * '-f4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
+   * '-fy4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
+   * '-fy2g': Instantiates FENGYUN-2G crawler to extract ever possible image for this vehicle.
    * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
 
 Long Arguments
@@ -242,7 +251,6 @@ Long Arguments
 
 ### Future Satellite Support
 
- * FY-2G 1125 x 1125px images
  * INSAT-3D 827px x 887px images
  * INSAT-3DR 827px x 887px images
  * FY-2H 2000px x 1200px images (China/India region)

@@ -53,9 +53,7 @@ class FENGYUN_2G(SatelliteCrawler):
 
         # Get start and stop utctimes
         utctime = self.__current_utctime()
-        print(utctime)
         endtime = self.__calculate_endtime(utctime)
-        print(endtime)
 
         # Generate dictionary containing julian date and utc hour/minute as key and georgian date str as value
         times = self.__calculate_timerange(utctime, endtime)

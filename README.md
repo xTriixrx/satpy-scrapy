@@ -16,6 +16,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -k3
  * sudo python3 satpy-scrapy.py -m8
  * sudo python3 satpy-scrapy.py -m11
+ * sudo python3 satpy-scrapy.py -g15
  * sudo python3 satpy-scrapy.py -fy4a
  * sudo python3 satpy-scrapy.py -fy2g
  * sudo python3 satpy-scrapy.py -gk2a
@@ -23,6 +24,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py --filters
  * sudo python3 satpy-scrapy.py -e --images="GeoColor"
  * sudo python3 satpy-scrapy.py -g1 --images="Visible"
+ * sudo python3 satpy-scrapy.py -g15 --images="Visible"
  * sudo python3 satpy-scrapy.py -fy2g --images="Visible"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -fy4a --utcrange="0000-2300"
@@ -148,6 +150,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
 
+### GOES-15 (GOES-WEST Backup)
+
+<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
+
 ### EWS-G1 (GOES-13)
 
 <p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
@@ -230,6 +238,7 @@ Short Arguments
    * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
    * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
    * '-m11': Instantiates METEOSAT-11 crawler to extract every possible image for this vehicle.
+   * '-g15': Instantiates GOES-15 crawler to extract every possible image for this vehicle.
    * '-fy4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
    * '-fy2g': Instantiates FENGYUN-2G crawler to extract ever possible image for this vehicle.
    * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.

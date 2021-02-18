@@ -11,6 +11,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -e
  * sudo python3 satpy-scrapy.py -w
  * sudo python3 satpy-scrapy.py -i
+ * sudo python3 satpy-scrapy.py -g1
  * sudo python3 satpy-scrapy.py -k2
  * sudo python3 satpy-scrapy.py -k3
  * sudo python3 satpy-scrapy.py -m8
@@ -20,6 +21,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py --help
  * sudo python3 satpy-scrapy.py --filters
  * sudo python3 satpy-scrapy.py -e --images="GeoColor"
+ * sudo python3 satpy-scrapy.py -g1 --images="Visible"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -f4a --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""

@@ -30,6 +30,7 @@ class SatelliteCrawler(Crawler):
     # Supported satellite names
     DSCOVR_NAME = 'DSCOVR'
     EWS_G1_NAME = 'EWS-G1'
+    GOES_15_NAME = 'GOES-15'
     GOES_EAST_NAME = 'GOES-EAST'
     GOES_WEST_NAME = 'GOES-WEST'
     HIMAWARI_8_NAME = 'HIMAWARI-8'

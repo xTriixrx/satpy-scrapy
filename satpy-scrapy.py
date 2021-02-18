@@ -7,6 +7,7 @@ import multitasking
 from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
 from crawlers.ews_g1 import EWS_G1
+from crawlers.goes_15 import GOES_15
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
 from crawlers.gk_2a import GEO_KOMPSAT_2A
@@ -20,8 +21,8 @@ from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2,
-and EWS-G1.
+GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, METEOSAT-8, 
+METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1.
 
  @author Vincent Nigro
  @version 0.0.1
@@ -133,6 +134,9 @@ def help_logger():
     print("To extract all the latest EWS-G1 images")
     print("\tsudo python3 satpy-scrapy.py -g1")
     print("")
+    print("To extract all the latest GOES-15 images")
+    print("\tsudo python3 satpy-scrapy.py -g15")
+    print("")
     print("To extract the latest FENGYUN-4A image")
     print("\tsudo python3 satpy-scrapy.py -fy4a")
     print("")
@@ -195,7 +199,7 @@ def filter_logger():
 
     ews_g1_filter_options = ['Visible', 'Near IR', 'Water Vapor', 'Longwave IR', 'C02 Longwave IR']
 
-    fy2g_filter_options = ['Visible', 'Shortwave IR', 'Water Vapor', 'Longwave IR']
+    fy2g_g15_filter_options = ['Visible', 'Shortwave IR', 'Water Vapor', 'Longwave IR']
 
     goes_filter_options = \
     [
@@ -245,8 +249,8 @@ def filter_logger():
     print('Filter options for EWS-G1')
     print(*ews_g1_filter_options, sep='\n')
     print('')
-    print('Filter options for FY2G')
-    print(*fy2g_filter_options, sep='\n')
+    print('Filter options for FY2G and GOES-15')
+    print(*fy2g_g15_filter_options, sep='\n')
     print('')
 
 
@@ -334,6 +338,8 @@ def handle_arguments(argv):
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types
                 elif arg == '1':
                     return EWS_G1(EWS_G1.EWS_G1_URL, EWS_G1.EWS_G1_NAME), img_types
+                elif arg == '15':
+                    return GOES_15(GOES_15.GOES_15_URL, GOES_15.GOES_15_NAME), img_types
             elif opt == '-m':
                 if arg == '8':
                     return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), img_types

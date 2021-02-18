@@ -96,10 +96,13 @@ METEOSAT-8 (42.0E) && METEOSAT-11 (0.0)
  * Ash (8x8) - 3712x3712 resolution.
 
 Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th, 2021 - January 27th, 2021.
-
 </p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/elektro-l2.gif" /> </p>
+
+<p align="center">Below is a .gif file created by EWS-G1 satellite images scraped by this program from February 16th, 2021 - February 17th, 2021.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1.gif" /> </p>
 
 ## Tor Client Configuration
 
@@ -140,6 +143,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
+
+### EWS-G1 (GOES-13)
+
+<p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary)[1] is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
 
 ### Elektro-L2
 
@@ -206,6 +215,7 @@ Short Arguments
    * '-e': Instantiates GOES-EAST crawler to extract every possible image for this vehicle.
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
    * '-i': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
+   * '-g1': Instantiates EWS-G1 crawler to extract every possible image for this vehicle.
    * '-k2': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
    * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
    * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
@@ -231,7 +241,6 @@ Long Arguments
 ### Future Satellite Support
 
  * FY-2G 1125 x 1125px images
- * EWS-G1 (GOES-13) 1100px x 1100px images
  * INSAT-3D 827px x 887px images
  * INSAT-3DR 827px x 887px images
  * FY-2H 2000px x 1200px images (China/India region)

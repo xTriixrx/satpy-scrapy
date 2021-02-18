@@ -14,6 +14,7 @@ from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.elektro_l3 import ELEKTRO_L3
 from crawlers.fengyun_4a import FENGYUN_4A
+from crawlers.fengyun_2g import FENGYUN_2G
 from crawlers.meteosat_8 import METEOSAT_8
 from crawlers.meteosat_11 import METEOSAT_11
 
@@ -133,7 +134,7 @@ def help_logger():
     print("\tsudo python3 satpy-scrapy.py -g1")
     print("")
     print("To extract the latest FENGYUN-4A image")
-    print("\tsudo python3 satpy-scrapy.py -f4a")
+    print("\tsudo python3 satpy-scrapy.py -fy4a")
     print("")
     print("To extract the latest GK2A images")
     print("\tsudo python3 satpy-scrapy.py -gk2a")
@@ -160,7 +161,7 @@ def help_logger():
     print("\tsudo python3 satpy-scrapy.py -k2 --day=\"25\" --utcrange=\"0000-2300\"")
     print("")
     print("To extract the latest FENGYUN-4A images within a UTC range")
-    print("\tsudo python3 satpy-scrapy.py -f4a --utcrange=\"0000-2300\"")
+    print("\tsudo python3 satpy-scrapy.py -fy4a --utcrange=\"0000-2300\"")
     print("")
     print("To extract 'GeoColor' GOES-EAST image(s)")
     print("\tsudo python3 satpy-scrapy.py -e --images=\"GeoColor\"")
@@ -193,6 +194,8 @@ def filter_logger():
     dscovr_filter_options = ['Natural Color', 'Enhanced Color']
 
     ews_g1_filter_options = ['Visible', 'Near IR', 'Water Vapor', 'Longwave IR', 'C02 Longwave IR']
+
+    fy2g_filter_options = ['Visible', 'Shortwave IR', 'Water Vapor', 'Longwave IR']
 
     goes_filter_options = \
     [
@@ -241,6 +244,9 @@ def filter_logger():
     print('')
     print('Filter options for EWS-G1')
     print(*ews_g1_filter_options, sep='\n')
+    print('')
+    print('Filter options for FY2G')
+    print(*fy2g_filter_options, sep='\n')
     print('')
 
 
@@ -319,8 +325,10 @@ def handle_arguments(argv):
                 elif arg == '3':
                     return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME), img_types
             elif opt == '-f':
-                if arg == '4a':
+                if arg == 'y4a':
                     return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME, utc_range), img_types
+                elif arg == 'y2g':
+                    return FENGYUN_2G(FENGYUN_2G.FENGYUN_2G_URL, FENGYUN_2G.FENGYUN_2G_NAME), img_types
             elif opt == '-g':
                 if arg == 'k2a':
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types

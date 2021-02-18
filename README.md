@@ -148,7 +148,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 ### EWS-G1 (GOES-13)
 
-<p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary)[1] is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
+<p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
 

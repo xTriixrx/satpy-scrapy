@@ -54,18 +54,18 @@ class ELEKTRO_L3(SatelliteCrawler):
 
             # Create bs soup object and extract containers holding high resolution image links and dates
             soup = BeautifulSoup(page.text, self.SOUP_PARSER)
-            td_containers = soup.findAll(self.TD_ELEMENT, {self.CLASS_ATTRIBUTE: self.TD_CLASS_VALUE})
+            img_elements = soup.findAll(self.A_ELEMENT, {self.HREF_ATTRIBUTE: re.compile(self.HTTP_HEADER)})[1::2]
 
             # For each container extract date/utc time of image as well as image link        
-            for container in td_containers:
-                c = container.text.strip()
+            for img_element in img_elements:
+                date = img_element.text.strip()
+
                 # Keep first 2 elements containing date and time
-                date_fields = re.compile("\s").split(c)[:2]
+                date_fields = re.compile("\s").split(date)[:2]
                 
                 title = self.__generate_title(image_type, date_fields)
                 
-                a_tag = container.findAll(href=re.compile(self.HTTP_HEADER))[0]
-                link = a_tag.get(self.HREF_ATTRIBUTE)
+                link = img_element.get(self.HREF_ATTRIBUTE)
                 
                 links[title] = link
 

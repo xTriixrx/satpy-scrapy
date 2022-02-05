@@ -1,4 +1,0 @@
-<config>
-    <tor pw="password-here" />
-    <secret location="secret" />
-</config>

@@ -11,8 +11,8 @@ class ELEKTRO_L3(SatelliteCrawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 2/11/21
+    @version 0.0.2
+    @modified 2/5/22
     """
     
     BAND_1 = '296'

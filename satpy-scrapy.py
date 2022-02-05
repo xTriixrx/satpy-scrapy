@@ -10,6 +10,7 @@ from crawlers.ews_g1 import EWS_G1
 from crawlers.goes_15 import GOES_15
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
+from crawlers.insat_3d import INSAT_3D
 from crawlers.gk_2a import GEO_KOMPSAT_2A
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
@@ -269,7 +270,7 @@ def handle_arguments(argv):
     fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, '-wehidk:m:f:g:', 
+        opts, args = getopt.getopt(argv, '-wehdi:k:m:f:g:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images='])
         
         for opt, arg in opts:
@@ -321,7 +322,10 @@ def handle_arguments(argv):
             elif opt == '-e':
                     return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types
             elif opt == '-i':
-                return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
+                if arg == 'nsat3d':
+                    return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types
+                else:
+                    return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
             elif opt == '-k':
                 if arg == '2':
                     return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, elektro_day, 
@@ -471,5 +475,4 @@ if __name__ == "__main__":
     """
     Forces only execution by shell and passes sys.argv without program name.
     """
-
     main(sys.argv[1:])

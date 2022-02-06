@@ -11,6 +11,7 @@ from crawlers.goes_15 import GOES_15
 from crawlers.goes_16 import GOES_EAST
 from crawlers.goes_17 import GOES_WEST
 from crawlers.insat_3d import INSAT_3D
+from crawlers.insat_3dr import INSAT_3DR
 from crawlers.gk_2a import GEO_KOMPSAT_2A
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
@@ -23,11 +24,11 @@ from crawlers.meteosat_11 import METEOSAT_11
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
 GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, METEOSAT-8, 
-METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1.
+METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.1
- @modified 2/17/21
+ @version 0.0.2
+ @modified 2/05/22
 """
 
 ASCII = 'ascii'
@@ -156,6 +157,12 @@ def help_logger():
     print("To extract the latest ELEKTRO-L3 image")
     print("\tsudo python3 satpy-scrapy.py -k3")
     print("")
+    print("To extract the latest INSAT-3D images")
+    print("\tsudo python3 satpy-scrapy.py -insat3d")
+    print("")
+    print("To extract the latest INSAT-3DR images")
+    print("\tsudo python3 satpy-scrapy.py -insat3dr")
+    print("")
     print("To extract 'Visible' EWS-G1 images")
     print("\tsudo python3 satpy-scrapy.py -g1 --images=\"Visible\"")
     print("")
@@ -232,6 +239,13 @@ def filter_logger():
         'Cloud-Top Height', 'Cloud Geometric Thickness', 'Cloud Layers', 'Cloud Optical Thickness', 'Cloud Effective Radius', 'Cloud Phase'
     ]
 
+    insat_filter_options = \
+    [
+        'Visible', 'Shortwave', 'Mid-Infrared', 'Water Vapour', 'Infra-red1', 'Infra-red2', 'Colour Composite', 'Day Microphysics(RGB)', 
+        'Night Microphysics(RGB)', 'Land Surface Temperature', 'Outgoing Longwave Radiation', 'Sea Suface Temperature', 
+        'Upper Tropospheric Humidity', 'Hydro-Estimator Rain', 'Cloud Mask'
+    ]
+
     print('Filter options for GOES-EAST & GOES-WEST')
     print(*goes_filter_options, sep='\n')
     print('')
@@ -253,6 +267,8 @@ def filter_logger():
     print('Filter options for FY2G and GOES-15')
     print(*fy2g_g15_filter_options, sep='\n')
     print('')
+    print('Filter options for INSAT-3D and INSAT-3DR')
+    print(*insat_filter_options, sep='\n')
 
 
 def handle_arguments(argv):
@@ -324,6 +340,8 @@ def handle_arguments(argv):
             elif opt == '-i':
                 if arg == 'nsat3d':
                     return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types
+                elif arg == 'nsat3dr':
+                    return INSAT_3DR(INSAT_3DR.INSAT_3DR_URL, INSAT_3DR.INSAT_3DR_NAME), img_types
                 else:
                     return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
             elif opt == '-k':

@@ -48,7 +48,7 @@ class INSAT_3D(SatelliteCrawler):
         gmt_time = self.__get_adjusted_gmttime()
         date_fields = self.__get_date_fields(gmt_time)
 
-        # Extrac the web page with the set of full disk links & titles
+        # Extract the web page with the set of full disk links & titles
         page = self._extract_content(self.get_url(), pw)
         
         soup = BeautifulSoup(page.text, self.SOUP_PARSER)
@@ -96,19 +96,19 @@ class INSAT_3D(SatelliteCrawler):
         
         time = datetime.now()
         utctime = time.utcnow()
+        utctime -= timedelta(hours = 1)
         
         # Always take off a half hour off time
         if utctime.minute >= 0 and utctime.minute <= 30:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
+            difference = timedelta(minutes = utctime.minute)
+            utctime -= difference
+            difference = timedelta(minutes = 00)
+            utctime += difference
+        elif utctime.minute > 30 and utctime.minute <= 59:
+            difference = timedelta(minutes = utctime.minute)
             utctime -= difference
             difference = timedelta(minutes = 30)
             utctime += difference
-        elif utctime.minute > 30 and utctime.minute <= 44:
-            difference = timedelta(minutes = utctime.minute + 30)
-            utctime -= difference
-        elif utctime.minute >= 45 and utctime.minute <= 59:
-            difference = timedelta(minutes = utctime.minute)
-            utctime -= difference
         
         # Returns a GMT timezone based timestamp which is represented by the Mosdac imagery jpg's
         return utctime.replace(tzinfo=pytz.timezone(self.GMT_TIME_ZONE))

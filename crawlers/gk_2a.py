@@ -70,7 +70,7 @@ class GEO_KOMPSAT_2A(SatelliteCrawler):
         # Build full URL paths for each possible image type for the given time
         for image in self.GEO_KOMPSAT_2A_IMG_SET:
             relative_path = year + month + '/' + day + '/' + hour + '/' + self.GEO_KOMPSAT_2A_IMG_HEADER + \
-                image + self.GEO_KOMPSAT_2A_IMG_FOOTER + year + month + day + hour + minute + '.srv.png'
+                image + self.GEO_KOMPSAT_2A_IMG_FOOTER + year + month + day + hour + minute + '.png'
             title = self.__generate_title(image, year, month, day, hour, minute)
             links[title] = self.GEO_KOMPSAT_2A_URL + relative_path
         

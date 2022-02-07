@@ -325,11 +325,11 @@ def handle_arguments(argv):
                 logging.info(no_range)
 
         img_types = [arg for opt, arg in opts if opt == '--images']
-
+        
         if img_types != []:
             # Create list of each image type preserving quotes
             img_types = shlex.split(img_types[0])
-
+        
         for opt, arg in opts:
             if opt == '-d':
                 return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types
@@ -342,7 +342,7 @@ def handle_arguments(argv):
                     return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types
                 elif arg == 'nsat3dr':
                     return INSAT_3DR(INSAT_3DR.INSAT_3DR_URL, INSAT_3DR.INSAT_3DR_NAME), img_types
-                else:
+                elif arg == '8':
                     return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
             elif opt == '-k':
                 if arg == '2':

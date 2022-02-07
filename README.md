@@ -10,7 +10,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -d
  * sudo python3 satpy-scrapy.py -e
  * sudo python3 satpy-scrapy.py -w
- * sudo python3 satpy-scrapy.py -i
+ * sudo python3 satpy-scrapy.py -i8
  * sudo python3 satpy-scrapy.py -g1
  * sudo python3 satpy-scrapy.py -k2
  * sudo python3 satpy-scrapy.py -k3
@@ -21,6 +21,8 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -fy2g
  * sudo python3 satpy-scrapy.py -gk2a
  * sudo python3 satpy-scrapy.py --help
+ * sudo python3 satpy-scrapy.py -insat3d
+ * sudo python3 satpy-scrapy.py -insat3dr
  * sudo python3 satpy-scrapy.py --filters
  * sudo python3 satpy-scrapy.py -e --images="GeoColor"
  * sudo python3 satpy-scrapy.py -g1 --images="Visible"
@@ -32,7 +34,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -k2 --day="25" --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -k3 --images="\"Synthesized Color\""
  * sudo python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\""
- * sudo python3 satpy-scrapy.py -i --images="\"Natural Color\" \"GeoColor\""
+ * sudo python3 satpy-scrapy.py -i8 --images="\"Natural Color\" \"GeoColor\""
  * sudo python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\""
  * sudo python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\""
 
@@ -225,6 +227,18 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/epic_RGB_20210208061925.png" /></p>
 
+### INSAT-3D
+
+<p align="center">INSAT-3D is a meteorological, data relay and satellite aided search and rescue satellite developed by the Indian Space Research Organisation and was launched successfully on 26 July 2013 using an Ariane 5 ECA launch vehicle from French Guiana. The satellite has many new technology elements like star sensor, micro stepping Solar Array Drive Assembly (SADA) to reduce the spacecraft disturbances and Bus Management Unit (BMU) for control and telecom and telemetry function. It also incorporates new features of bi-annual rotation and Image and Mirror motion compensations for improved performance of the meteorological payloads.</p>
+
+<p align="center"> <img src="" /></p>
+
+### INSAT-3DR
+
+<p align="center">INSAT-3DR is an Indian weather satellite built by the Indian Space Research Organisation and operated by the Indian National Satellite System. It will provide meteorological services to India using a 6-channel imager and a 19-channel sounder, as well as search and rescue information and message relay for terrestrial data collection platforms. The satellite was launched on 8 September 2016, and is a follow-up to INSAT-3D.</p>
+
+<p align="center"> <img src="" /></p>
+
 ## Command Line Arguments
 
 Short Arguments
@@ -232,7 +246,7 @@ Short Arguments
    * '-d': Instantiates DSCOVR crawler to extract ever possible image for this vehicle.
    * '-e': Instantiates GOES-EAST crawler to extract every possible image for this vehicle.
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
-   * '-i': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
+   * '-i8': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
    * '-g1': Instantiates EWS-G1 crawler to extract every possible image for this vehicle.
    * '-k2': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
    * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
@@ -242,6 +256,8 @@ Short Arguments
    * '-fy4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
    * '-fy2g': Instantiates FENGYUN-2G crawler to extract ever possible image for this vehicle.
    * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
+   * '-insat3d': Instantiates INSAT-3D crawler to extract every possible image for this vehicle.
+   * '-insat3dr': Instantiates INSAT-3DR crawler to extract every possible image for this vehicle.
 
 Long Arguments
    * '--help': Triggers help logging function.
@@ -260,7 +276,7 @@ Long Arguments
 
 ### Future Satellite Support
 
- * INSAT-3D 827px x 887px images
- * INSAT-3DR 827px x 887px images
+ * Update FY-4A
+   * Will require using obfs4 tor bridge
  * FY-2H 2000px x 1200px images (China/India region)
  * Others potentially (FY-2, Elektro-L1 (archive 2013-2016))

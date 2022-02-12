@@ -1,6 +1,6 @@
 import re
 import os
-import pytz
+from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler
 
@@ -12,15 +12,15 @@ class EWS_G1(SatelliteCrawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 2/17/21
+    @version 0.0.2
+    @modified 2/12/22
     """
 
     VISIBLE = '_01_'
     NEAR_IR = '_02_'
+    IMG_TYPE = 'fd.gif'
     WATER_VAPOR = '_03_'
     LONGWAVE_IR = '_04_'
-    IMG_TYPE = 'fd.gif'
     CO2_LONGWAVE_IR = '_06_'
     EWS_G1_FIELD = 'ews-g1_'
     VISIBLE_TITLE = 'Visible'
@@ -52,191 +52,86 @@ class EWS_G1(SatelliteCrawler):
         """
 
         links = {}
-
-        # Get start and stop utctimes
-        utctime = self.__current_utctime()
-        endtime = self.__calculate_endtime(utctime)
-
-        # Generate dictionary containing julian date and utc hour/minute as key and georgian date str as value
-        times = self.__calculate_timerange(utctime, endtime)
-
-        # Get subset of links for each image type
-        vis_links = self.__generate_links_set(times, self.VISIBLE)
-        nir_links = self.__generate_links_set(times, self.NEAR_IR)
-        wvp_links = self.__generate_links_set(times, self.WATER_VAPOR)
-        lir_links = self.__generate_links_set(times, self.LONGWAVE_IR)
-        clir_links = self.__generate_links_set(times, self.CO2_LONGWAVE_IR)
-
-        # Merge individual dictionaries into one
-        links = {**vis_links, **nir_links, **wvp_links, **lir_links, **clir_links}
-
-        return links
-
-
-    def __calculate_timerange(self, utctime, endtime):
-        """
-        Creates and returns a dictionary based off of a time range spanning about a day, where each iteration 
-        stores a unique julian date with the utc hour and time as the key, and the georgian date as the value.
-
-        @param utctime: datetime - A datetime object containing the current adjusted datetime.
-        @param endtime: datetime - A datetime object containing the ending adjusted datetime.
-        @return times: {} - A dictionary containing a unique string composed of julian date and utctime and date as value.
-        """
-
-        times = {}
-
-        # While utctime is still greater, create date stamps list into times array
-        while utctime >= endtime: 
-            tt = utctime.timetuple()
-            julian_datetime = int('%d%03d' % (tt.tm_year, tt.tm_yday))
-            
-            date = datetime.strptime(str(julian_datetime)[2:], '%y%j').date()
-            hour = utctime.strftime('%H')
-            minute = utctime.strftime('%M')
-            
-            # Add key value pair to times dictionary
-            times[str(julian_datetime) + '_' + hour + minute] = str(date)
-
-            # Get current minutes and remove minutes from iter utctime
-            mins = utctime.minute
-            difference = timedelta(minutes = utctime.minute)
-            utctime -= difference
-            
-            # Decrement utctime to next 45 or 15 minute mark
-            if mins >= 45 and mins < 60:
-                difference = timedelta(minutes = 15)
-                utctime += difference
-            else:
-                difference = timedelta(hours = 1, minutes = utctime.minute)
-                utctime -= difference
-                difference = timedelta(minutes = 45)
-                utctime += difference
         
-        return times
+        # Get set of links available
+        page = self._extract_content(self.get_url(), pw)
 
+        soup = BeautifulSoup(page.text, self.SOUP_PARSER)
+        a_elements = soup.findAll(self.A_ELEMENT, {self.HREF_ATTRIBUTE: re.compile(self.IMG_TYPE)})
 
-    def __calculate_endtime(self, utctime):
-        """
-        Subtracts 1 day, 1 hour, and all of the minutes off of the utctime passed, and sets the
-        minutes on the endtime to either 45 or 15 based on the minutes of the current adjusted utctime.
+        # Iterate through each a_element containing details for a given full disk image
+        for a_element in a_elements:
+            # Extract href property containing details
+            href = a_element.get(self.HREF_ATTRIBUTE)
 
-        @param utctime: datetime - A datetime object containing the current adjusted datetime.
-        @return endtime: datetime - A datetime object containing the ending adjusted datetime.
-        """
+            # Generate link based on base_url + href
+            link = self.get_url() + href
 
-        # Create an endtime for which a full day, a single hour and the remainder of minutes is subtracted
-        endtime = utctime
-        mins = endtime.minute
-        difference = timedelta(days = 1, hours = 1, minutes = endtime.minute)
-        endtime -= difference
-        
-        # Round minutes to either 45 or 15 on endtime.
-        if mins >= 45 and mins < 60:
-            difference = timedelta(minutes = 45)
-            endtime += difference
-        else:
-            difference = timedelta(minutes = 15)
-            endtime += difference
-        
-        return endtime
+            # Generate a title based on the href details
+            title = self.__generate_title(href)
 
-
-    def __current_utctime(self):
-        """
-        Returns a current utctime time based on the timezone where the EWS-G1 spacecraft is located. This
-        time is adjusted by an hour and 15 mintues to ensure the latest image is posted on the web server.
-
-        @return utctime: datetime - A datetime object containing the current adjusted datetime.
-        """
-        
-        # Get UTC time of around where EWS-G1 vehicle is located
-        time_zone = pytz.timezone(self.EWS_G1_TIME_ZONE)
-        country_time = datetime.now(time_zone)
-        utctime = country_time.utcnow()
-        
-        # Subtract an hour and 15 minutes from current time to ensure we get an image
-        difference = timedelta(hours = 1, minutes = 15)
-        utctime -= difference
-        mins = utctime.minute
-
-        # Round minutes to current time to either have 45 or 15 as minute field
-        if mins >= 45 and mins < 60:
-            difference = timedelta(minutes = utctime.minute)
-            utctime -= difference
-            difference = timedelta(minutes = 45)
-            utctime += difference
-        else:
-            difference = timedelta(minutes = utctime.minute)
-            utctime -= difference
-            difference = timedelta(minutes = 15)
-            utctime += difference
-        
-        return utctime
-
-
-    def __generate_links_set(self, times, img_type):
-        """
-        Generates a subset of the links dictionary based off of the times dictionary and the type of image.
-
-        @param times: {} - A dictionary containing A unique string composed of julian date and utctime and date as value.
-        @param img_type: str - A unique string containing identifying information to be utilized in link building.
-        @return links: {} - A dictionary containing a unique string composed of julian date and utctime and date as value.
-        """
-
-        links = {}
-        
-        for julian_date, date in times.items():
-            title = self.__generate_title(img_type, julian_date, date)
-            link = self.__generate_link(img_type, julian_date)
-            
             links[title] = link
-        
+
         return links
 
 
-    def __generate_link(self, img_type, j_date):
+    def __generate_title(self, href):
         """
-        Generates and individual URL path based on the image type and the julian date string containing the utc
-        hour and time joined together such as '2021048'.
-        
-        @param img_type: str - A unique string containing identifying information to be utilized in link building.
-        @param j_date: str - A string containing the julian date and utc hour and time such as '2021048'.
-        @return link: str - A generated link to retrieve a single image for the date, and img_type provided.
-        """
+        Using the href provided, performs the necessary formatting to generating the standardized title format.
 
-        link = self.get_url() + self.EWS_G1_FIELD + j_date + img_type + self.IMG_TYPE
-        
-        return link
-
-
-    def __generate_title(self, img_type, j_date, date):
-        """
-        Using the date fields and img_type provided, performs the necessary formatting to generating the
-        standardized title format.
-
-        @param img_type: str - A unique string containing identifying information to be utilized in link building.
-        @param j_date: str - A string containing the julian date and utc hour and time such as '2021048'.
-        @param date: str - A georgian calendar datetime formatted as YYYY-MM-DD.
+        @param href: str - A string containing the julian date and image type such as ews-g1_2022042_1415_01_fd.gif
         @return title: str - A string containing the following standard format: 'TITLE - DATE - HH-MM UTC'
         """
 
-        utc = j_date.split('_')[1]
+        # Split parts of the href, should produce something such as ['ews-g1, 'YYYYJJJ', 'HHMM', 'FF', 'fd.gif']
+        # Where YYYY represents the year, HH and MM represents the UTC hour and minute time respectively, 
+        # JJJ represents a julian day, and FF represents an image type
+        parts = href.split('_')
+        
+        utc = parts[2]
+        img_type = parts[3]
+        year = parts[1][:-3]
+        julian_day = parts[1][4:]
+
+        # Create a georgian datetime object and convert to a string formatted as YYYY-MM-DD
+        date = self.__convert_julian_day_to_georgian(year, julian_day)
+        date = date.strftime('%Y-%m-%d')
 
         title = ''
-        if img_type == self.VISIBLE:
+        if img_type in self.VISIBLE:
             title = self.VISIBLE_TITLE
-        elif img_type == self.NEAR_IR:
+        elif img_type in self.NEAR_IR:
             title = self.NEAR_IR_TITLE
-        elif img_type == self.WATER_VAPOR:
+        elif img_type in self.WATER_VAPOR:
             title = self.WATER_VAPOR_TITLE
-        elif img_type == self.LONGWAVE_IR:
+        elif img_type in self.LONGWAVE_IR:
             title = self.LONGWAVE_IR_TITLE
-        elif img_type == self.CO2_LONGWAVE_IR:
+        elif img_type in self.CO2_LONGWAVE_IR:
             title = self.CO2_LONGWAVE_IR_TITLE
         
         title += ' - ' + date + ' - ' + utc[:-2] +  '-' + utc[2:] + ' ' + self.UTC_STRING
-        
+
         return title
+
+
+    def __convert_julian_day_to_georgian(self, year, julian_day):
+        """
+        Converts a Julian calendar date into a Georgian calendar datetime object.
+
+        @param year: str - A string representing the current year such as '2022'.
+        @param julian_day: str - A string representing a julian day such as '042'.
+        @return georgian_date: datetime - A georgian date time representing the julian day and year in YYYY-MM-DD form.
+        """
+
+        georgian_date = datetime(int(year), 1, 1)
+
+        # Subtract by one as the conversion is off by 1
+        difference = timedelta(int(julian_day) - 1)
+        
+        # Apply difference delta to georgian date
+        georgian_date += difference
+
+        return georgian_date
 
 
     def _create_img_dir(self, title):

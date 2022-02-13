@@ -116,7 +116,8 @@ Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this prog
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A_20220212160000_20220212161459_TO_20220213160000_20220213161459.gif" /> </p>
 
-<p align="center">Below is a .gif file created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2021.</p>
+<p align="center">Below is a .gif file created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2021. The composite color mapping was created by blending the first 3 bands (1-BLUE, 2-RED, 3-GREEN) into a false color composite. For more information on how to do this a quick tutorial with GIMP can be found here: <a href="https://remoteastrophotography.com/2020/03/using-gimp-to-combine-three-mono-images-into-one-rgb">Using GIMP to Compbine Three Mono Images Into One RGB</a>
+</p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ARKTIKA-M1-20220211024502121945.gif" /> </p>
 

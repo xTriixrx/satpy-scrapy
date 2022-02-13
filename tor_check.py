@@ -1,7 +1,6 @@
 import sys
 import requests
 from stem import Signal
-from bs4 import BeautifulSoup
 from stem.control import Controller
 
 def get_tor_session():
@@ -37,22 +36,23 @@ def main():
     """
     Main program which executes the tor checking program.
     """
+
+    print("Executing tor_check...")
+
     s = get_tor_session()
-    page = s.get("https://www.showmyip.com/")
+    page = s.get("https://api.myip.com")
     s.close()
     
-    soup = BeautifulSoup(page.text, 'lxml')
-    print(soup.findAll("span", {"class": "cf-footer-item sm:block sm:mb-1"})[1].text)
+    print(page.text)
     
     print('------------------------------------------')
     renew_connection('your-password-here')
 
     s = get_tor_session()
-    page = s.get("https://www.showmyip.com/")
+    page = s.get("https://api.myip.com")
     s.close()
 
-    soup = BeautifulSoup(page.text, 'lxml')
-    print(soup.findAll("span", {"class": "cf-footer-item sm:block sm:mb-1"})[1].text)
+    print(page.text)
 
 if __name__ == '__main__':
     main()

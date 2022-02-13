@@ -112,6 +112,14 @@ Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this prog
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1.gif" /> </p>
 
+<p align="center">Below is a .gif file created by FY-4A satellite images scraped by this program from February 12th, 2022 - February 13th, 2022.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A_20220212160000_20220212161459_TO_20220213160000_20220213161459.gif" /> </p>
+
+<p align="center">Below is a .gif file created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2021.</p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ARKTIKA-M1-20220211024502121945.gif" /> </p>
+
 ## Tor Client Configuration
 
 <p align="center">

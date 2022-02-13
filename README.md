@@ -27,9 +27,9 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -e --images="GeoColor"
  * sudo python3 satpy-scrapy.py -g1 --images="Visible"
  * sudo python3 satpy-scrapy.py -g15 --images="Visible"
+ * sudo python3 satpy-scrapy.py -fy4a --images="Visible"
  * sudo python3 satpy-scrapy.py -fy2g --images="Visible"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
- * sudo python3 satpy-scrapy.py -fy4a --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
  * sudo python3 satpy-scrapy.py -k2 --day="25" --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -k3 --images="\"Synthesized Color\""
@@ -186,7 +186,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center">Fengyun-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after Fengyun-2 satellite series.</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/00.jpg" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A-_AGRI--_N_DISK_1047E_L1C_MTCC_MULT_NOM_20220210050000_20220210051459_1000M_V0001.jpeg" /> </p>
 
 ### Fengyun 2G
 
@@ -231,13 +231,13 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 
 <p align="center">INSAT-3D is a meteorological, data relay and satellite aided search and rescue satellite developed by the Indian Space Research Organisation and was launched successfully on 26 July 2013 using an Ariane 5 ECA launch vehicle from French Guiana. The satellite has many new technology elements like star sensor, micro stepping Solar Array Drive Assembly (SADA) to reduce the spacecraft disturbances and Bus Management Unit (BMU) for control and telecom and telemetry function. It also incorporates new features of bi-annual rotation and Image and Mirror motion compensations for improved performance of the meteorological payloads.</p>
 
-<p align="center"> <img src="" /></p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d?imagename=3DIMG*_L1B_STD_VIS.jpg" /></p>
 
 ### INSAT-3DR
 
 <p align="center">INSAT-3DR is an Indian weather satellite built by the Indian Space Research Organisation and operated by the Indian National Satellite System. It will provide meteorological services to India using a 6-channel imager and a 19-channel sounder, as well as search and rescue information and message relay for terrestrial data collection platforms. The satellite was launched on 8 September 2016, and is a follow-up to INSAT-3D.</p>
 
-<p align="center"> <img src="" /></p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d?imagename3r=3RIMG*_L1B_STD_VIS.jpg" /></p>
 
 ## Command Line Arguments
 
@@ -263,7 +263,7 @@ Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
-   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server or for the FENGYUN-4A crawler.
+   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server.
    * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 FTP server. 
 
 ## Dependencies
@@ -276,7 +276,8 @@ Long Arguments
 
 ### Future Satellite Support
 
- * Update FY-4A
-   * Will require using obfs4 tor bridge
- * FY-2H 2000px x 1200px images (China/India region)
- * Others potentially (FY-2, Elektro-L1 (archive 2013-2016))
+ * ARKTIKA-M1 1k x 1k (FTP store, HEO orbit)
+ * FY-2H 2750px x 2750px images (Full disk)
+ * FY-2F 4k x 4k images (China/Asia Region)
+ * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)
+ * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GEO-KOMPSAT-2B)

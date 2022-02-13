@@ -9,14 +9,32 @@ class FENGYUN_4A(SatelliteCrawler):
     This method of splitting spiders into separate classes will help with keeping longevity of spider 
     runner classes and update issues easier that may occur during website HTML updates. This spider hierarchy
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
+    The FENGYUN_4A crawler does not use the Tor network but instead relys on using a VPN to perform the request,
+    if you try to execute this crawler without having a VPN enabled the crawler will encounter long blocking periods
+    as well as max retries exceptions.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 1/29/21
+    @version 0.0.2
+    @modified 2/13/22
     """
 
     FENGYUN_4A_DIRECTORY = 'FENGYUN-4A'
-    FENGYUN_4A_URL = 'https://www.qweather.com/en/satellite/fengyun4-asia-tc.html'
+    FENGYUN_4A_URL = 'http://img.nsmc.org.cn/PORTAL/NSMC/XML/FY4A/'
+    
+    FENGYUN_4A_XML_FILES = ['FY4A_AGRI_IMG_DISK_MTCC_NOM.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C001.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C002.xml',
+    'FY4A_AGRI_IMG_DISK_GRA_NOM_C003.xml','FY4A_AGRI_IMG_DISK_GRA_NOM_C004.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C005.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C006.xml',
+    'FY4A_AGRI_IMG_DISK_GRA_NOM_C007.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C008.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C009.xml', 'FY4A_AGRI_IMG_DISK_COL_NOM_C009.xml',
+    'FY4A_AGRI_IMG_DISK_GRA_NOM_C010.xml', 'FY4A_AGRI_IMG_DISK_COL_NOM_C010.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C011.xml', 'FY4A_AGRI_IMG_DISK_COL_NOM_C011.xml',
+    'FY4A_AGRI_IMG_DISK_GRA_NOM_C012.xml', 'FY4A_AGRI_IMG_DISK_COL_NOM_C012.xml', 'FY4A_AGRI_IMG_DISK_GRA_NOM_C013.xml', 'FY4A_AGRI_IMG_DISK_COL_NOM_C013.xml',
+    'FY4A_AGRI_IMG_DISK_GRA_NOM_C014.xml', 'FY4A_AGRI_IMG_DISK_COL_NOM_C014.xml']
+    
+    FENGYUN_4A_TITLE_MAP = {'FY4A AGRI IMG DISK MTCC NOM': 'Visible', 'FY4A AGRI IMG DISK GRA NOM C001': 'Band 1', 'FY4A AGRI IMG DISK GRA NOM C002': 'Band 2',
+    'FY4A AGRI IMG DISK GRA NOM C003': 'Band 3', 'FY4A AGRI IMG DISK GRA NOM C004': 'Band 4', 'FY4A AGRI IMG DISK GRA NOM C005': 'Band 5', 
+    'FY4A AGRI IMG DISK GRA NOM C006': 'Band 6', 'FY4A AGRI IMG DISK GRA NOM C007': 'Band 7', 'FY4A AGRI IMG DISK GRA NOM C008': 'Band 8', 
+    'FY4A AGRI IMG DISK GRA NOM C009': 'Band 9', 'FY4A AGRI IMG DISK COL NOM C009': 'Band 9 Enhanced', 'FY4A AGRI IMG DISK GRA NOM C010': 'Band 10', 
+    'FY4A AGRI IMG DISK COL NOM C010': 'Band 10 Enhanced', 'FY4A AGRI IMG DISK GRA NOM C011': 'Band 11', 'FY4A AGRI IMG DISK COL NOM C011': 'Band 11 Enhanced',
+    'FY4A AGRI IMG DISK GRA NOM C012': 'Band 12', 'FY4A AGRI IMG DISK COL NOM C012': 'Band 12 Enhanced', 'FY4A AGRI IMG DISK GRA NOM C013': 'Band 13', 
+    'FY4A AGRI IMG DISK COL NOM C013': 'Band 13 Enhanced', 'FY4A AGRI IMG DISK GRA NOM C014': 'Band 14', 'FY4A AGRI IMG DISK COL NOM C014': 'Band 14 Enhanced'}
 
     def __init__(self, url, satellite, utcrange):
         """
@@ -42,88 +60,31 @@ class FENGYUN_4A(SatelliteCrawler):
         """
 
         links = {}
-        
-        page = self._extract_content(self.get_url(), pw)
-        
-        soup = BeautifulSoup(page.text, self.SOUP_PARSER)
-        image_links = soup.findAll(self.IMG_ELEMENT)
-        
-        # Extract only <img> containers with path 'satellite' in src string.
-        image_links = [link for link in image_links if 'satellite' in str(link)]
-        image_links = self.__extract_src_links(image_links)
 
-        # If utcrange was provided
-        if self.__utcrange != '':
-            # Get each image from earliest to latest image.
-            links = self.__populate_link_range(image_links)
-        else:
-            # Reverse list to ascending order and get latest image
-            image_links.sort(reverse=True)
-            links[self.__generate_title(image_links[0])] = image_links[0]
-
-        return links
-
-
-    def __populate_link_range(self, image_links):
-        """
-        A private method which receives a list of full URL paths to a set of images and will
-        check if the link is within the set UTC range. If it is, the URL is placed into the 
-        links dictionary with the appropriate standardized title, otherwise it is left out.
-
-        @param image_links: [] - A list of full URL paths to each respective image.
-        @return links: {} - A key-value mapping of a title key in a standard format and its appropriate image link.
-        """
-
-        links = {}
-
-        for image_link in image_links:
-            link_parts = image_link.split('/')
-            link_parts.reverse()
-            utctime = link_parts[1] + link_parts[0].split('.')[0]
+        # Iterate over each XML file defining where images are located on server
+        for xml_file in self.FENGYUN_4A_XML_FILES:
+            # Extract xml page
+            page = self._extract_content(self.get_url() + xml_file, pw)
+            soup = BeautifulSoup(page.text, self.SOUP_PARSER)
             
-            # If built utctime is within the range list.
-            if utctime in self.__utcrange:
-                title = self.__generate_title(image_link)
-                links[title] = image_link
-        
+            # Extract all <image> elements (should be basically entire document)
+            image_elements = soup.findAll(self.IMAGE_ELEMENT)
+
+            # Iterate over each image element to start generating links
+            for image_element in image_elements:
+                # Extract the elements' description, and split the utc time for title
+                desc = image_element.get(self.DESC_ATTRIBUTE)
+                time_data = image_element.get(self.TIME_ATTRIBUTE)
+                date = time_data.split(" ")[0]
+                utc = time_data.split(" ")[1]
+                
+                # Generate title based on title map and append date and utc time 
+                title = self.FENGYUN_4A_TITLE_MAP[desc]
+                title += " - " + date + " - " + utc + " UTC"
+                link = image_element.get(self.URL_ATTRIBUTE)
+                links[title] = link
+
         return links
-
-
-    def __extract_src_links(self, image_containers):
-        """
-        A private method which receives a set of <img> containers which contain src attributes
-        holding the image links needed to be extracted. Each containers' src attribute is extracted
-        into a list and returned to the caller.
-
-        @param image_containers: [] - A list of <img> containers to be extracted.
-        @return src_links: [] - A list of full URL paths to their respective images.
-        """
-        
-        src_links = []
-
-        for image_container in image_containers:
-            src_links.append(image_container[self.SRC_ATTRIBUTE])
-        
-        # Remove 'latest' labeled image link
-        return src_links[1:]
-
-
-    def __generate_title(self, link):
-        """
-        A private method which generates a standardized title format to be used as a directory to contain the
-        linked image as well as other processing done by the standard pulldown procedure.
-
-        @param link: str - A full URL link to an image containing values to be used in the title.
-        @return title: str - A title with a standardized format such as: 'True Color - 29-01-2021 - 23-00 UTC'
-        """
-        
-        link_parts = link.split('/')
-        link_parts.reverse()
-
-        title = 'True Color - ' + link_parts[2] + '-' + link_parts[3] + '-' + link_parts[4] + \
-            ' - ' + link_parts[1] + '-' + link_parts[0].split('.')[0] + ' ' + self.UTC_STRING
-        
-        return title
 
 
     def _create_img_dir(self, title):

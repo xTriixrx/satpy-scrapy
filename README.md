@@ -231,13 +231,13 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 
 <p align="center">INSAT-3D is a meteorological, data relay and satellite aided search and rescue satellite developed by the Indian Space Research Organisation and was launched successfully on 26 July 2013 using an Ariane 5 ECA launch vehicle from French Guiana. The satellite has many new technology elements like star sensor, micro stepping Solar Array Drive Assembly (SADA) to reduce the spacecraft disturbances and Bus Management Unit (BMU) for control and telecom and telemetry function. It also incorporates new features of bi-annual rotation and Image and Mirror motion compensations for improved performance of the meteorological payloads.</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d?imagename=3DIMG*_L1B_STD_VIS.jpg" /></p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename%3D3DIMG*_L1B_STD_VIS.jpg" /></p>
 
 ### INSAT-3DR
 
 <p align="center">INSAT-3DR is an Indian weather satellite built by the Indian Space Research Organisation and operated by the Indian National Satellite System. It will provide meteorological services to India using a 6-channel imager and a 19-channel sounder, as well as search and rescue information and message relay for terrestrial data collection platforms. The satellite was launched on 8 September 2016, and is a follow-up to INSAT-3D.</p>
 
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d?imagename3r=3RIMG*_L1B_STD_VIS.jpg" /></p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename3r%3D3RIMG*_L1B_STD_VIS.jpg" /></p>
 
 ## Command Line Arguments
 

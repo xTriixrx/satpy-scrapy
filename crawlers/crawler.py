@@ -22,10 +22,14 @@ class Crawler:
     TD_ELEMENT = 'td'
     DIV_ELEMENT = 'div'
     IMG_ELEMENT = 'img'
+    IMAGE_ELEMENT = 'image'
 
     # HTML Element Attributes
     SRC_ATTRIBUTE = 'src'
+    URL_ATTRIBUTE = 'url'
     HREF_ATTRIBUTE = 'href'
+    DESC_ATTRIBUTE = 'desc'
+    TIME_ATTRIBUTE = 'time'
     TITLE_ATTRIBUTE = 'title'
     CLASS_ATTRIBUTE = 'class'
     

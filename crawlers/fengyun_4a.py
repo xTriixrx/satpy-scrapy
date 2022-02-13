@@ -11,7 +11,9 @@ class FENGYUN_4A(SatelliteCrawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
     The FENGYUN_4A crawler does not use the Tor network but instead relys on using a VPN to perform the request,
     if you try to execute this crawler without having a VPN enabled the crawler will encounter long blocking periods
-    as well as max retries exceptions.
+    as well as max retries exceptions. This is intentional as web scraping Chinese websites are not exactly safe, and
+    Tor is blocked by China's deep packet analysis. Will continue to look for a way to make this crawler work with the
+    Tor network.
 
     @author Vincent.Nigro
     @version 0.0.2

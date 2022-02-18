@@ -173,6 +173,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
 
+### ARKTIKA-M1
+
+<p align="center">Arktika-M (Russian Арктика-М) is a Russian multipurpose satellite constellation under construction. The main task of Arktika-M is weather observation in the northern part of Russian territory; in addition, the satellites are to be used there as data relays and for emergency communication. Other applications are the observation of space weather, the earth's magnetic field and the ionosphere. The first satellite in the constellation - Arktika-M1 - was launched on the 28th. February 2021 with a Soyuz 2.1b/Fregat rocket from Baikonur Cosmodrome. Another four satellites are to follow by 2025.</p>
+
+<p align="center"> <img src="" /></p>
+
 ### Elektro-L2
 
 <p align="center">The Electro-L satellite is Russia's second high-altitude weather observatory, coming after a troubled mission launched in 1994 that never achieved all of its goals The next-generation Electro-L program faced years of delays because of interruptions in funding. The Electro-L spacecraft will function for up to 10 years, collecting weather imagery several times per hour with visible and infrared cameras.</p>
@@ -257,6 +263,7 @@ Short Arguments
    * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
    * '-i8': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
    * '-g1': Instantiates EWS-G1 crawler to extract every possible image for this vehicle.
+   * '-a1': Instantiates ARKTIKA-M1 crawler to extract every possible image for this vehicle.
    * '-k2': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
    * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
    * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
@@ -272,8 +279,8 @@ Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
-   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server.
-   * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 FTP server. 
+   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported ARKTIKA-M1 crawler in half hour increments.
+   * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 or ARKTIKA-M1 FTP server. 
 
 ## Dependencies
 
@@ -282,10 +289,10 @@ Long Arguments
  * Stem v1.8
  * Pytz v2020.1
  * Multitasking v0.0.9
+ * googletrans v4.0.0rc1
 
 ### Future Satellite Support
 
- * ARKTIKA-M1 1k x 1k (FTP store, HEO orbit)
  * FY-2H 2750px x 2750px images (Full disk)
  * FY-2F 4k x 4k images (China/Asia Region)
  * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)

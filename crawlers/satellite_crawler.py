@@ -35,6 +35,7 @@ class SatelliteCrawler(Crawler):
     INSAT_3DR_NAME = 'INSAT-3DR'
     GOES_EAST_NAME = 'GOES-EAST'
     GOES_WEST_NAME = 'GOES-WEST'
+    ARKTIKA_M1_NAME = 'ARKTIKA-M1'
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     ELEKTRO_L3_NAME = 'ELEKTRO-L3'
@@ -103,7 +104,8 @@ class SatelliteCrawler(Crawler):
                 # Create full relative path including file name
                 path = os.path.join(dir_path, filename)
 
-                if self.get_satellite_name() == self.ELEKTRO_L2_NAME: # FTP Download
+                if (self.get_satellite_name() == self.ELEKTRO_L2_NAME) or \
+                (self.get_satellite_name() == self.ARKTIKA_M1_NAME): # FTP Download
                     try:
                         with closing(request.urlopen(link)) as r:
                             with open(path, 'wb') as f:

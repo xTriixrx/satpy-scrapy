@@ -13,6 +13,7 @@ from crawlers.goes_17 import GOES_WEST
 from crawlers.insat_3d import INSAT_3D
 from crawlers.insat_3dr import INSAT_3DR
 from crawlers.gk_2a import GEO_KOMPSAT_2A
+from crawlers.arktika_m1 import ARKTIKA_M1
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.elektro_l3 import ELEKTRO_L3
@@ -27,8 +28,8 @@ GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGY
 METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.2
- @modified 2/05/22
+ @version 0.0.3
+ @modified 2/16/22
 """
 
 ASCII = 'ascii'
@@ -246,6 +247,11 @@ def filter_logger():
         'Upper Tropospheric Humidity', 'Hydro-Estimator Rain', 'Cloud Mask'
     ]
 
+    arktika_m1_options = \
+    [
+        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10'
+    ]
+
     print('Filter options for GOES-EAST & GOES-WEST')
     print(*goes_filter_options, sep='\n')
     print('')
@@ -269,6 +275,9 @@ def filter_logger():
     print('')
     print('Filter options for INSAT-3D and INSAT-3DR')
     print(*insat_filter_options, sep='\n')
+    print('')
+    print('Filter options for ARKTIKA-M1')
+    print(*arktika_m1_options, sep='\n')
 
 
 def handle_arguments(argv):
@@ -279,14 +288,15 @@ def handle_arguments(argv):
     @return satellite, img_types: SatelliteCrawler, []
     """
 
+    day = ''
     img_types = []
     utc_range = ''
-    elektro_day = ''
+    arktika1_pass = False
     elektro2_pass = False
     fengyun_4a_pass = False
     
     try:
-        opts, args = getopt.getopt(argv, '-wehdi:k:m:f:g:', 
+        opts, args = getopt.getopt(argv, '-wehda:i:k:m:f:g:', 
             ['help', 'filters', 'day=', 'utcrange=', 'images='])
         
         for opt, arg in opts:
@@ -299,11 +309,14 @@ def handle_arguments(argv):
             elif opt == '-k':
                 if arg == '2':
                     elektro2_pass = True
+            elif opt == '-a':
+                if arg == '1':
+                    arktika1_pass = True
             elif opt == '-f':
                 if arg == '4a':
                     fengyun_4a_pass = True
                 
-        if not elektro2_pass:
+        if not (elektro2_pass or arktika1_pass):
             if fengyun_4a_pass:
                 try:
                     utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
@@ -313,13 +326,16 @@ def handle_arguments(argv):
                     logging.info(no_range)
         else:
             try:
-                elektro_day = [arg for opt, arg in opts if opt == '--day'][0]
+                day = [arg for opt, arg in opts if opt == '--day'][0]
             except Exception as e:
                 no_day = 'No --day parameter was given to Elektro-L2 image pull iteration.'
                 logging.info(no_day)
             try:
                 utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
-                utc_range = generate_utc_range_30_step(utc_range)
+                if elektro2_pass:
+                    utc_range = generate_utc_range_30_step(utc_range)
+                elif arktika1_pass:
+                    utc_range = generate_utc_range_15_step(utc_range)
             except Exception as e:
                 no_range = 'No --utcrange parameter was given to Elektro-L2 image pull iteration.'
                 logging.info(no_range)
@@ -331,7 +347,10 @@ def handle_arguments(argv):
             img_types = shlex.split(img_types[0])
         
         for opt, arg in opts:
-            if opt == '-d':
+            if opt == '-a':
+                if arg == '1':
+                    return ARKTIKA_M1(ARKTIKA_M1.ARKTIKA_M1_URL, ARKTIKA_M1.ARKTIKA_M1_NAME, day, utc_range), img_types
+            elif opt == '-d':
                 return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types
             elif opt == '-w':
                 return GOES_WEST(GOES_WEST.GOES_WEST_URL, GOES_WEST.GOES_WEST_NAME, 10848), img_types
@@ -346,7 +365,7 @@ def handle_arguments(argv):
                     return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
             elif opt == '-k':
                 if arg == '2':
-                    return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, elektro_day, 
+                    return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, day, 
                         utc_range), img_types
                 elif arg == '3':
                     return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME), img_types

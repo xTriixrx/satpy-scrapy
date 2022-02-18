@@ -2,9 +2,9 @@
 
 <p align="center">
 
-satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2 satellite utilize HTTP/HTTPS Tor requests while the ELEKTRO-L2 satellite provides a direct FTP server connection to download images.
+satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ARKTIKA-M1, and FENGYUN-4A satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2 and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FENGYUN-4A satellite requires a VPN connection due to China's network blocking Tor requests.
 
-The --images= argument should not be used for the ELEKTRO-L2 satellite, the --utcrange= argument should only be used for the ELEKTRO-L2 satellite and the FENGYUN-4A satellite, and the --day= argument should only be used for the ELEKTRO-L2 satellite. Here are some sample commands for this program:
+The --images= argument should not be used for the ELEKTRO-L2 satellite and the --utcrange=/--day= arguments should only be used for the ELEKTRO-L2 and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
 
  * sudo python3 satpy-scrapy.py -h
  * sudo python3 satpy-scrapy.py -d
@@ -12,6 +12,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -w
  * sudo python3 satpy-scrapy.py -i8
  * sudo python3 satpy-scrapy.py -g1
+ * sudo python3 satpy-scrapy.py -a1
  * sudo python3 satpy-scrapy.py -k2
  * sudo python3 satpy-scrapy.py -k3
  * sudo python3 satpy-scrapy.py -m8
@@ -30,7 +31,9 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite, the --ut
  * sudo python3 satpy-scrapy.py -fy4a --images="Visible"
  * sudo python3 satpy-scrapy.py -fy2g --images="Visible"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
+ * sudo python3 satpy-scrapy.py -a1 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
+ * sudo python3 satpy-scrapy.py -a1 --day="25" --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -k2 --day="25" --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -k3 --images="\"Synthesized Color\""
  * sudo python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\""
@@ -177,7 +180,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center">Arktika-M (Russian Арктика-М) is a Russian multipurpose satellite constellation under construction. The main task of Arktika-M is weather observation in the northern part of Russian territory; in addition, the satellites are to be used there as data relays and for emergency communication. Other applications are the observation of space weather, the earth's magnetic field and the ionosphere. The first satellite in the constellation - Arktika-M1 - was launched on the 28th. February 2021 with a Soyuz 2.1b/Fregat rocket from Baikonur Cosmodrome. Another four satellites are to follow by 2025.</p>
 
-<p align="center"> <img src="" /></p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/V1_3720_20220217143000_RGB.jpg" /></p>
 
 ### Elektro-L2
 

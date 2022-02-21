@@ -293,7 +293,6 @@ def handle_arguments(argv):
     utc_range = ''
     arktika1_pass = False
     elektro2_pass = False
-    fengyun_4a_pass = False
     
     try:
         opts, args = getopt.getopt(argv, '-wehda:i:k:m:f:g:', 
@@ -312,19 +311,8 @@ def handle_arguments(argv):
             elif opt == '-a':
                 if arg == '1':
                     arktika1_pass = True
-            elif opt == '-f':
-                if arg == '4a':
-                    fengyun_4a_pass = True
                 
-        if not (elektro2_pass or arktika1_pass):
-            if fengyun_4a_pass:
-                try:
-                    utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
-                    utc_range = generate_utc_range_15_step(utc_range)
-                except Exception as e:
-                    no_range = 'No --utcrange parameter was given to Fengyun-4A image pull iteration.'
-                    logging.info(no_range)
-        else:
+        if (elektro2_pass or arktika1_pass):
             try:
                 day = [arg for opt, arg in opts if opt == '--day'][0]
             except Exception as e:
@@ -371,7 +359,7 @@ def handle_arguments(argv):
                     return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME), img_types
             elif opt == '-f':
                 if arg == 'y4a':
-                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME, utc_range), img_types
+                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME), img_types
                 elif arg == 'y2g':
                     return FENGYUN_2G(FENGYUN_2G.FENGYUN_2G_URL, FENGYUN_2G.FENGYUN_2G_NAME), img_types
             elif opt == '-g':

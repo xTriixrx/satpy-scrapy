@@ -38,7 +38,7 @@ class FENGYUN_4A(SatelliteCrawler):
     'FY4A AGRI IMG DISK GRA NOM C012': 'Band 12', 'FY4A AGRI IMG DISK COL NOM C012': 'Band 12 Enhanced', 'FY4A AGRI IMG DISK GRA NOM C013': 'Band 13', 
     'FY4A AGRI IMG DISK COL NOM C013': 'Band 13 Enhanced', 'FY4A AGRI IMG DISK GRA NOM C014': 'Band 14', 'FY4A AGRI IMG DISK COL NOM C014': 'Band 14 Enhanced'}
 
-    def __init__(self, url, satellite, utcrange):
+    def __init__(self, url, satellite):
         """
         A concrete constructor which accepts a full base path to a URL to begin crawl, satellite name, and
         an appropriate resolution size to search for during crawl process.
@@ -49,7 +49,6 @@ class FENGYUN_4A(SatelliteCrawler):
         """
 
         super().__init__(url, satellite)
-        self.__utcrange = utcrange
 
 
     def get_links(self, pw):

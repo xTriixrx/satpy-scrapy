@@ -282,7 +282,7 @@ Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
-   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported ARKTIKA-M1 crawler in half hour increments.
+   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by ARKTIKA-M1 crawler in half hour increments.
    * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 or ARKTIKA-M1 FTP server. 
 
 ## Dependencies

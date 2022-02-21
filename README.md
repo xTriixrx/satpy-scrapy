@@ -20,6 +20,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite and the -
  * sudo python3 satpy-scrapy.py -g15
  * sudo python3 satpy-scrapy.py -fy4a
  * sudo python3 satpy-scrapy.py -fy2g
+ * sudo python3 satpy-scrapy.py -fy2h
  * sudo python3 satpy-scrapy.py -gk2a
  * sudo python3 satpy-scrapy.py --help
  * sudo python3 satpy-scrapy.py -insat3d
@@ -30,6 +31,7 @@ The --images= argument should not be used for the ELEKTRO-L2 satellite and the -
  * sudo python3 satpy-scrapy.py -g15 --images="Visible"
  * sudo python3 satpy-scrapy.py -fy4a --images="Visible"
  * sudo python3 satpy-scrapy.py -fy2g --images="Visible"
+ * sudo python3 satpy-scrapy.py -fy2h --images="Visible"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -a1 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
@@ -211,6 +213,12 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center">FENGYUN 2G is a meteorological satellites to provide warnings of weather fronts and tropical cyclones across Asia. FENGYUN 2G will take over for the Fengyun 2E weather observatory at 105 degrees east longitude. China's fleet of Fengyun 2 spacecraft have a similar mission to NOAA's GOES weather satellites in geostationary orbit.</p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/fy2g_2021048_0530_01_fd.gif" /> </p>
+
+### Fengyun 2H
+
+<p align="center">Fengyun-2H is the eighth and final of the Fengyun-2 series of spin-stabilized weather satellites for geostationary orbit, development of which began in the 1980s under CASC. The satellite is equipped with a Stretched Visible and Infrared Spin Scan Radiometer (S-VISSR) for multi-purpose weather satellite imagery, a Space Environment Monitor (SEM), a Solar X-ray Monitor (SXM) and Data Collection Service (DCS).</p>
+
+<p align="center"> <img src="" /> </p>
 
 ### GEO-KOMPSAT-2A
 

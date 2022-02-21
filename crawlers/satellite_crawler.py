@@ -24,7 +24,7 @@ class SatelliteCrawler(Crawler):
 
     @author Vincent.Nigro
     @version 0.0.1
-    @modified 2/05/22
+    @modified 2/21/22
     """
     
     # Supported satellite names
@@ -40,6 +40,7 @@ class SatelliteCrawler(Crawler):
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     ELEKTRO_L3_NAME = 'ELEKTRO-L3'
     FENGYUN_2G_NAME = 'FENGYUN-2G'
+    FENGYUN_2H_NAME = 'FENGYUN-2H'
     FENGYUN_4A_NAME = 'FENGYUN-4A'
     METEOSAT_8_NAME = 'METEOSAT-8'
     METEOSAT_11_NAME = 'METEOSAT-11'

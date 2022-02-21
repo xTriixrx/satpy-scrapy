@@ -19,17 +19,18 @@ from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.elektro_l3 import ELEKTRO_L3
 from crawlers.fengyun_4a import FENGYUN_4A
 from crawlers.fengyun_2g import FENGYUN_2G
+from crawlers.fengyun_2h import FENGYUN_2H
 from crawlers.meteosat_8 import METEOSAT_8
 from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, METEOSAT-8, 
-METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, EWS-G1, INSAT-3D, and INSAT-3DR.
+GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
+METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
  @version 0.0.3
- @modified 2/16/22
+ @modified 2/21/22
 """
 
 ASCII = 'ascii'
@@ -167,6 +168,9 @@ def help_logger():
     print("To extract 'Visible' EWS-G1 images")
     print("\tsudo python3 satpy-scrapy.py -g1 --images=\"Visible\"")
     print("")
+    print("To extract 'Visible' FENGYUN-2H images")
+    print("\tsudo python3 satpy-scrapy.py -fy2h --images=\"Visible\"")
+    print("")
     print("To extract the latest ELEKTRO-L2 images within a UTC range")
     print("\tsudo python3 satpy-scrapy.py -k2 --utcrange=\"0000-2300\"")
     print("")
@@ -209,6 +213,8 @@ def filter_logger():
     ews_g1_filter_options = ['Visible', 'Near IR', 'Water Vapor', 'Longwave IR', 'C02 Longwave IR']
 
     fy2g_g15_filter_options = ['Visible', 'Shortwave IR', 'Water Vapor', 'Longwave IR']
+
+    fy2h_filter_options = ['False Color', 'Infared 1', 'Infared 2', 'Infared 3', 'Infared 4', 'Visible']
 
     goes_filter_options = \
     [
@@ -278,6 +284,9 @@ def filter_logger():
     print('')
     print('Filter options for ARKTIKA-M1')
     print(*arktika_m1_options, sep='\n')
+    print('')
+    print('Filter options for FENGYUN-2H')
+    print(*fy2h_filter_options, sep='\n')
 
 
 def handle_arguments(argv):
@@ -362,6 +371,8 @@ def handle_arguments(argv):
                     return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME), img_types
                 elif arg == 'y2g':
                     return FENGYUN_2G(FENGYUN_2G.FENGYUN_2G_URL, FENGYUN_2G.FENGYUN_2G_NAME), img_types
+                elif arg == 'y2h':
+                    return FENGYUN_2H(FENGYUN_2H.FENGYUN_2H_URL, FENGYUN_2H.FENGYUN_2H_NAME), img_types
             elif opt == '-g':
                 if arg == 'k2a':
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types

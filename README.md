@@ -282,6 +282,7 @@ Short Arguments
    * '-g15': Instantiates GOES-15 crawler to extract every possible image for this vehicle.
    * '-fy4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
    * '-fy2g': Instantiates FENGYUN-2G crawler to extract ever possible image for this vehicle.
+   * '-fy2h': Instantiates FENGYUN-2H crawler to extract ever possible image for this vehicle.
    * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
    * '-insat3d': Instantiates INSAT-3D crawler to extract every possible image for this vehicle.
    * '-insat3dr': Instantiates INSAT-3DR crawler to extract every possible image for this vehicle.
@@ -304,7 +305,6 @@ Long Arguments
 
 ### Future Satellite Support
 
- * FY-2H 2750px x 2750px images (Full disk)
  * FY-2F 4k x 4k images (China/Asia Region)
  * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)
  * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GEO-KOMPSAT-2B)

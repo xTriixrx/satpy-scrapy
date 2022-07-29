@@ -130,7 +130,7 @@ Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this prog
 
 <p align="center">
 The Tor client can be installed on multiple operating systems and each installation may vary. For instance to install the Tor client on Mac OS, you can use Homebrew using the 'brew install tor' command. To install the Tor client I would suggest looking up the specific instructions for your operating system. Once installed, on Linux and Mac OS the torrc configuration file should be located
-at /usr/local/etc/tor/torrc. Before editing this file you should have a password hashed by tor with the following command saved: tor --hashed-password "your-pw-here". Save the output as you will need
+at /etc/tor/torrc. Before editing this file you should have a password hashed by tor with the following command saved: tor --hash-password "your-pw-here". Save the output as you will need
 to store this in your torrc configuration file. When you open the torrc file you will need to uncomment the following lines:
 </p>
 
@@ -143,6 +143,23 @@ And add the following lines at the bottom of the file if you would like to use a
 
  * ExitNodes {us}
  * StrictNodes 1
+
+<p align="center">
+Perform the following commands to enable the tor service and restart the tor service after configuration. 
+</p>
+
+```Bash
+sudo systemctl enable tor
+sudo systemctl restart tor
+```
+
+<p align="center">
+Perform the following to install all requirements for satpy-scrapy.
+</p>
+
+```Bash
+python3 -m pip install -r requirements.txt
+```
 
 <p align="center">
 You can test your Tor client configuration by running the tor_check.py program with your tor password by editing line 37 of the program. After you run the program you should see 2 different IP addresses which are not your own IP address. Now we just need to set up the config file and secret file containing a hashed string. This hashed string should be the hash for your tor password that you have defined for the ControlPort. To generate a hash, use the hasher.py program to produce a hash. Once a hash is produced, copy this and while as the root user create a file that should be only known to you and stored somewhere other than the satpy-scrapy directory location and paste the hash into this file. Once this file is saved, chmod this file as root into a readonly mode (400) such that only the root user can access this special file. Lastly, create a config.xml file within the satpy-scrapy directory as root and populate the fields templated in the example config.xml file. Once the config file is finished being written to, also as root chmod this file to be readonly (400) as well. Enforcing root privileges increases security of storing passwords on the file system and decentralizing the password from a single config file. It is recommended to remove the hasher.py program when finished with setting up the environment. With that taken care of you are now ready to use satpy-scrapy!
@@ -292,19 +309,11 @@ Long Arguments
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
    * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by ARKTIKA-M1 crawler in half hour increments.
-   * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 or ARKTIKA-M1 FTP server. 
-
-## Dependencies
-
- * BeautifulSoup 4
- * Requests v2.24
- * Stem v1.8
- * Pytz v2020.1
- * Multitasking v0.0.9
- * googletrans v4.0.0rc1
+   * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 or ARKTIKA-M1 FTP server.
 
 ### Future Satellite Support
 
+ * GOES-18
  * FY-2F 4k x 4k images (China/Asia Region)
  * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)
  * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GEO-KOMPSAT-2B)

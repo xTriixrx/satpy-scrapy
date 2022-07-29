@@ -1,0 +1,8 @@
+bs4
+pytz
+stem
+lxml
+PySocks
+requests
+googletrans
+multitasking

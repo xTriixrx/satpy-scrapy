@@ -78,8 +78,8 @@ class HIMAWARI_8(SatelliteCrawler):
         year, month, day, hour, minute = self.__get_date_fields(utctime)
         
         # Build date properties needed to build links
-        date_link = year + month + day # 20210131
-        date_time_link = date_link + hour + minute + '00' # 20210131204000
+        date_link = year + '/' + month + '/' + day # 2021/01/31
+        date_time_link = year + month + day + hour + minute + '00' # 20210131204000
 
         # Generate max 16x16 images ranging from 000_000.png to 015_015.png
         my_range = []
@@ -139,8 +139,8 @@ class HIMAWARI_8(SatelliteCrawler):
 
     def __get_adjusted_utctime(self):
         """
-        Creates a UTC time that is an hour behind the current time to ensure that the images are still
-        present on the web server.
+        Creates a UTC time that is 2 hours behind the current time to ensure that the images
+        are still present on the web server.
         
         @return utctime: datetime - A datetime object containing the current UTC time behind by one hour.
         """
@@ -148,36 +148,32 @@ class HIMAWARI_8(SatelliteCrawler):
         time = datetime.now()
         utctime = time.utcnow()
         
-        # Always take off an hour off time to ensure images will always be available.
+        # Always take off 2 hours of time to ensure images will always be available.
+        difference = timedelta(hours = 2, minutes = utctime.minute)
+
         if utctime.minute >= 0 and utctime.minute <= 9:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
         elif utctime.minute >= 10 and utctime.minute <= 19:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
             difference = timedelta(minutes = 10)
             utctime += difference 
         elif utctime.minute >= 20 and utctime.minute <= 29:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
             difference = timedelta(minutes = 20)
             utctime += difference
         elif utctime.minute >= 30 and utctime.minute <= 39:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
             difference = timedelta(minutes = 30)
             utctime += difference
         elif utctime.minute >= 40 and utctime.minute <= 49:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
             difference = timedelta(minutes = 40)
             utctime += difference
         elif utctime.minute >= 50 and utctime.minute <= 59:
-            difference = timedelta(hours = 1, minutes = utctime.minute)
             utctime -= difference
             difference = timedelta(minutes = 50)
             utctime += difference
-        
+
         return utctime
 
 

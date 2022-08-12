@@ -9,7 +9,8 @@ from crawlers.dscovr import DSCOVR
 from crawlers.ews_g1 import EWS_G1
 from crawlers.goes_15 import GOES_15
 from crawlers.goes_16 import GOES_16
-from crawlers.goes_17 import GOES_WEST
+from crawlers.goes_17 import GOES_17
+from crawlers.goes_18 import GOES_18
 from crawlers.insat_3d import INSAT_3D
 from crawlers.insat_3dr import INSAT_3DR
 from crawlers.gk_2a import GEO_KOMPSAT_2A
@@ -24,12 +25,12 @@ from crawlers.meteosat_8 import METEOSAT_8
 from crawlers.meteosat_11 import METEOSAT_11
 
 """
-Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-EAST (GOES-16),
-GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
+Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
+GOES-17, GOES-18, GOES-15, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
 METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.4
+ @version 0.0.5
  @modified 8/12/22
 """
 
@@ -115,16 +116,13 @@ def help_logger():
     """
 
     print("Satellite Hi-Res IMG Scraper By Vincent Nigro")
-    print("Version: 1.0.0")
-    print("Last Modified: 2/11/21")
+    print("Version: 1.0.1")
+    print("Last Modified: 8/12/22")
     print("")
     print("This program extracts the latest high resolution images from various sources using the Tor Network.")
     print("")
     print("To printout the available image filters for each satellite")
     print("\tsudo python3 satpy-scrapy.py --filters")
-    print("")
-    print("To extract all the latest GOES-WEST images")
-    print("\tsudo python3 satpy-scrapy.py -w")
     print("")
     print("To extract all the latest HIMAWARI-8 images")
     print("\tsudo python3 satpy-scrapy.py -i")
@@ -140,6 +138,12 @@ def help_logger():
     print("")
     print("To extract all the latest GOES-16 images")
     print("\tsudo python3 satpy-scrapy.py -g16")
+    print("")
+    print("To extract all the latest GOES-17 images")
+    print("\tsudo python3 satpy-scrapy.py -g17")
+    print("")
+    print("To extract all the latest GOES-18 images")
+    print("\tsudo python3 satpy-scrapy.py -g18")
     print("")
     print("To extract the latest FENGYUN-4A image")
     print("\tsudo python3 satpy-scrapy.py -fy4a")
@@ -201,6 +205,9 @@ def help_logger():
     print("To extract 'Natural Color' and 'True Color' HIMAWARI-8 images")
     print("\tsudo python3 satpy-scrapy.py -i --images=\"\\\"Natural Color\\\" \\\"GeoColor\\\"\"")
     print("")
+    print("To extract the latest GeoColor GOES-18 images with 21696 resolution")
+    print("\tsudo python3 satpy-scrapy.py -g18 --images=\"GeoColor\" --resolution=21696")
+    print("")
 
 
 def filter_logger():
@@ -258,7 +265,7 @@ def filter_logger():
         'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10'
     ]
 
-    print('Filter options for GOES-16 & GOES-WEST')
+    print('Filter options for GOES-16 & GOES-17, & GOES-18')
     print(*goes_filter_options, sep='\n')
     print('')
     print('Filter options for GEO-KOMPSAT-2A')
@@ -318,9 +325,8 @@ def handle_arguments(argv):
             elif opt == '-k':
                 if arg == '2':
                     elektro2_pass = True
-            elif opt == '-a':
-                if arg == '1':
-                    arktika1_pass = True
+            elif opt == '-a' and arg == '1':
+                arktika1_pass = True
                 
         if (elektro2_pass or arktika1_pass):
             try:
@@ -357,8 +363,6 @@ def handle_arguments(argv):
                     return ARKTIKA_M1(ARKTIKA_M1.ARKTIKA_M1_URL, ARKTIKA_M1.ARKTIKA_M1_NAME, day, utc_range), img_types
             elif opt == '-d':
                 return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types
-            elif opt == '-w':
-                return GOES_WEST(GOES_WEST.GOES_WEST_URL, GOES_WEST.GOES_WEST_NAME, 10848), img_types
             elif opt == '-i':
                 if arg == 'nsat3d':
                     return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types
@@ -388,6 +392,10 @@ def handle_arguments(argv):
                     return GOES_15(GOES_15.GOES_15_URL, GOES_15.GOES_15_NAME), img_types
                 elif arg == '16':
                     return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
+                elif arg == '17':
+                    return GOES_17(GOES_17.GOES_17_URL, GOES_17.GOES_17_NAME, resolution, img_types), img_types
+                elif arg == '18':
+                    return GOES_18(GOES_18.GOES_18_URL, GOES_18.GOES_18_NAME, resolution, img_types), img_types
             elif opt == '-m':
                 if arg == '8':
                     return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), img_types
@@ -448,8 +456,8 @@ def read_tor_secret():
         logging.error(e)
         print(e)
         sys.exit(1)
-    finally:
-        return tor_pw
+    
+    return tor_pw
 
 
 def main(argv):

@@ -24,8 +24,8 @@ class SatelliteCrawler(Crawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 2/21/22
+    @version 0.0.2
+    @modified 8/12/22
     """
     
     # Supported satellite names
@@ -33,9 +33,10 @@ class SatelliteCrawler(Crawler):
     EWS_G1_NAME = 'EWS-G1'
     GOES_15_NAME = 'GOES-15'
     GOES_16_NAME = 'GOES-16'
+    GOES_17_NAME = 'GOES-17'
+    GOES_18_NAME = 'GOES-18'
     INSAT_3D_NAME = 'INSAT-3D'
     INSAT_3DR_NAME = 'INSAT-3DR'
-    GOES_WEST_NAME = 'GOES-WEST'
     ARKTIKA_M1_NAME = 'ARKTIKA-M1'
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'

@@ -9,6 +9,7 @@ import requests
 import multitasking
 from stem import Signal
 from datetime import date
+from datetime import datetime
 from contextlib import closing
 import urllib.request as request
 from stem.control import Controller
@@ -31,9 +32,9 @@ class SatelliteCrawler(Crawler):
     DSCOVR_NAME = 'DSCOVR'
     EWS_G1_NAME = 'EWS-G1'
     GOES_15_NAME = 'GOES-15'
+    GOES_16_NAME = 'GOES-16'
     INSAT_3D_NAME = 'INSAT-3D'
     INSAT_3DR_NAME = 'INSAT-3DR'
-    GOES_EAST_NAME = 'GOES-EAST'
     GOES_WEST_NAME = 'GOES-WEST'
     ARKTIKA_M1_NAME = 'ARKTIKA-M1'
     HIMAWARI_8_NAME = 'HIMAWARI-8'
@@ -62,7 +63,7 @@ class SatelliteCrawler(Crawler):
         self.__satellite = satellite
 
         # Initialize logging for starting up satellite crawler
-        self.__initialize_logging()
+        self._initialize_logging()
 
 
     @multitasking.task
@@ -242,7 +243,7 @@ class SatelliteCrawler(Crawler):
         dir_path = self._create_img_dir(title)
 
         # If path exists and the directory is not empty, then the image exists
-        if os.path.exists(dir_path) and not os.listdir(dir_path) == []:
+        if os.path.exists(dir_path) and os.listdir(dir_path) != []:
             return True
         return False
 
@@ -264,9 +265,9 @@ class SatelliteCrawler(Crawler):
         logging.debug("---------------------------------------------")
 
 
-    def __initialize_logging(self):
+    def _initialize_logging(self):
         """
-        Generic private method which initializes logging for a generic concrete satellite crawler during instantiation.
+        Generic protected method which initializes logging for a generic concrete satellite crawler during instantiation.
         """
         
         logpath = "logs/"
@@ -283,6 +284,19 @@ class SatelliteCrawler(Crawler):
         logging.basicConfig(filename=logpath + logfile, level=logging.DEBUG, \
         format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')  
         logging.debug("Satellite " + self.__satellite + " crawl has initialized.")
+
+
+    def _julian_to_date(self, jdate):
+        """
+        Converts a julian date string to a date object that can be converted to other formats.
+         
+        @param jdate: str - A string in the format of YYYYJJJ to be converted to a datetime object. Ex: 2022224
+        """
+
+        fmt = '%Y%j'
+        date = datetime.strptime(jdate, fmt).date()
+
+        return date
 
 
     def get_url(self):

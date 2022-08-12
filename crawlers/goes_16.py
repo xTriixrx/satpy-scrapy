@@ -1,40 +1,55 @@
 import re
 import os
+import logging
 from bs4 import BeautifulSoup
 from crawlers.satellite_crawler import SatelliteCrawler
 
-class GOES_EAST(SatelliteCrawler):
+class GOES_16(SatelliteCrawler):
     """
-    Concrete satellite spider class for GOES_EAST (GOES-16) which extends the base class, SatelliteCrawler.
+    Concrete satellite spider class for GOES_16 which extends the base class, SatelliteCrawler.
     This method of splitting spiders into separate classes will help with keeping longevity of spider 
     runner classes and update issues easier that may occur during website HTML updates. This spider hierarchy
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 1/24/21
+    @version 0.0.2
+    @modified 8/12/22
     """
 
-    GOES_EAST_DIRECTORY = 'GOES-EAST'
-    GOES_EAST_URL = 'https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G16'
+    GOES_16_RESOLUTIONS = ['339', '1808', '5424', '10848', '21696']
+
+    GOES_16_IMAGES = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13',
+    '14', '15', '16', 'AirMass', 'DMW', 'DayCloudPhase', 'DayConvection', 'Dust', 'FireTemperature',
+    'GEOCOLOR', 'NightMicrophysics', 'SWD', 'Sandwich']
+
+    GOES_16_TITLES = ['Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9',
+    'Band 10', 'Band 11', 'Band 12', 'Band 13', 'Band 14', 'Band 15', 'Band 16', 'AirMass RGB',
+    'Derived Motion Winds', 'Day Cloud Phase RGB', 'Day Convection RGB', 'Dust', 'Fire Temperature', 'GeoColor',
+    'Nighttime Microphysics', 'Split Window Differential', 'Sandwich RGB']
+     
+    GOES_16_DIRECTORY = 'GOES-16'
+    GOES_16_BASE_URL_EXTENSION = 'GOES16-ABI-FD'
+    GOES_16_URL = 'https://cdn.star.nesdis.noaa.gov/GOES16/ABI/FD/'
     
-    def __init__(self, url, satellite, resolution):
+    def __init__(self, url, satellite, resolution, image_types):
         """
         A concrete constructor which accepts a full base path to a URL to begin crawl, satellite name, and
         an appropriate resolution size to search for during crawl process.
 
         @param url: str - A string containing a full URL path to some website to begin web crawl.
-        @param satellite: str - A string containing a representative name for the GOES-EAST satellite crawler.
-        @parm resolution: int - An integer representation of a pixel resolution to search for in web crawler. 
+        @param satellite: str - A string containing a representative name for the GOES-16 satellite crawler.
+        @param resolution: int - An integer representation of a pixel resolution to search for in web crawler. 
+        @param image_types: list - A list of image titles to compare during generation of links to reduce computation.
         """
 
         super().__init__(url, satellite)
         self.__resolution = resolution
+        self.__image_types = image_types
 
 
     def get_links(self, pw):
         """
-        Implemented abstract public method which performs GOES-EAST specific base page extraction and extraction
+        Implemented abstract public method which performs GOES-16 specific base page extraction and extraction
         of links from the appropriate containing objects.
 
         @param pw: str - A string containing the Tor password for the given system configuration.
@@ -43,16 +58,55 @@ class GOES_EAST(SatelliteCrawler):
 
         links = {}
         
-        page = self._extract_content(self.get_url(), pw)
-
-        # Generate bs soup object and extract list of containers containing each set of image links
-        soup = BeautifulSoup(page.text, self.SOUP_PARSER)
-        summary_containers = soup.findAll(self.DIV_ELEMENT, {self.CLASS_ATTRIBUTE: self.GOES_TARGET_CLASS_VALUE})
-
-        # Extract each URI for each image type available for px resolution
-        links = self.__extract_hires_uris(summary_containers, self.__resolution)
+        # If the resolution is not in the known set of resolutions, return an empty map
+        if self.__resolution not in self.GOES_16_RESOLUTIONS:
+            return links
         
+        # For each image type, attempt to get the appropriate link for the desired resolution
+        for i in range(0, len(self.GOES_16_IMAGES)):
+
+            # If image types were provided, ensure we are not scraping pages for stuff that are not desired 
+            if len(self.__image_types) > 0 and self.GOES_16_TITLES[i] not in self.__image_types:
+                continue
+            
+            # Get the page for the provided full image page 
+            page = self._extract_content(self.get_url() + self.GOES_16_IMAGES[i] + '/', pw)
+
+            # Generate bs soup object and extract list of 'a' elements containing each image link
+            soup = BeautifulSoup(page.text, self.SOUP_PARSER)
+            a_elements = soup.findAll(self.A_ELEMENT, href=True)
+            
+            # Find latest link for resolution provided
+            for a_element in reversed(a_elements):
+                href = str(a_element[self.HREF_ATTRIBUTE])
+                
+                # If the extension base and the resolution is in the link, we found the latest link
+                if self.GOES_16_BASE_URL_EXTENSION in href and self.__resolution in href and '.jpg' in href:
+                    title = self.__generate_title(self.GOES_16_TITLES[i], href)
+                    link = self.GOES_16_URL + self.GOES_16_IMAGES[i] + '/' + href
+                    logging.info("Scraped link " + link + " for image " + title + ".")
+                    links[title] = link
+                    break
+
         return links
+
+
+    def __generate_title(self, base_title, href):
+        """
+        Will generate a full title with the standard format of 'TITLE - DATE - HH-MM UTC'. An example would be
+        'Band 1 - YYYY-MM-DD - 03-30 UTC'.
+
+        @param base_title: str - A string representing the type of image: Ex: 'Band 1'.
+        @param href: str - A string representing a link a partial link: Ex: 20222241750_GOES16-ABI-FD-01-10848x10848.jpg
+        """
+        title = ''
+        date_info = href.split('_')[0] # In YYYYJJJHHMM format: 20222241750
+        date = self._julian_to_date(date_info[:7])
+
+        title = base_title + ' - ' + date.strftime('%Y-%m-%d') + ' - ' + \
+            date_info[-4:-2] + '-' + date_info[-2:] + ' UTC'
+        
+        return title
 
 
     def _create_img_dir(self, title):
@@ -63,7 +117,7 @@ class GOES_EAST(SatelliteCrawler):
 
         @param title: str - A string containing the following standard format: 'TITLE - DATE - HH-MM UTC'
         which describes the image being queried.
-        @return dir_path: str - A directory string containing the following standard format: 'GOES-EAST/DATE/HH-MM UTC/TITLE'
+        @return dir_path: str - A directory string containing the following standard format: 'GOES-16/DATE/HH-MM UTC/TITLE'
         where the image downloaded should be placed, or already has been placed.
         """
 
@@ -72,64 +126,25 @@ class GOES_EAST(SatelliteCrawler):
         today = re.split(self.TITLE_DELIMITER, title)[1]
         utctime = re.split(self.TITLE_DELIMITER, title)[-1].replace(":", "-")
 
-        dir_path = self.GOES_EAST_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
+        dir_path = self.GOES_16_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
         
         return dir_path
-
-
-    def __extract_hires_uris(self, containers, res):
-        """
-        Private method which performs unique extraction of desired high resolution image links
-        from the containers set.
-
-        @param containers: ResultSet - A list of results each containing multiple image links of different resolutions.
-        @param res: int - A desired resolution to extract the appropriate image link from each container.
-        @return links: {} - A key-value mapping of a title key in a standard format and its appropriate image link.
-        """
-
-        links = {}
-
-        for container in containers:
-            a_tags = self.__extract_image_link(container, res)
-            a_tag = a_tags[0]
-
-            link = a_tag.get(self.HREF_ATTRIBUTE)
-            title = a_tag.get(self.TITLE_ATTRIBUTE)
-
-            links[title] = link
-
-        return links
-
-
-    def __extract_image_link(self, container, res):
-        """
-        Private method which extracts image links in a div container links to downloadable images 
-        with regex containing the desired resolution of the image.
-
-        @param container: Any - A object containing a subset of HTML markup containing many image links.
-        @param res: int - An integer representation of the desired resolution.
-        @return links: [] - A list which should contain a single element of the appropriate resolution image link.
-        """
-
-        links = container.findAll(href=re.compile(str(res)))
-        
-        return links
 
 
     def create_satellite_directory(self):
         """
         Implemented public abstract method which creates a high-level directory with the static 
-        GOES_EAST_DIRECTORY string if it does not exist.
+        GOES_16_DIRECTORY string if it does not exist.
         """
 
-        if not os.path.exists(self.GOES_EAST_DIRECTORY):
-            os.makedirs(self.GOES_EAST_DIRECTORY)
+        if not os.path.exists(self.GOES_16_DIRECTORY):
+            os.makedirs(self.GOES_16_DIRECTORY)
 
 
     def get_resolution(self):
         """
         Public accessor method for retrieving the private member containing the configured resolution
-        for the current GOES-EAST instance.
+        for the current GOES-16 instance.
         """
 
         return self.__resolution

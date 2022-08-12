@@ -8,7 +8,7 @@ from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
 from crawlers.ews_g1 import EWS_G1
 from crawlers.goes_15 import GOES_15
-from crawlers.goes_16 import GOES_EAST
+from crawlers.goes_16 import GOES_16
 from crawlers.goes_17 import GOES_WEST
 from crawlers.insat_3d import INSAT_3D
 from crawlers.insat_3dr import INSAT_3DR
@@ -29,8 +29,8 @@ GOES-WEST (GOES-17), GOES-15 (GOES-17 Backup), HIMAWARI-8, GEO-KOMPSAT-2A, FENGY
 METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.3
- @modified 2/21/22
+ @version 0.0.4
+ @modified 8/12/22
 """
 
 ASCII = 'ascii'
@@ -123,9 +123,6 @@ def help_logger():
     print("To printout the available image filters for each satellite")
     print("\tsudo python3 satpy-scrapy.py --filters")
     print("")
-    print("To extract all the latest GOES-EAST images")
-    print("\tsudo python3 satpy-scrapy.py -e")
-    print("")
     print("To extract all the latest GOES-WEST images")
     print("\tsudo python3 satpy-scrapy.py -w")
     print("")
@@ -140,6 +137,9 @@ def help_logger():
     print("")
     print("To extract all the latest GOES-15 images")
     print("\tsudo python3 satpy-scrapy.py -g15")
+    print("")
+    print("To extract all the latest GOES-16 images")
+    print("\tsudo python3 satpy-scrapy.py -g16")
     print("")
     print("To extract the latest FENGYUN-4A image")
     print("\tsudo python3 satpy-scrapy.py -fy4a")
@@ -218,10 +218,10 @@ def filter_logger():
 
     goes_filter_options = \
     [
-        "GeoColor (Captures GLM type too)", "GLM FED+GeoColor", "AirMass RGB", "Sandwich RGB", "Derived Motion Winds",
-        "Day Cloud Phase RGB", "Nighttime Microphysics", "Band 1", "Band 2", "Band 3", "Band 4",
-        "Band 5", "Band 6", "Band 7", "Band 8", "Band 9", "Band 10", "Band 11", "Band 12", "Band 13",
-        "Band 14", "Band 15", "Band 16"
+        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9',
+        'Band 10', 'Band 11', 'Band 12', 'Band 13', 'Band 14', 'Band 15', 'Band 16', 'AirMass RGB',
+        'Derived Motion Winds', 'Day Cloud Phase RGB', 'Day Convection RGB', 'Dust', 'Fire Temperature', 'GeoColor',
+        'Nighttime Microphysics', 'Split Window Differential', 'Sandwich RGB'
     ]
 
     gk2a_filter_options = \
@@ -258,7 +258,7 @@ def filter_logger():
         'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10'
     ]
 
-    print('Filter options for GOES-EAST & GOES-WEST')
+    print('Filter options for GOES-16 & GOES-WEST')
     print(*goes_filter_options, sep='\n')
     print('')
     print('Filter options for GEO-KOMPSAT-2A')
@@ -300,12 +300,13 @@ def handle_arguments(argv):
     day = ''
     img_types = []
     utc_range = ''
+    resolution = ''
     arktika1_pass = False
     elektro2_pass = False
     
     try:
         opts, args = getopt.getopt(argv, '-wehda:i:k:m:f:g:', 
-            ['help', 'filters', 'day=', 'utcrange=', 'images='])
+            ['help', 'filters', 'day=', 'utcrange=', 'images=', 'resolution='])
         
         for opt, arg in opts:
             if opt == '-h' or opt == '--help':
@@ -343,6 +344,13 @@ def handle_arguments(argv):
             # Create list of each image type preserving quotes
             img_types = shlex.split(img_types[0])
         
+        try:
+            resolution = str([arg for opt, arg in opts if opt == '--resolution'][0])
+        except Exception as e:
+            no_resolution = "No resolution parameter was provided during image pull."
+            resolution = '10848'
+            logging.info(no_resolution)
+
         for opt, arg in opts:
             if opt == '-a':
                 if arg == '1':
@@ -351,8 +359,6 @@ def handle_arguments(argv):
                 return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types
             elif opt == '-w':
                 return GOES_WEST(GOES_WEST.GOES_WEST_URL, GOES_WEST.GOES_WEST_NAME, 10848), img_types
-            elif opt == '-e':
-                    return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types
             elif opt == '-i':
                 if arg == 'nsat3d':
                     return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types
@@ -380,6 +386,8 @@ def handle_arguments(argv):
                     return EWS_G1(EWS_G1.EWS_G1_URL, EWS_G1.EWS_G1_NAME), img_types
                 elif arg == '15':
                     return GOES_15(GOES_15.GOES_15_URL, GOES_15.GOES_15_NAME), img_types
+                elif arg == '16':
+                    return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
             elif opt == '-m':
                 if arg == '8':
                     return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), img_types
@@ -391,7 +399,7 @@ def handle_arguments(argv):
         print(e)
         sys.exit(1)
 
-    return GOES_EAST(GOES_EAST.GOES_EAST_URL, GOES_EAST.GOES_EAST_NAME, 10848), img_types
+    return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
 
 
 def read_tor_secret():

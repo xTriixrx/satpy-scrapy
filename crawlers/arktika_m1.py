@@ -164,7 +164,7 @@ class ARKTIKA_M1(SatelliteCrawler):
                 
                 # Create latin-1 decoded link for file
                 link = (self.ARKTIKA_M1_URL + '/' + year + '/' + translated_month + '/' + day + \
-                    '/' + utc_time + '/' + file).encode('utf-8').decode('latin-1')
+                    '/' + utc_time + '/' + file)
                 
                 self._logger.debug("Scraped link " + link + " for image " + title + ".")
 
@@ -241,6 +241,8 @@ class ARKTIKA_M1(SatelliteCrawler):
 
         dir_path = self.ARKTIKA_M1_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+
         return dir_path
 
 
@@ -251,4 +253,5 @@ class ARKTIKA_M1(SatelliteCrawler):
         """
 
         if not os.path.exists(self.ARKTIKA_M1_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.ARKTIKA_M1_DIRECTORY)
             os.makedirs(self.ARKTIKA_M1_DIRECTORY)

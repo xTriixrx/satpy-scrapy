@@ -1,13 +1,13 @@
 import os
 import sys
 import time
-from imp import reload
 import signal
 import shutil
 import logging
 import zipfile
 import requests
 import multitasking
+from imp import reload
 from stem import Signal
 from datetime import date
 from datetime import datetime

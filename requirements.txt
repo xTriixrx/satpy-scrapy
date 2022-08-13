@@ -4,5 +4,5 @@ stem
 lxml
 PySocks
 requests
-googletrans
 multitasking
+googletrans==4.0.0-rc1

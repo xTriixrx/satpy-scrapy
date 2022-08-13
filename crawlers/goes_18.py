@@ -1,6 +1,5 @@
 import re
 import os
-import logging
 from bs4 import BeautifulSoup 
 from crawlers.satellite_crawler import SatelliteCrawler
 
@@ -84,7 +83,7 @@ class GOES_18(SatelliteCrawler):
                 if self.GOES_18_BASE_URL_EXTENSION in href and self.__resolution in href and '.jpg' in href:
                     title = self.__generate_title(self.GOES_18_TITLES[i], href)
                     link = self.GOES_18_URL + self.GOES_18_IMAGES[i] + '/' + href
-                    logging.info("Scraped link " + link + " for image " + title + ".")
+                    self._logger.info("Scraped link " + link + " for image " + title + ".")
                     links[title] = link
                     break
 

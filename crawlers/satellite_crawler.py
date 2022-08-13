@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+from imp import reload
 import signal
 import shutil
 import logging
@@ -60,11 +61,12 @@ class SatelliteCrawler(Crawler):
         """
 
         self.__url = url
+        self._logger = None
         self.__start = time.time()
         self.__satellite = satellite
 
         # Initialize logging for starting up satellite crawler
-        self._initialize_logging()
+        self.__initialize_logging()
 
 
     @multitasking.task
@@ -87,7 +89,7 @@ class SatelliteCrawler(Crawler):
         for title, link in links.items():
             starting_info = 'Thread ' + title + ' has started download...'
             print(starting_info)
-            logging.info(starting_info)
+            self._logger.info(starting_info)
             
             failed_download = False
 
@@ -101,7 +103,7 @@ class SatelliteCrawler(Crawler):
             if not self._image_exists(title):
                 # Check if path exists prior to attempting to create path
                 if not os.path.exists(dir_path):
-                    logging.info("Creating directory path " + dir_path + ".")
+                    self._logger.info("Creating directory path " + dir_path + ".")
                     os.makedirs(dir_path)
 
                 # Create full relative path including file name
@@ -110,11 +112,12 @@ class SatelliteCrawler(Crawler):
                 if (self.get_satellite_name() == self.ELEKTRO_L2_NAME) or \
                 (self.get_satellite_name() == self.ARKTIKA_M1_NAME): # FTP Download
                     try:
+                        self._logger.info("Attempting to fetch FTP link at: " + link)
                         with closing(request.urlopen(link)) as r:
                             with open(path, 'wb') as f:
                                 shutil.copyfileobj(r, f)
                     except Exception as e:
-                        logging.error(e)
+                        self._logger.error(e)
                         print(e)
                         sys.exit(1)
                 else: # HTTP/HTTPS download
@@ -128,7 +131,7 @@ class SatelliteCrawler(Crawler):
 
                         # download file to path      
                         with open(path,'wb') as f:
-                            logging.info("Downloading " + title + "...")
+                            self._logger.info("Downloading " + title + "...")
                             shutil.copyfileobj(page.raw, f)
                             f.close()
                 
@@ -136,28 +139,28 @@ class SatelliteCrawler(Crawler):
                         if (self.ZIP_EXTENSION in filename):
                             try:
                                 with zipfile.ZipFile(path, 'r') as ref:
-                                    logging.info("Downloaded file was zipped, extracting to " + dir_path + ".")
+                                    self._logger.info("Downloaded file was zipped, extracting to " + dir_path + ".")
                                     ref.extractall(dir_path)
                                     ref.close()
                         
-                                logging.info("Removing zipped file located at " + path + ".")
+                                self._logger.info("Removing zipped file located at " + path + ".")
                                 os.remove(path)
                             except Exception as e:
                                 print(e)
-                                logging.error(e)
+                                self._logger.error(e)
                                 failed_download = True
                     else:
                         failed_download_log = title + " failed to download."
-                        logging.info(failed_download_log)
+                        self._logger.info(failed_download_log)
                         print(failed_download_log)
                 
                 if not failed_download:
                     downloaded_log = title + " has downloaded."
-                    logging.info(downloaded_log)
+                    self._logger.info(downloaded_log)
                     print(downloaded_log)
             else:
                 already_downloaded_log = "An image for " + title + " has already been downloaded."
-                logging.info(already_downloaded_log)
+                self._logger.info(already_downloaded_log)
                 print(already_downloaded_log)
 
 
@@ -178,7 +181,7 @@ class SatelliteCrawler(Crawler):
         s = self._get_tor_session()
         
         # Extract html archive page
-        logging.info("Extracting page content at link: " + link)
+        self._logger.info("Extracting page content at link: " + link)
         if streaming:
             page = s.get(link, stream=streaming)
         else:
@@ -200,7 +203,7 @@ class SatelliteCrawler(Crawler):
         to default Tor output socket.
         """
 
-        logging.info("Creating new tor session for satellite " + self.__satellite)
+        self._logger.info("Creating new tor session for satellite " + self.__satellite)
         
         # initialize a requests Session
         session = requests.Session()
@@ -228,7 +231,7 @@ class SatelliteCrawler(Crawler):
             c.signal(Signal.NEWNYM)
             
             generated_ip_log = 'Generated new tor IP...'
-            logging.info(generated_ip_log)
+            self._logger.info(generated_ip_log)
             print(generated_ip_log)
 
 
@@ -260,17 +263,19 @@ class SatelliteCrawler(Crawler):
         minutes, seconds = divmod(rem, 60)
         elapsed_log = "The elapsed time was {:0>2} hours, {:0>2} minutes, and {:05.2f} seconds.".format(int(hours), int(minutes), seconds)
         
-        logging.info(elapsed_log)
+        self._logger.info(elapsed_log)
         print(elapsed_log)
-        logging.debug("Pass has ended.")
-        logging.debug("---------------------------------------------")
+        self._logger.debug("Pass has ended.")
+        self._logger.debug("---------------------------------------------")
 
 
-    def _initialize_logging(self):
+    def __initialize_logging(self):
         """
         Generic protected method which initializes logging for a generic concrete satellite crawler during instantiation.
         """
-        
+        # For whatever reason, logging needed to be reloaded...
+        reload(logging)
+
         logpath = "logs/"
         logfile = "SAT-" + self.__satellite + "-CRAWL-" + str(date.today()) + ".txt"
 
@@ -283,8 +288,10 @@ class SatelliteCrawler(Crawler):
         
         # Initialize root logging
         logging.basicConfig(filename=logpath + logfile, level=logging.DEBUG, \
-        format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')  
-        logging.debug("Satellite " + self.__satellite + " crawl has initialized.")
+        format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+        self._logger = logging.getLogger()
+        self._logger.debug("Satellite " + self.__satellite + " crawl has initialized.")
 
 
     def _julian_to_date(self, jdate):

@@ -133,6 +133,9 @@ def help_logger():
     print("To extract all the latest EWS-G1 images")
     print("\tsudo python3 satpy-scrapy.py -g1")
     print("")
+    print("To extract all the latest ARTIKA-M1 images")
+    print("\tsudo python3 satpy-scrapy.py -a1")
+    print("")
     print("To extract all the latest GOES-15 images")
     print("\tsudo python3 satpy-scrapy.py -g15")
     print("")
@@ -474,7 +477,7 @@ def main(argv):
     """
     
     satellite, img_titles = handle_arguments(argv)
-
+    
     tor_pw = read_tor_secret()
 
     if tor_pw == '':

@@ -54,19 +54,20 @@ class ELEKTRO_L3(SatelliteCrawler):
 
             # Create bs soup object and extract containers holding high resolution image links and dates
             soup = BeautifulSoup(page.text, self.SOUP_PARSER)
-            img_elements = soup.findAll(self.A_ELEMENT, {self.HREF_ATTRIBUTE: re.compile(self.HTTP_HEADER)})[1::2]
+            img_elements = soup.findAll(self.A_ELEMENT, {self.HREF_ATTRIBUTE: re.compile(self.HTTP_HEADER)})
+            img_elements = img_elements[4::2]
 
             # For each container extract date/utc time of image as well as image link        
             for img_element in img_elements:
                 date = img_element.text.strip()
-
+                
                 # Keep first 2 elements containing date and time
                 date_fields = re.compile("\s").split(date)[:2]
                 
                 title = self.__generate_title(image_type, date_fields)
-                
+                print(title)
                 link = img_element.get(self.HREF_ATTRIBUTE)
-                
+                print(link)
                 links[title] = link
 
         return links
@@ -117,6 +118,8 @@ class ELEKTRO_L3(SatelliteCrawler):
 
         dir_path = self.ELEKTRO_L3_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+        
         return dir_path
 
 
@@ -127,4 +130,5 @@ class ELEKTRO_L3(SatelliteCrawler):
         """
 
         if not os.path.exists(self.ELEKTRO_L3_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.ELEKTRO_L3_DIRECTORY)
             os.makedirs(self.ELEKTRO_L3_DIRECTORY)

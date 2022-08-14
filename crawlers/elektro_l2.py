@@ -1,7 +1,6 @@
 import re
 import os
 import pytz
-import logging
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler
 
@@ -60,7 +59,7 @@ class ELEKTRO_L2(SatelliteCrawler):
             
             title, path = self.__generate_properties(day, month, month_digits, year, utc)
             
-            logging.info(country_time.strftime("Current Date in Moscow, Russia is %d-%m-%y and the time is %H:%M:%S"))
+            self._logger.info(country_time.strftime("Current Date in Moscow, Russia is %d-%m-%y and the time is %H:%M:%S"))
             
             links[title] = self.get_url() + path
 
@@ -81,7 +80,7 @@ class ELEKTRO_L2(SatelliteCrawler):
         # Get rounded utc time and full country time of russia
         utctime, country_time = self.__get_russian_utc_time()
         
-        logging.info(country_time.strftime("Current Date in Moscow, Russia is %d-%m-%y and the time is %H:%M:%S"))
+        self._logger.info(country_time.strftime("Current Date in Moscow, Russia is %d-%m-%y and the time is %H:%M:%S"))
 
         # Extract each field required for building title, filename, and relative_path 
         day, month, month_digits, year, utc = self.__get_date_fields(utctime)
@@ -250,6 +249,8 @@ class ELEKTRO_L2(SatelliteCrawler):
 
         dir_path = self.ELEKTRO_L2_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+
         return dir_path
 
 
@@ -260,4 +261,5 @@ class ELEKTRO_L2(SatelliteCrawler):
         """
 
         if not os.path.exists(self.ELEKTRO_L2_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.ELEKTRO_L2_DIRECTORY)
             os.makedirs(self.ELEKTRO_L2_DIRECTORY)

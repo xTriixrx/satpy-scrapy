@@ -177,7 +177,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260420_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 </details>
-<br />
 
 ### GOES-17
 
@@ -189,7 +188,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
 </details>
-<br />
 
 ### GOES-15
 
@@ -199,7 +197,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
 </details>
-<br />
 
 ### EWS-G1 (GOES-13)
 
@@ -209,7 +206,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
 </details>
-<br />
 
 ### ARKTIKA-M1
 
@@ -219,7 +215,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/V1_3720_20220217143000_RGB.jpg" /></p>
 </details>
-<br />
 
 ### Elektro-L2
 
@@ -229,7 +224,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/210126_1600_original_RGB.jpg" /></p>
 </details>
-<br />
 
 ### Elektro-L3
 
@@ -239,7 +233,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2102110630_e3_295.jpg" /></p>
 <details>
-<br />
 
 ### HIMAWARI-8
 
@@ -249,7 +242,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/full_disk_ahi_natural_color_20210126023000.jpg" /></p>
 </details>
-<br />
 
 ### Fengyun 4A
 
@@ -259,7 +251,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A-_AGRI--_N_DISK_1047E_L1C_MTCC_MULT_NOM_20220210050000_20220210051459_1000M_V0001.jpeg" /> </p>
 </details>
-<br />
 
 ### Fengyun 2G
 
@@ -269,7 +260,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/fy2g_2021048_0530_01_fd.gif" /> </p>
 </details>
-<br />
 
 ### Fengyun 2H
 
@@ -279,7 +269,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY2H_GLB_VIS_GRA_1KM_20220221_0700.jpg" /> </p>
 </details>
-<br />
 
 ### GEO-KOMPSAT-2A
 
@@ -290,7 +279,6 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 </details>
-<br />
 
 ### METEOSAT-8
 
@@ -302,7 +290,6 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
 </details>
-<br />
 
 ### METEOSAT-11
 
@@ -314,7 +301,6 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 01-00 UTC.jpg" /></p>
 </details>
-<br />
 
 ### DSCOVR
 
@@ -328,7 +314,6 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/epic_RGB_20210208061925.png" /></p>
 </details>
-<br />
 
 ### INSAT-3D
 
@@ -338,7 +323,6 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename%3D3DIMG*_L1B_STD_VIS.jpg" /></p>
 </details>
-<br />
 
 ### INSAT-3DR
 
@@ -348,7 +332,6 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename3r%3D3RIMG*_L1B_STD_VIS.jpg" /></p>
 </details>
-<br />
 
 ## Command Line Arguments
 

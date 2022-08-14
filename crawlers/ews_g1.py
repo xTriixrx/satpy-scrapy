@@ -70,6 +70,8 @@ class EWS_G1(SatelliteCrawler):
             # Generate a title based on the href details
             title = self.__generate_title(href)
 
+            self._logger.debug("Generated link " + link + " for image " + title + ".")
+
             links[title] = link
 
         return links
@@ -111,6 +113,7 @@ class EWS_G1(SatelliteCrawler):
         
         title += ' - ' + date + ' - ' + utc[:-2] +  '-' + utc[2:] + ' ' + self.UTC_STRING
 
+        self._logger.debug("Created title for href " + href + ": " + title + ".")
         return title
 
 
@@ -153,6 +156,8 @@ class EWS_G1(SatelliteCrawler):
 
         dir_path = self.EWS_G1_DIRECTORY + os.sep + str(today) + os.sep + utctime + os.sep + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+
         return dir_path
 
 
@@ -162,4 +167,5 @@ class EWS_G1(SatelliteCrawler):
         """
 
         if not os.path.exists(self.EWS_G1_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.EWS_G1_DIRECTORY)
             os.makedirs(self.EWS_G1_DIRECTORY)

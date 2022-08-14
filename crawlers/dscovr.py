@@ -1,5 +1,6 @@
 import re
 import os
+import json
 from crawlers.satellite_crawler import SatelliteCrawler
 
 class DSCOVR(SatelliteCrawler):
@@ -20,7 +21,7 @@ class DSCOVR(SatelliteCrawler):
     DSCOVR_DIRECTORY = 'DSCOVR'
     DSCOVR_ENHANCED = 'enhanced'
     DSCOVR_URL = 'https://epic.gsfc.nasa.gov/api/'
-    DSCOVR_ARCHIVE_URL = 'https://epic.gsfc.nasa.gov/archive/'
+    DSCOVR_ARCHIVE_URL = 'https://epic.gsfc.nasa.gov/archive'
 
     def __init__(self, url, satellite):
         """
@@ -48,6 +49,9 @@ class DSCOVR(SatelliteCrawler):
         # Get JSON response from each image page which provides latest images available
         natural_json = self._extract_content(self.get_url() + self.DSCOVR_NATURAL).json()
         enhanced_json = self._extract_content(self.get_url() + self.DSCOVR_ENHANCED).json()
+
+        self._logger.debug("Extracted Natural Image JSON: " + json.dumps(natural_json, indent=4) + ".")
+        self._logger.debug("Extracted Enhanced Image JSON: " + json.dumps(enhanced_json, indent=4) + ".")
 
         # Get links subsets containing key, value pairs for each set of JSON response
         natural_links = self.__generate_links_set(natural_json, self.DSCOVR_NATURAL)
@@ -77,6 +81,9 @@ class DSCOVR(SatelliteCrawler):
             
             title = self.__generate_title(img_type, date)
             link = self.__generate_link(img_type, date, img)
+
+            self._logger.debug("Generated link " + link + " for image " + title + ".")
+
             links[title] = link
         
         return links
@@ -121,6 +128,8 @@ class DSCOVR(SatelliteCrawler):
 
         dir_path = self.DSCOVR_DIRECTORY + os.sep + str(today) + os.sep + utctime + os.sep + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+
         return dir_path
 
 
@@ -141,6 +150,8 @@ class DSCOVR(SatelliteCrawler):
         title = img_type.capitalize() + ' Color - ' + date_fields[0] + ' - ' + utc_fields[0] + '-' \
             + utc_fields[1] + ' ' + self.UTC_STRING
 
+        self._logger.debug("Created title for image type " + img_type + " and date " + date + ": " + title + ".")
+
         return title
 
 
@@ -150,4 +161,5 @@ class DSCOVR(SatelliteCrawler):
         """
 
         if not os.path.exists(self.DSCOVR_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.DSCOVR_DIRECTORY)
             os.makedirs(self.DSCOVR_DIRECTORY)

@@ -27,7 +27,7 @@ class ARKTIKA_M1(SatelliteCrawler):
     MOSCOW_TIME_ZONE = 'Europe/Moscow'
     ARKTIKA_M1_DIRECTORY = 'ARKTIKA-M1'
     ARKTIKA_M1_URL_HOSTNAME = 'ntsomz.gptl.ru'
-    ARKTIKA_M1_FTP_BASE_DIRECTORY = 'ARKTIKA_M_1/'
+    ARKTIKA_M1_FTP_BASE_DIRECTORY = 'ARKTIKA_M_1'
     ARKTIKA_M1_URL = 'ftp://electro:electro@ntsomz.gptl.ru:2121/ARKTIKA_M_1'
     ARKTIKA_M1_PREFIXES = ['Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 
     'Band 7', 'Band 8', 'Band 9', 'Band 10']
@@ -61,7 +61,8 @@ class ARKTIKA_M1(SatelliteCrawler):
         
         # Get current utc time of russia
         utctime = self.__get_russian_utc_time()
-
+        self._logger.debug("Approximate current russian utc time is: " + utctime.strftime("%x - %X"))
+        
         # Extract each field required for run
         year, month = self.__get_date_fields(utctime)
 
@@ -102,9 +103,17 @@ class ARKTIKA_M1(SatelliteCrawler):
         # Initiate FTP connection
         with FTP() as ftp:
             ftp.connect(self.ARKTIKA_M1_URL_HOSTNAME, self.ARKTIKA_M1_FTP_PORT)
-            ftp.login(self.ARKTIKA_M1_USERNAME, self.ARKTIKA_M1_PASSWORD)
-            ftp.cwd(self.ARKTIKA_M1_FTP_BASE_DIRECTORY + '/' + year + '/' + translated_month)
+            self._logger.debug("Connecting to FTP server at: " + self.ARKTIKA_M1_URL_HOSTNAME \
+                + ":" + str(self.ARKTIKA_M1_FTP_PORT) + ".")
             
+            ftp.login(self.ARKTIKA_M1_USERNAME, self.ARKTIKA_M1_PASSWORD)
+            self._logger.debug("Logging into FTP server with credentials: " + self.ARKTIKA_M1_USERNAME \
+                + ":" + self.ARKTIKA_M1_PASSWORD + ".")
+
+            base_dir = self.ARKTIKA_M1_FTP_BASE_DIRECTORY + '/' + year + '/' + translated_month
+            ftp.cwd(base_dir)
+            self._logger.debug("Changed directory to: " + base_dir + ".")
+
             # If days is empty, get the list of days in the current directory
             if not days:
                 days = ftp.nlst()
@@ -112,7 +121,10 @@ class ARKTIKA_M1(SatelliteCrawler):
             # Iterate over each day and get the links for each day, aggregating them into the links map
             for day in days:
                 tmp_links = self.extract_links_for_day(ftp, year, translated_month, day, utc_range)
+                self._logger.debug("Changed directory back to: " + base_dir + ".")
                 links = {**tmp_links, **links}
+        self._logger.debug("Closing connection to FTP server at: " + self.ARKTIKA_M1_URL_HOSTNAME \
+                + ":" + str(self.ARKTIKA_M1_FTP_PORT) + ".")
 
         return links
 
@@ -135,6 +147,7 @@ class ARKTIKA_M1(SatelliteCrawler):
         
         # Enter the valid day directory and get the list of all the utc_times available
         ftp.cwd(day)
+        self._logger.debug("Changed directory to: " + day + ".")
         utc_times = ftp.nlst()
         
         # For each utc_time if its within range get the files & create links
@@ -144,13 +157,16 @@ class ARKTIKA_M1(SatelliteCrawler):
             curr_time = time_map[0] + time_map[1]
             
             # If the current time is not within the utc_range, skip over it
-            if curr_time not in utc_range:
+            if curr_time not in utc_range and utc_range:
+                self._logger.debug("UTC time " + time_map[0] + "-" + time_map[1] + " UTC is not within provided UTC range.")
                 continue
 
             # Enter the valid utc directory and get the list of all the files
             ftp.cwd(utc_time)
-            files = ftp.nlst()
+            self._logger.debug("Changed directory to: " + utc_time + ".")
 
+            files = ftp.nlst()
+            
             # For each file, generate the title and link & insert into links map
             for file in files:
                 # Get time from file and parse into datetime for better readability
@@ -172,6 +188,7 @@ class ARKTIKA_M1(SatelliteCrawler):
                 links[title] = link
             # Navigate back one directory
             ftp.cwd('..')
+            self._logger.debug("Changed directory back to: " + day + ".")
         # Navigate back one directory
         ftp.cwd('..')
 

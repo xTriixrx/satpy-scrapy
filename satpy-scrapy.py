@@ -265,7 +265,7 @@ def filter_logger():
 
     arktika_m1_options = \
     [
-        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10'
+        'Band 01', 'Band 02', 'Band 03', 'Band 04', 'Band 05', 'Band 06', 'Band 07', 'Band 08', 'Band 99', 'Band 10'
     ]
 
     print('Filter options for GOES-16 & GOES-17, & GOES-18')

@@ -232,7 +232,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 <details>
 <summary>Example Image</summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2102110630_e3_295.jpg" /></p>
-<details>
+</details>
 
 ### HIMAWARI-8
 

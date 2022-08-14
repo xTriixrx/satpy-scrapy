@@ -170,9 +170,8 @@ You can test your Tor client configuration by running the tor_check.py program w
 ### GOES-16
 
 <p align="center">GOES-16, formerly known as GOES-R before reaching geostationary orbit, is the first of the GOES-R series of Geostationary Operational Environmental Satellite (GOES) operated by NASA and the National Oceanic and Atmospheric Administration (NOAA).</p>
-
 <details>
-<summary>Example Images</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210231620_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260420_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
@@ -181,9 +180,8 @@ You can test your Tor client configuration by running the tor_check.py program w
 ### GOES-17
 
 <p align="center">GOES-17 (formerly GOES-S) is the second of the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA).</p>
-
 <details>
-<summary>Example Images</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
@@ -192,81 +190,72 @@ You can test your Tor client configuration by running the tor_check.py program w
 ### GOES-15
 
 <p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
 </details>
 
 ### EWS-G1 (GOES-13)
 
 <p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
 </details>
 
 ### ARKTIKA-M1
 
 <p align="center">Arktika-M (Russian Арктика-М) is a Russian multipurpose satellite constellation under construction. The main task of Arktika-M is weather observation in the northern part of Russian territory; in addition, the satellites are to be used there as data relays and for emergency communication. Other applications are the observation of space weather, the earth's magnetic field and the ionosphere. The first satellite in the constellation - Arktika-M1 - was launched on the 28th. February 2021 with a Soyuz 2.1b/Fregat rocket from Baikonur Cosmodrome. Another four satellites are to follow by 2025.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/V1_3720_20220217143000_RGB.jpg" /></p>
 </details>
 
 ### Elektro-L2
 
 <p align="center">The Electro-L satellite is Russia's second high-altitude weather observatory, coming after a troubled mission launched in 1994 that never achieved all of its goals The next-generation Electro-L program faced years of delays because of interruptions in funding. The Electro-L spacecraft will function for up to 10 years, collecting weather imagery several times per hour with visible and infrared cameras.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/210126_1600_original_RGB.jpg" /></p>
 </details>
 
 ### Elektro-L3
 
 <p align="center">The third satellite in the series Elektro-L No.3, was launched from Baikonur Cosmodrome on 24 December 2019 at 12:03 UTC by a Proton-M rocket.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2102110630_e3_295.jpg" /></p>
 </details>
 
 ### HIMAWARI-8
 
 <p align="center">Himawari 8 (ひまわり8号) is a Japanese weather satellite, the 8th of the Himawari geostationary weather satellites operated by the Japan Meteorological Agency. Himawari-8 will be succeeded by Himawari-9 which is currently in standby mode, until 2022.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/full_disk_ahi_natural_color_20210126023000.jpg" /></p>
 </details>
 
 ### Fengyun 4A
 
 <p align="center">Fengyun-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after Fengyun-2 satellite series.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A-_AGRI--_N_DISK_1047E_L1C_MTCC_MULT_NOM_20220210050000_20220210051459_1000M_V0001.jpeg" /> </p>
 </details>
 
 ### Fengyun 2G
 
 <p align="center">FENGYUN 2G is a meteorological satellites to provide warnings of weather fronts and tropical cyclones across Asia. FENGYUN 2G will take over for the Fengyun 2E weather observatory at 105 degrees east longitude. China's fleet of Fengyun 2 spacecraft have a similar mission to NOAA's GOES weather satellites in geostationary orbit.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/fy2g_2021048_0530_01_fd.gif" /> </p>
 </details>
 
 ### Fengyun 2H
 
 <p align="center">Fengyun-2H is the eighth and final of the Fengyun-2 series of spin-stabilized weather satellites for geostationary orbit, development of which began in the 1980s under CASC. The satellite is equipped with a Stretched Visible and Infrared Spin Scan Radiometer (S-VISSR) for multi-purpose weather satellite imagery, a Space Environment Monitor (SEM), a Solar X-ray Monitor (SXM) and Data Collection Service (DCS).</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY2H_GLB_VIS_GRA_1KM_20220221_0700.jpg" /> </p>
 </details>
 
@@ -274,18 +263,16 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <p align="center">GEO-KOMPSAT 2A is a South Korean geostationary meteorological satellite developed by KARI. It is one component of the two satellite GEO-KOMPSAT 2 program.
 The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the meteorological GEO-KOMPSAT-2A (GK2A) and the ocean monitoring GEO-KOMPSAT-2B (GK2B) sharing the same satellite bus. The lifetime of both satellites will be no less than 10 years.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 </details>
 
 ### METEOSAT-8
 
 <p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022.</p>
-
 <details>
-<summary>Example Images</summary>
+<summary></summary>
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m8.jpg" /></p>
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
@@ -294,9 +281,8 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 ### METEOSAT-11
 
 <p align="center">Meteosat-11 is the prime operational geostationary satellite, positioned at 0º and providing full disc imagery every 15 minutes. It also provides Search and Rescue monitoring and Data Collection Platform Relay Service.</p>
-
 <details>
-<summary>Example Images</summary>
+<summary></summary>
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m11.jpg" /></p>
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 01-00 UTC.jpg" /></p>
@@ -307,9 +293,8 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 <p align="center">The Deep Space Climate Observatory, or DSCOVR, was launched in February of 2015, and maintains the nation's real-time solar wind monitoring capabilities, which are critical to the accuracy and lead time of NOAA's space weather alerts and forecasts. Without timely and accurate warnings, space weather events—like geomagnetic storms—have the potential to disrupt nearly every major public infrastructure system on Earth, including power grids, telecommunications, aviation and GPS.
 
 The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role in supporting solar wind alerts and warnings from the L1 orbit, which is the neutral gravity point between the Earth and Sun, approximately one million miles from Earth. L1 is a good position from which to monitor the Sun, because the constant stream of particles from the Sun (the solar wind) reaches L1 up to an hour before reaching Earth.</p>
-
 <details>
-<summary>Example Images</summary>
+<summary></summary>
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/epic_1b_20210209150054.png" /></p>
 
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/epic_RGB_20210208061925.png" /></p>
@@ -318,18 +303,16 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 ### INSAT-3D
 
 <p align="center">INSAT-3D is a meteorological, data relay and satellite aided search and rescue satellite developed by the Indian Space Research Organisation and was launched successfully on 26 July 2013 using an Ariane 5 ECA launch vehicle from French Guiana. The satellite has many new technology elements like star sensor, micro stepping Solar Array Drive Assembly (SADA) to reduce the spacecraft disturbances and Bus Management Unit (BMU) for control and telecom and telemetry function. It also incorporates new features of bi-annual rotation and Image and Mirror motion compensations for improved performance of the meteorological payloads.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename%3D3DIMG*_L1B_STD_VIS.jpg" /></p>
 </details>
 
 ### INSAT-3DR
 
 <p align="center">INSAT-3DR is an Indian weather satellite built by the Indian Space Research Organisation and operated by the Indian National Satellite System. It will provide meteorological services to India using a 6-channel imager and a 19-channel sounder, as well as search and rescue information and message relay for terrestrial data collection platforms. The satellite was launched on 8 September 2016, and is a follow-up to INSAT-3D.</p>
-
 <details>
-<summary>Example Image</summary>
+<summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename3r%3D3RIMG*_L1B_STD_VIS.jpg" /></p>
 </details>
 

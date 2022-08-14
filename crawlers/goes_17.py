@@ -16,7 +16,7 @@ class GOES_17(SatelliteCrawler):
     @modified 8/12/22
     """
 
-    GOES_17_RESOLUTIONS = ['339', '1808', '5424', '10848', '21696']
+    GOES_17_RESOLUTIONS = ['339', '678', '1808', '5424', '10848', '21696']
 
     GOES_17_IMAGES = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13',
     '14', '15', '16', 'AirMass', 'DMW', 'DayCloudPhase', 'DayConvection', 'Dust', 'FireTemperature',
@@ -128,6 +128,8 @@ class GOES_17(SatelliteCrawler):
 
         dir_path = self.GOES_17_DIRECTORY + "/" + str(today) + "/" + utctime + "/" + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+        
         return dir_path
 
 
@@ -138,6 +140,7 @@ class GOES_17(SatelliteCrawler):
         """
 
         if not os.path.exists(self.GOES_17_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.GOES_17_DIRECTORY)
             os.makedirs(self.GOES_17_DIRECTORY)
 
 

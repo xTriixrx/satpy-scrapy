@@ -85,6 +85,14 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <details><summary></summary>
 
+### GOES-15
+
+<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year.</p>
+<details>
+<summary></summary>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
+</details>
+
 ### GOES-16
 
 <p align="center">GOES-16, formerly known as GOES-R before reaching geostationary orbit, is the first of the GOES-R series of Geostationary Operational Environmental Satellite (GOES) operated by NASA and the National Oceanic and Atmospheric Administration (NOAA).</p>
@@ -105,14 +113,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
 </details>
 
-### GOES-15
-
-<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year.</p>
-<details>
-<summary></summary>
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
-</details>
-
 ### EWS-G1 (GOES-13)
 
 <p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
@@ -129,7 +129,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/V1_3720_20220217143000_RGB.jpg" /></p>
 </details>
 
-### Elektro-L2
+### ELEKTRO-L2
 
 <p align="center">The Electro-L satellite is Russia's second high-altitude weather observatory, coming after a troubled mission launched in 1994 that never achieved all of its goals The next-generation Electro-L program faced years of delays because of interruptions in funding. The Electro-L spacecraft will function for up to 10 years, collecting weather imagery several times per hour with visible and infrared cameras.</p>
 <details>
@@ -137,7 +137,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/210126_1600_original_RGB.jpg" /></p>
 </details>
 
-### Elektro-L3
+### ELEKTRO-L3
 
 <p align="center">The third satellite in the series Elektro-L No.3, was launched from Baikonur Cosmodrome on 24 December 2019 at 12:03 UTC by a Proton-M rocket.</p>
 <details>
@@ -153,7 +153,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/full_disk_ahi_natural_color_20210126023000.jpg" /></p>
 </details>
 
-### Fengyun 4A
+### FY-4A
 
 <p align="center">Fengyun-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after Fengyun-2 satellite series.</p>
 <details>
@@ -161,7 +161,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A-_AGRI--_N_DISK_1047E_L1C_MTCC_MULT_NOM_20220210050000_20220210051459_1000M_V0001.jpeg" /> </p>
 </details>
 
-### Fengyun 2G
+### FY-2G
 
 <p align="center">FENGYUN 2G is a meteorological satellites to provide warnings of weather fronts and tropical cyclones across Asia. FENGYUN 2G will take over for the Fengyun 2E weather observatory at 105 degrees east longitude. China's fleet of Fengyun 2 spacecraft have a similar mission to NOAA's GOES weather satellites in geostationary orbit.</p>
 <details>
@@ -169,7 +169,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/fy2g_2021048_0530_01_fd.gif" /> </p>
 </details>
 
-### Fengyun 2H
+### FY-2H
 
 <p align="center">Fengyun-2H is the eighth and final of the Fengyun-2 series of spin-stabilized weather satellites for geostationary orbit, development of which began in the 1980s under CASC. The satellite is equipped with a Stretched Visible and Infrared Spin Scan Radiometer (S-VISSR) for multi-purpose weather satellite imagery, a Space Environment Monitor (SEM), a Solar X-ray Monitor (SXM) and Data Collection Service (DCS).</p>
 <details>
@@ -242,7 +242,7 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |Satellite|Short-Arg|Long-Args|Supported Image Names|Supported Resolutions|
 |---|---|---|---|---|
 |**DSCOVR**|-d|--images|'Natural Color'<br/>'Enhanced Color'|2048x2048|
-|**EWES-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
+|**EWS-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
 |**GOES-15**|-g15|--images|'Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1250x1250|
 |**GOES-16**<br/>**GOES-17**<br/>**GOES-18**|-g16<br/>-g17<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|

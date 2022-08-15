@@ -85,9 +85,9 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <details><summary></summary>
 
-### GOES-15
+### GOES-15 (DEPRECATED)
 
-<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year.</p>
+<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year. As of August 10th 2022, the GOES-15 IMAGER subsystem has been turned off and has been placed back into On-Orbit Storage. GOES-18 will now operate in tandum with GOES-17.</p>
 <details>
 <summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>

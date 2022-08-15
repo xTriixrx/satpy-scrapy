@@ -7,106 +7,22 @@ satpy-scrapy is a modular, multithreaded, protocol based high resolution satelli
 The --images= argument should not be used for the ELEKTRO-L2 satellite and the --utcrange=/--day= arguments should only be used for the ELEKTRO-L2 and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
 
  * sudo python3 satpy-scrapy.py -h
- * sudo python3 satpy-scrapy.py -d
- * sudo python3 satpy-scrapy.py -e
- * sudo python3 satpy-scrapy.py -w
- * sudo python3 satpy-scrapy.py -i8
- * sudo python3 satpy-scrapy.py -g1
- * sudo python3 satpy-scrapy.py -a1
- * sudo python3 satpy-scrapy.py -k2
- * sudo python3 satpy-scrapy.py -k3
- * sudo python3 satpy-scrapy.py -m8
- * sudo python3 satpy-scrapy.py -m11
- * sudo python3 satpy-scrapy.py -g15
- * sudo python3 satpy-scrapy.py -fy4a
- * sudo python3 satpy-scrapy.py -fy2g
- * sudo python3 satpy-scrapy.py -fy2h
- * sudo python3 satpy-scrapy.py -gk2a
  * sudo python3 satpy-scrapy.py --help
- * sudo python3 satpy-scrapy.py -insat3d
- * sudo python3 satpy-scrapy.py -insat3dr
  * sudo python3 satpy-scrapy.py --filters
- * sudo python3 satpy-scrapy.py -e --images="GeoColor"
- * sudo python3 satpy-scrapy.py -g1 --images="Visible"
- * sudo python3 satpy-scrapy.py -g15 --images="Visible"
- * sudo python3 satpy-scrapy.py -fy4a --images="Visible"
- * sudo python3 satpy-scrapy.py -fy2g --images="Visible"
- * sudo python3 satpy-scrapy.py -fy2h --images="Visible"
+ * sudo python3 satpy-scrapy.py -g16 --images="GeoColor"
  * sudo python3 satpy-scrapy.py -k2 --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -a1 --utcrange="0000-2300"
- * sudo python3 satpy-scrapy.py -d --images="\"Enhanced Color\""
+ * sudo python3 satpy-scrapy.py -d --images="\\\"Enhanced Color\\\""
  * sudo python3 satpy-scrapy.py -a1 --day="25" --utcrange="0000-2300"
  * sudo python3 satpy-scrapy.py -k2 --day="25" --utcrange="0000-2300"
- * sudo python3 satpy-scrapy.py -k3 --images="\"Synthesized Color\""
- * sudo python3 satpy-scrapy.py -w --images="\"Derived Motion Winds\""
- * sudo python3 satpy-scrapy.py -i8 --images="\"Natural Color\" \"GeoColor\""
- * sudo python3 satpy-scrapy.py -e --images=\"GeoColor \"Derived Motion Winds\""
- * sudo python3 satpy-scrapy.py -gk2a --images="\"Natural Color\" \"True Color\""
+ * sudo python3 satpy-scrapy.py -gk2a --images="\\\"Natural Color\\\" \\\"True Color\\\""
 
 The merge-img program is a utility program which will merge together patches of a full res image together. Some satellites being queried are written to extract the full resolution patches to be merged together at a later time, rather than downloading a single, low resolution image. Some images provide the full 11008px x 11008px resolution image while others are downscaled to some other lower resolution. Here are some sample commands for this program:
 
- * python3 merge-img.py --destination="\"HIMAWARI-8/2021-02-08/22-30 UTC/GeoColor\"" --dimension="16"
- * python3 merge-img.py --destination="\"HIMAWARI-8/2021-02-08/22-30 UTC/RGB AirMass\"" --dimension="8"
+ * python3 merge-img.py --destination="\\\"HIMAWARI-8/2021-02-08/22-30 UTC/GeoColor\\\"" --dimension="16"
+ * python3 merge-img.py --destination="\\\"HIMAWARI-8/2021-02-08/22-30 UTC/RGB AirMass\\\"" --dimension="8"
 
-It is highly recommended to target a single image type at a time for a given scraping run as each image requires 256 (16x16) or 64 (8x8) web scraping runs for each image patch. As the number of images increase, the risk of failure exponentially increases along with the number of web scrape requests. It can also be said that the more images scraped in a single run the longer the run will take, so if this is to be automated the chance of missing images increases. Optimally, this would benefit from a mulithreaded, multisystem environment such as a Beowulf cluster. Below here is a list of each satellite that follows this pattern of individual image patches and will need to merge the image patches together, along with the available resolution:
-
-HIMAWARI-8:
-
- * Band 1 (16x16) - 11008x11008 resolution.
- * Band 2 (16x16) - 11008x11008 resolution.
- * Band 3 (16x16) - 11008x11008 resolution.
- * Band 4 (16x16) - 11008x11008 resolution.
- * Band 5 (8x8) - 5504x5504 resolution.
- * Band 6 (8x8) - 5504x5504 resolution.
- * Band 7 (8x8) - 5504x5504 resolution.
- * Band 8 (8x8) - 5504x5504 resolution.
- * Band 9 (8x8) - 5504x5504 resolution.
- * Band 10 (8x8) - 5504x5504 resolution.
- * Band 11 (8x8) - 5504x5504 resolution.
- * Band 12 (8x8) - 5504x5504 resolution.
- * Band 13 (8x8) - 5504x5504 resolution.
- * Band 14 (8x8) - 5504x5504 resolution.
- * Band 15 (8x8) - 5504x5504 resolution.
- * Band 16  (8x8) - 5504x5504 resolution.
- * GeoColor (16x16) - 11008x11008 resolution.
- * Shortwave Albedo (8x8) - 5504x5504 resolution.
- * Visible Albedo (8x8) - 5504x5504 resolution.
- * Split Window Difference (8x8) - 5504x5504 resolution.
- * Natural Color (16x16) - 11008x11008 resolution.
- * RGB AirMass (8x8) - 5504x5504 resolution.
- * Day Cloud Phase Distinction (16x16) - 11008x11008 resolution.
- * Dust (8x8) - 5504x5504 resolution.
- * Fire Temperature (8x8) - 5504x5504 resolution.
- * Natural Fire Color (16x16) - 11008x11008 resolution.
- * Ash (8x8) - 5504x5504 resolution.
- * Sulfur Dioxide (8x8) - 5504x5504 resolution.
- * Cloud-Top Height (8x8) - 5504x5504 resolution.
- * Cloud Geometric Thickness (8x8) - 5504x5504 resolution.
- * Cloud Layers (8x8) - 5504x5504 resolution.
- * Cloud Optical Thickness (8x8) - 5504x5504 resolution.
- * Cloud Effective Radius (8x8) - 5504x5504 resolution.
- * Cloud Phase (8x8) - 5504x5504 resolution.
-
-METEOSAT-8 (42.0E) && METEOSAT-11 (0.0)
-
- * Band 1 (8x8) - 3712x3712 resolution.
- * Band 2 (8x8) - 3712x3712 resolution.
- * Band 3 (8x8) - 3712x3712 resolution.
- * Band 4 (8x8) - 3712x3712 resolution.
- * Band 5 (8x8) - 3712x3712 resolution.
- * Band 6 (8x8) - 3712x3712 resolution.
- * Band 7 (8x8) - 3712x3712 resolution.
- * Band 8 (8x8) - 3712x3712 resolution.
- * Band 9 (8x8) - 3712x3712 resolution.
- * Band 10 (8x8) - 3712x3712 resolution.
- * Band 11 (8x8) - 3712x3712 resolution.
- * GeoColor (8x8) - 3712x3712 resolution.
- * Natural Color (8x8) - 3712x3712 resolution.
- * RGB AirMass (8x8) - 3712x3712 resolution.
- * Day Cloud Phase Distinction (8x8) - 3712x3712 resolution.
- * Nighttime Microphysics (8x8) - 3712x3712 resolution.
- * Dust (8x8) - 3712x3712 resolution.
- * Ash (8x8) - 3712x3712 resolution.
+It is highly recommended to target a single image type at a time for a given scraping run as each image requires 256 (16x16) or 64 (8x8) web scraping runs for each image patch. As the number of images increase, the risk of failure exponentially increases along with the number of web scrape requests. It can also be said that the more images scraped in a single run the longer the run will take, so if this is to be automated the chance of missing images increases. Optimally, this would benefit from a mulithreaded, multisystem environment such as a Beowulf cluster.
 
 Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th, 2021 - January 27th, 2021.
 </p>
@@ -121,7 +37,7 @@ Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this prog
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A_20220212160000_20220212161459_TO_20220213160000_20220213161459.gif" /> </p>
 
-<p align="center">Below is a .gif file created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2021. The composite color mapping was created by blending the first 3 bands (1-BLUE, 2-RED, 3-GREEN) into a false color composite. For more information on how to do this a quick tutorial with GIMP can be found here: <a href="https://remoteastrophotography.com/2020/03/using-gimp-to-combine-three-mono-images-into-one-rgb">Using GIMP to Compbine Three Mono Images Into One RGB</a>
+<p align="center">Below is a .gif file created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2021. The composite color mapping was created by blending the first 3 bands (1-BLUE, 2-RED, 3-GREEN) into a false color composite. For more information on how to do this a quick tutorial with GIMP can be found here: <a href="https://remoteastrophotography.com/2020/03/using-gimp-to-combine-three-mono-images-into-one-rgb">Using GIMP to Combine Three Mono Images Into One RGB</a>
 </p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ARKTIKA-M1-20220211024502121945.gif" /> </p>
@@ -166,6 +82,8 @@ You can test your Tor client configuration by running the tor_check.py program w
 </p>
 
 ## Supported Satellites
+
+<details><summary></summary>
 
 ### GOES-16
 
@@ -316,38 +234,46 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename3r%3D3RIMG*_L1B_STD_VIS.jpg" /></p>
 </details>
 
-## Command Line Arguments
+</details>
+
+## Argument Table
+<details><summary></summary>
+
+|Satellite|Short-Arg|Long-Args|Supported Image Names|Supported Resolutions|
+|---|---|---|---|---|
+|**DSCOVR**|-d|--images|'Natural Color'<br/>'Enhanced Color'|2048x2048|
+|**EWES-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
+|**GOES-15**|-g15|--images|'Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1250x1250|
+|**GOES-16**<br/>**GOES-17**<br/>**GOES-18**|-g16<br/>-g17<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
+|**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
+|**ELEKTRO-L2**|-k2|--images<br/>--day<br/>--utcrange|'Original RGB'|11136x11136|
+|**ELEKTRO-L3**|-k3|--images|'Synthesized Color'<br/>'Band 1'<br/>'Band 9'|2784x3418 (Band 9)<br/>11136x13672|
+|**FENGYUN-2G**|-fy2g|--images|Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1125x1125|
+|**FENGYUN-2H**|-fy2h|--images|'False Color'<br/>'Infared 1'<br/>'Infared 2'<br/>'Infared 3'<br/>'Infared 4'<br/>'Visible'|2288x2288<br/>9152x9152 (Visible)|
+|**FENGYUN-4A**|-fy4a|--images|'Visible' (11k)<br/>'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 9 Enhanced'<br/>'Band 10'<br/>'Band 10 Enhanced'<br/>'Band 11'<br/>'Band 11 Enhanced'<br/>'Band 12'<br/>'Band 12 Enhanced'<br/>'Band 13'<br/>'Band 13 Enhanced'<br/>'Band 14'<br/>'Band 14 Enhanced'<br/>|2748x2748<br/>5496x5496<br/>10992x10992<br/>21984x21984|
+|**INSAT-3D**|-insat3d|--images| |1260x1410|
+|**INSAT-3DR**|-insat3dr|--images| |1260x1410|
+|**METEOSAT-8**|-m8|--images| | |
+|**METEOSAT-11**|-m11|--images| | |
+|**ARKTIKA-M1**|-a1|--images<br/>--day<br/>--utcrange|'Band 01'<br/>'Band 02'<br/>'Band 03'<br/>'Band 04'<br/>'Band 05'<br/>'Band 06'<br/>'Band 07'<br/>'Band 08'<br/>'Band 09'<br/>'Band 10'<br/>|1392x1392|
+|**GEO-KOMPSAT-2A**|-gk2a|--images|'VIS 0.47µm'<br/>'VIS 0.51µm'<br/>'VIS 0.64µm' (22k)<br/>'VIS 0.86µm'<br/>'NIR 1.37µm'<br/>'NIR 1.6µm'<br/>'SWIR 3.8µm'<br/>'WV 6.3µm'<br/>'WV 6.9µm'<br/>'WV 7.3µm'<br/>'IR 8.7µm'<br/>'IR 9.6µm'<br/>'IR 10.5µm'<br/>'IR 11.2µm'<br/>'IR 12.3µm'<br/>'IR 13.3µm'<br/>'True Color'<br/>'Natural Color'<br/>'AirMass RGB'<br/>'Dust RGB'<br/>'Daynight RGB'<br/>'Fog RGB'<br/>'Storm RGB'<br/>'Snowfog RGB'<br/>'Cloud RGB'<br/>'Ash RGB'<br/>'Enhanced IR WV 6.3µm'<br/>'Enhanced IR WV 6.9µm'<br/>'Enhanced IR WV 7.3µm'<br/>'Enhanced IR 10.5µm'|5500x5637<br/>11000x11275 (partial)<br/>22000x22550|
+</details>
+
+### Additional Command Line Argument Info
 
 Short Arguments
    * '-h': Triggers help logging function.
-   * '-d': Instantiates DSCOVR crawler to extract ever possible image for this vehicle.
-   * '-e': Instantiates GOES-EAST crawler to extract every possible image for this vehicle.
-   * '-w': Instantiates GOES-WEST crawler to extract every possible image for this vehicle.
-   * '-i8': Instantiates HIMAWARI-8 crawler to extract every possible image for this vehicle.
-   * '-g1': Instantiates EWS-G1 crawler to extract every possible image for this vehicle.
-   * '-a1': Instantiates ARKTIKA-M1 crawler to extract every possible image for this vehicle.
-   * '-k2': Instantiates ELEKTRO-L2 crawler to extract every possible image for this vehicle.
-   * '-k3': Instantiates ELEKTRO-L3 crawler to extract every possible image for this vehicle.
-   * '-m8': Instantiates METEOSAT-8 crawler to extract every possible image for this vehicle.
-   * '-m11': Instantiates METEOSAT-11 crawler to extract every possible image for this vehicle.
-   * '-g15': Instantiates GOES-15 crawler to extract every possible image for this vehicle.
-   * '-fy4a': Instantiates FENGYUN-4A crawler to extract ever possible image for this vehicle.
-   * '-fy2g': Instantiates FENGYUN-2G crawler to extract ever possible image for this vehicle.
-   * '-fy2h': Instantiates FENGYUN-2H crawler to extract ever possible image for this vehicle.
-   * '-gk2a': Instantiates GEO-KOMPSAT-2A crawler to extract every possible image for this vehicle.
-   * '-insat3d': Instantiates INSAT-3D crawler to extract every possible image for this vehicle.
-   * '-insat3dr': Instantiates INSAT-3DR crawler to extract every possible image for this vehicle.
 
 Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
+   * '--resolution=': Accepts some resolution such as '10848 or 678', currently only used by GOES-16, GOES-17, and GOES-18 scrapers. 
    * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by ARKTIKA-M1 crawler in half hour increments.
    * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 or ARKTIKA-M1 FTP server.
 
 ### Future Satellite Support
 
- * GOES-18
  * FY-2F 4k x 4k images (China/Asia Region)
  * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)
  * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GEO-KOMPSAT-2B)

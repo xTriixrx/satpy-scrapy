@@ -113,6 +113,14 @@ You can test your Tor client configuration by running the tor_check.py program w
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
 </details>
 
+### GOES-18
+
+<p align="center">GOES-18 (formerly GOES-T) is the third of the "GOES-R Series", the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA).</p>
+<details>
+<summary></summary>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20222270200_GOES18-ABI-FD-GEOCOLOR-1808x1808.jpg" /></p>
+</details>
+
 ### EWS-G1 (GOES-13)
 
 <p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>

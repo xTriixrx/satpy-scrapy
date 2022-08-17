@@ -194,7 +194,7 @@ The GK-2 program is to develop two geostationary orbit satellites, the meteorolo
 
 ### METEOSAT-9 (IODC)
 
-<p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-9 took over as prime IODC spacecraft on June 1st, 2022; replacing Meteosat 8.</p>
+<p align="center">Meteosat 9 is a weather satellite, also known as MSG-2. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-9 took over as prime IODC spacecraft on June 1st, 2022; replacing Meteosat 8.</p>
 <details>
 <summary></summary>
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/METEOSAT-9-2022-08-16%2023-00%20UTC.jpg" /></p>
@@ -297,7 +297,7 @@ Long Arguments
 
 ### METEOSAT-8
 
-<p align="center">Meteosat 8 is a weather satellite, also known as MSG-2. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022. As of June 2022, METEOSAT-8 has been decommissioned and placed into a "graveyard orbit".</p>
+<p align="center">Meteosat 8 is a weather satellite, also known as MSG-1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022. As of June 2022, METEOSAT-8 has been decommissioned and placed into a "graveyard orbit".</p>
 <details>
 <summary></summary>
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m8.jpg" /></p>

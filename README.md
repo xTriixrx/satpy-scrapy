@@ -85,14 +85,6 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 <details><summary></summary>
 
-### GOES-15 (DEPRECATED)
-
-<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year. As of August 10th 2022, the GOES-15 IMAGER subsystem has been turned off and has been placed back into On-Orbit Storage. GOES-18 will now operate in tandum with GOES-17.</p>
-<details>
-<summary></summary>
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
-</details>
-
 ### GOES-16
 
 <p align="center">GOES-16, formerly known as GOES-R before reaching geostationary orbit, is the first of the GOES-R series of Geostationary Operational Environmental Satellite (GOES) operated by NASA and the National Oceanic and Atmospheric Administration (NOAA).</p>
@@ -194,24 +186,12 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 </details>
 
-### METEOSAT-8 (DEPRECATED)
-
-<p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022. As of June 2022, METEOSAT-8 has been decommissioned and placed into a "graveyard orbit".</p>
-<details>
-<summary></summary>
-<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m8.jpg" /></p>
-
-<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
-</details>
-
 ### METEOSAT-9
 
-<p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022.</p>
+<p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-9 took over as prime IODC spacecraft on June 1st, 2022; replacing Meteosat 8.</p>
 <details>
 <summary></summary>
-<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m8.jpg" /></p>
-
-<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/METEOSAT-9-2022-08-16%2023-00%20UTC.jpg" /></p>
 </details>
 
 ### METEOSAT-11
@@ -253,6 +233,7 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 </details>
 
 </details>
+<br/>
 
 ## Argument Table
 <details><summary></summary>
@@ -261,7 +242,6 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |---|---|---|---|---|
 |**DSCOVR**|-d|--images|'Natural Color'<br/>'Enhanced Color'|2048x2048|
 |**EWS-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
-|**GOES-15**|-g15|--images|'Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1250x1250|
 |**GOES-16**<br/>**GOES-17**<br/>**GOES-18**|-g16<br/>-g17<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
 |**ELEKTRO-L2**|-k2|--images<br/>--day<br/>--utcrange|'Original RGB'|11136x11136|
@@ -269,13 +249,13 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |**FENGYUN-2G**|-fy2g|--images|Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1125x1125|
 |**FENGYUN-2H**|-fy2h|--images|'False Color'<br/>'Infared 1'<br/>'Infared 2'<br/>'Infared 3'<br/>'Infared 4'<br/>'Visible'|2288x2288<br/>9152x9152 (Visible)|
 |**FENGYUN-4A**|-fy4a|--images|'Visible' (11k)<br/>'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 9 Enhanced'<br/>'Band 10'<br/>'Band 10 Enhanced'<br/>'Band 11'<br/>'Band 11 Enhanced'<br/>'Band 12'<br/>'Band 12 Enhanced'<br/>'Band 13'<br/>'Band 13 Enhanced'<br/>'Band 14'<br/>'Band 14 Enhanced'<br/>|2748x2748<br/>5496x5496<br/>10992x10992<br/>21984x21984|
-|**INSAT-3D**|-insat3d|--images| |1260x1410|
-|**INSAT-3DR**|-insat3dr|--images| |1260x1410|
-|**METEOSAT-8**|-m8|--images| | |
-|**METEOSAT-11**|-m11|--images| | |
+|**METEOSAT-9**<br/>**METEOSAT-11**|-m9<br/>-m11|--images|'Band 1'<br/>'Band 2'<br/>'Band 3'<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'GeoColor'<br/>'ProxyVis'<br/>'Dust - DEBRA'<br/>'Split Window Difference'<br/>'Split Window Difference Dust'<br/>'Split Window Difference Grayscale'<br/>'Natural Color'<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction'<br/>'Nighttime Microphysics'<br/>'Dust'<br/>'Natural Color-Fire'<br/>'Ash'<br/>|3712x3712|
 |**ARKTIKA-M1**|-a1|--images<br/>--day<br/>--utcrange|'Band 01'<br/>'Band 02'<br/>'Band 03'<br/>'Band 04'<br/>'Band 05'<br/>'Band 06'<br/>'Band 07'<br/>'Band 08'<br/>'Band 09'<br/>'Band 10'<br/>|1392x1392|
 |**GEO-KOMPSAT-2A**|-gk2a|--images|'VIS 0.47µm'<br/>'VIS 0.51µm'<br/>'VIS 0.64µm' (22k)<br/>'VIS 0.86µm'<br/>'NIR 1.37µm'<br/>'NIR 1.6µm'<br/>'SWIR 3.8µm'<br/>'WV 6.3µm'<br/>'WV 6.9µm'<br/>'WV 7.3µm'<br/>'IR 8.7µm'<br/>'IR 9.6µm'<br/>'IR 10.5µm'<br/>'IR 11.2µm'<br/>'IR 12.3µm'<br/>'IR 13.3µm'<br/>'True Color'<br/>'Natural Color'<br/>'AirMass RGB'<br/>'Dust RGB'<br/>'Daynight RGB'<br/>'Fog RGB'<br/>'Storm RGB'<br/>'Snowfog RGB'<br/>'Cloud RGB'<br/>'Ash RGB'<br/>'Enhanced IR WV 6.3µm'<br/>'Enhanced IR WV 6.9µm'<br/>'Enhanced IR WV 7.3µm'<br/>'Enhanced IR 10.5µm'|5500x5637<br/>11000x11275 (partial)<br/>22000x22550|
+|**INSAT-3D**|-insat3d|--images| |1260x1410|
+|**INSAT-3DR**|-insat3dr|--images| |1260x1410|
 </details>
+<br/>
 
 ### Additional Command Line Argument Info
 
@@ -295,3 +275,27 @@ Long Arguments
  * FY-2F 4k x 4k images (China/Asia Region)
  * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)
  * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GEO-KOMPSAT-2B)
+
+
+## Retired Satellites
+
+<details><summary></summary>
+
+### GOES-15
+
+<p align="center">GOES-15, previously known as GOES-P, is an American weather satellite, which forms part of the Geostationary Operational Environmental Satellite (GOES) system operated by the U.S. National Oceanic and Atmospheric Administration. The spacecraft was constructed by Boeing, and is the last of three GOES satellites to be based on the BSS-601 bus. It was launched in 2010, while the other BSS-601 GOES satellites -- GOES-13 and GOES-14—were launched in May 2006 and June 2009 respectively. It was the sixteenth GOES satellite to be launched. On March 2, 2020, GOES-15 was deactivated and moved to a storage orbit, with plans to re-activate it in August 2020 to back up GOES-17 operations due to a known flaw causing many sensors to become unreliable at night during certain times of the year. As of August 10th 2022, the GOES-15 IMAGER subsystem has been turned off and has been placed back into On-Orbit Storage. GOES-18 will now operate in tandum with GOES-17.</p>
+<details>
+<summary></summary>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/goes-15_2021048_2100_01_fd.gif" /></p>
+</details>
+
+### METEOSAT-8
+
+<p align="center">Meteosat 8 is a weather satellite, also known as MSG-2. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022. As of June 2022, METEOSAT-8 has been decommissioned and placed into a "graveyard orbit".</p>
+<details>
+<summary></summary>
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m8.jpg" /></p>
+
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
+</details>
+</details>

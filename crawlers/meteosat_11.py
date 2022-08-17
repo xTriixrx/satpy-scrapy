@@ -11,8 +11,8 @@ class METEOSAT_11(SatelliteCrawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 2/8/21
+    @version 0.0.2
+    @modified 8/16/22
     """
 
     TIMES_3_ZOOM = '03'
@@ -22,14 +22,19 @@ class METEOSAT_11(SatelliteCrawler):
 
     # Dictionary containing key of image title presented in link to presentation title
     IMAGE_TITLES = {'band_01': 'Band 1', 'band_02': 'Band 2', 'band_03': 'Band 3', 'band_04': 'Band 4', 'band_05': 'Band 5', 'band_06': 'Band 6', 'band_07': 'Band 7', 
-        'band_08': 'Band 8', 'band_09': 'Band 9', 'band_10': 'Band 10', 'band_11': 'Band 11', 'geocolor': 'GeoColor', 'natural_color': 'Natural Color', 'rgb_air_mass': 'RGB AirMass', 
-        'jma_day_cloud_phase_distinction_rgb': 'Day Cloud Phase Distinction', 'eumetsat_nighttime_microphysics': 'Nighttime Microphysics', 'awips_dust': 'Dust', 'eumetsat_ash': 'Ash'}
+        'band_08': 'Band 8', 'band_09': 'Band 9', 'band_10': 'Band 10', 'band_11': 'Band 11', 'geocolor': 'GeoColor', 'cira_proxy_visible': 'ProxyVis',
+        'cira_debra_dust': 'Dust - DEBRA', 'split_window_difference_10_3-12_3':'Split Window Difference', 'split_window_difference_dust': 'Split Window Difference Dust',
+        'split_window_difference_grayscale': 'Split Window Difference Grayscale', 'natural_color': 'Natural Color', 'rgb_air_mass': 'RGB AirMass', 
+        'jma_day_cloud_phase_distinction_rgb': 'Day Cloud Phase Distinction', 'eumetsat_nighttime_microphysics': 'Nighttime Microphysics', 'awips_dust': 'Dust',
+        'cira_natural_fire_color':'Natural Color-Fire', 'eumetsat_ash': 'Ash'}
 
     # Dictionary containing key of image title presented in link to zoom level for each image.
     IMAGE_PATHS = {'band_01': TIMES_3_ZOOM, 'band_02': TIMES_3_ZOOM, 'band_03': TIMES_3_ZOOM, 'band_04': TIMES_3_ZOOM, 'band_05': TIMES_3_ZOOM,
         'band_06': TIMES_3_ZOOM, 'band_07': TIMES_3_ZOOM, 'band_08': TIMES_3_ZOOM, 'band_09': TIMES_3_ZOOM, 'band_10': TIMES_3_ZOOM, 'band_11': TIMES_3_ZOOM,
-        'geocolor': TIMES_3_ZOOM, 'natural_color': TIMES_3_ZOOM, 'rgb_air_mass': TIMES_3_ZOOM, 'jma_day_cloud_phase_distinction_rgb': TIMES_3_ZOOM, 
-        'eumetsat_nighttime_microphysics': TIMES_3_ZOOM, 'awips_dust': TIMES_3_ZOOM, 'eumetsat_ash': TIMES_3_ZOOM}
+        'geocolor': TIMES_3_ZOOM, 'cira_proxy_visible': TIMES_3_ZOOM, 'cira_debra_dust':TIMES_3_ZOOM, 'split_window_difference_10_3-12_3':TIMES_3_ZOOM,
+        'split_window_difference_dust':TIMES_3_ZOOM, 'split_window_difference_grayscale':TIMES_3_ZOOM, 'natural_color': TIMES_3_ZOOM, 'rgb_air_mass': TIMES_3_ZOOM,
+        'jma_day_cloud_phase_distinction_rgb': TIMES_3_ZOOM, 'eumetsat_nighttime_microphysics': TIMES_3_ZOOM, 'awips_dust': TIMES_3_ZOOM, 'cira_natural_fire_color':TIMES_3_ZOOM,
+        'eumetsat_ash': TIMES_3_ZOOM}
     
     def __init__(self, url, satellite):
         """
@@ -99,11 +104,11 @@ class METEOSAT_11(SatelliteCrawler):
                     title = self.__generate_title(type_path, formatted_utc, r)
                     hourly_datetime_link = date_link + hour + '0000'
 
-                    links[title] = self.get_url() + date_link + '/' + self.METEOSAT_11_BASE_FULL_DISK + \
+                    links[title] = self.get_url() + year + '/' + month + '/' + day + '/' + self.METEOSAT_11_BASE_FULL_DISK + \
                         '/' + type_path + '/' + hourly_datetime_link + '/' + zoom + '/' + r
                 else:
                     title = self.__generate_title(type_path, short_utctime, r)
-                    links[title] = self.get_url() + date_link + '/' + self.METEOSAT_11_BASE_FULL_DISK + \
+                    links[title] = self.get_url() + year + '/' + month + '/' + day + '/' + self.METEOSAT_11_BASE_FULL_DISK + \
                         '/' + type_path + '/' + date_time_link + '/' + zoom + '/' + r
                 
                 i += 1

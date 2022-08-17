@@ -21,13 +21,13 @@ from crawlers.elektro_l3 import ELEKTRO_L3
 from crawlers.fengyun_4a import FENGYUN_4A
 from crawlers.fengyun_2g import FENGYUN_2G
 from crawlers.fengyun_2h import FENGYUN_2H
-from crawlers.meteosat_8 import METEOSAT_8
+from crawlers.meteosat_9 import METEOSAT_9
 from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
 GOES-17, GOES-18, GOES-15, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
-METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
+METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
  @version 0.0.5
@@ -154,8 +154,8 @@ def help_logger():
     print("To extract the latest GK2A images")
     print("\tsudo python3 satpy-scrapy.py -gk2a")
     print("")
-    print("To extract the latest METEOSAT-8 images")
-    print("\tsudo python3 satpy-scrapy.py -m8")
+    print("To extract the latest METEOSAT-9 images")
+    print("\tsudo python3 satpy-scrapy.py -m9")
     print("")
     print("To extract the latest METEOSAT-11 images")
     print("\tsudo python3 satpy-scrapy.py -m11")
@@ -244,8 +244,9 @@ def filter_logger():
     
     meteosat_options = \
     [
-        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10', 'Band 11', 'GeoColor',
-        'Natural Color', 'RGB AirMass', 'Day Cloud Phase Distinction', 'Nighttime Microphysics', 'Dust', 'Ash'
+        'Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 'Band 7', 'Band 8', 'Band 9', 'Band 10', 'Band 11', 'GeoColor', 'ProxyVis',
+        'Dust - DEBRA', 'Split Window Difference', 'Split Window Difference Dust', 'Split Window Difference Grayscale', 'Natural Color', 
+        'RGB AirMass', 'Day Cloud Phase Distinction', 'Nighttime Microphysics', 'Dust', 'Natural Color-Fire', 'Ash'
     ]
 
     himawari_filter_options = \
@@ -277,7 +278,7 @@ def filter_logger():
     print('Filter options for HIMAWARI-8')
     print(*himawari_filter_options, sep='\n')
     print('')
-    print('Filter options for METEOSAT-8 & METEOSAT-11')
+    print('Filter options for METEOSAT-9 & METEOSAT-11')
     print(*meteosat_options, sep='\n')
     print('')
     print('Filter options for DSCOVR')
@@ -401,7 +402,7 @@ def handle_arguments(argv):
                     return GOES_18(GOES_18.GOES_18_URL, GOES_18.GOES_18_NAME, resolution, img_types), img_types
             elif opt == '-m':
                 if arg == '8':
-                    return METEOSAT_8(METEOSAT_8.METEOSAT_8_URL, METEOSAT_8.METEOSAT_8_NAME), img_types
+                    return METEOSAT_9(METEOSAT_9.METEOSAT_9_URL, METEOSAT_9.METEOSAT_9_NAME), img_types
                 elif arg == '11':
                     return METEOSAT_11(METEOSAT_11.METEOSAT_11_URL, METEOSAT_11.METEOSAT_11_NAME), img_types
         
@@ -466,7 +467,7 @@ def read_tor_secret():
 def main(argv):
     """
     Main program which executes the anonymous extraction of GOES-16, GOES-17, HIMAWARI-8,
-    FY-4A, GK2A, METEOSAT-8, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1 high resolution
+    FY-4A, GK2A, METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1 high resolution
     images. By default, the resolution for GOES vehicles is set to the 10848x10848 resolution, 
     FENGYUN-4A is typically just under 3k images, GK2A typically are under 1500x1500 and the HIMAWARI-8 
     images are either 11000x11000 or 5500x5500.

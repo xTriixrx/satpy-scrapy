@@ -16,6 +16,7 @@ class METEOSAT_11(SatelliteCrawler):
     """
 
     TIMES_3_ZOOM = '03'
+    UTC_PRINT_FORMAT = '%Y%m%d%H%M%S'
     METEOSAT_11_DIRECTORY = 'METEOSAT-11'
     METEOSAT_11_BASE_FULL_DISK = 'meteosat-11---full_disk'
     METEOSAT_11_URL = 'https://rammb-slider.cira.colostate.edu/data/imagery/'
@@ -58,24 +59,14 @@ class METEOSAT_11(SatelliteCrawler):
         """
         links = {}
 
-        # Generates a UTC time an hour back from the current time
-        utctime = self.__get_adjusted_utctime()
+        # Generates a min and max UTC time; max is an hour back from the current time and min is 3 hours behind
+        max_utctime = self.__get_adjusted_utctime()
+        min_utctime = max_utctime
+        min_utctime -= timedelta(hours = 2)
 
-        # Removes fractions of second field from utctime 
-        short_utctime = str(utctime).split('.')[0]
+        self._logger.debug("Max UTC Time: " + max_utctime.strftime(self.UTC_PRINT_FORMAT))
+        self._logger.debug("Min UTC Time: " + min_utctime.strftime(self.UTC_PRINT_FORMAT))
         
-        # Creates list and removes last element containing seconds
-        short_utctime = short_utctime.split(':')[:-1]
-        
-        # Joins list back as string separated with a space
-        short_utctime = short_utctime[0] + ':' + short_utctime[1] + ' UTC'
-        
-        year, month, day, hour, minute = self.__get_date_fields(utctime)
-
-        # Build date properties needed to build links
-        date_link = year + month + day # 20210131
-        date_time_link = date_link + hour + minute + '00' # 20210131204000
-
         # Generate max 8x8 images ranging from 000_000.png to 007_007.png
         my_range = []
         for i in range(0, 8):
@@ -86,33 +77,32 @@ class METEOSAT_11(SatelliteCrawler):
                     my_range.append('00' + str(i) +  '_00' + str(j) + '.png')
                 elif i < 10 and j > 9:
                     my_range.append('00' + str(i) +  '_0' + str(j) + '.png')
+        
+        while min_utctime < max_utctime:
+            # Removes fractions of second field from utctime 
+            short_utctime = str(min_utctime).split('.')[0]
+        
+            # Creates list and removes last element containing seconds
+            short_utctime = short_utctime.split(':')[:-1]
+            
+            # Joins list back as string separated with a space
+            short_utctime = short_utctime[0] + ':' + short_utctime[1] + ' UTC'
+            
+            year, month, day, hour, minute = self.__get_date_fields(min_utctime)
 
-        # Build necesary paths for each image
-        for type_path, zoom in self.IMAGE_PATHS.items():
-            i = 0
-            j = 0
-            for r in my_range:
-                # If band type, images are updated hourly, otherwise every 15 minutes.
-                if 'band' in type_path:
-                    difference = timedelta(minutes = utctime.minute)
-                    utctime -= difference
-                    
-                    formatted_utc = str(utctime).split('.')[0]
-                    formatted_utc = formatted_utc.split(':')[:-1]
-                    formatted_utc = formatted_utc[0] + ':' + formatted_utc[1] + ' UTC'
-                    
-                    title = self.__generate_title(type_path, formatted_utc, r)
-                    hourly_datetime_link = date_link + hour + '0000'
+            # Build date properties needed to build links
+            date_link = year + month + day # 20210131
+            date_time_link = date_link + hour + minute + '00' # 20210131204500
 
-                    links[title] = self.get_url() + year + '/' + month + '/' + day + '/' + self.METEOSAT_11_BASE_FULL_DISK + \
-                        '/' + type_path + '/' + hourly_datetime_link + '/' + zoom + '/' + r
-                else:
+            # Build necesary paths for each image
+            for type_path, zoom in self.IMAGE_PATHS.items():
+                for r in my_range:
                     title = self.__generate_title(type_path, short_utctime, r)
                     links[title] = self.get_url() + year + '/' + month + '/' + day + '/' + self.METEOSAT_11_BASE_FULL_DISK + \
                         '/' + type_path + '/' + date_time_link + '/' + zoom + '/' + r
-                
-                i += 1
-
+            
+            # Add 15 minutes to min time
+            min_utctime += timedelta(minutes = 15)
         return links
 
 

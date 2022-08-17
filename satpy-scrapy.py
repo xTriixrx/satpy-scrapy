@@ -7,7 +7,6 @@ import multitasking
 from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
 from crawlers.ews_g1 import EWS_G1
-from crawlers.goes_15 import GOES_15
 from crawlers.goes_16 import GOES_16
 from crawlers.goes_17 import GOES_17
 from crawlers.goes_18 import GOES_18
@@ -26,7 +25,7 @@ from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
-GOES-17, GOES-18, GOES-15, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
+GOES-17, GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
@@ -135,9 +134,6 @@ def help_logger():
     print("")
     print("To extract all the latest ARTIKA-M1 images")
     print("\tsudo python3 satpy-scrapy.py -a1")
-    print("")
-    print("To extract all the latest GOES-15 images")
-    print("\tsudo python3 satpy-scrapy.py -g15")
     print("")
     print("To extract all the latest GOES-16 images")
     print("\tsudo python3 satpy-scrapy.py -g16")
@@ -287,7 +283,7 @@ def filter_logger():
     print('Filter options for EWS-G1')
     print(*ews_g1_filter_options, sep='\n')
     print('')
-    print('Filter options for FY2G and GOES-15')
+    print('Filter options for FY2G')
     print(*fy2g_g15_filter_options, sep='\n')
     print('')
     print('Filter options for INSAT-3D and INSAT-3DR')
@@ -392,8 +388,6 @@ def handle_arguments(argv):
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types
                 elif arg == '1':
                     return EWS_G1(EWS_G1.EWS_G1_URL, EWS_G1.EWS_G1_NAME), img_types
-                elif arg == '15':
-                    return GOES_15(GOES_15.GOES_15_URL, GOES_15.GOES_15_NAME), img_types
                 elif arg == '16':
                     return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
                 elif arg == '17':

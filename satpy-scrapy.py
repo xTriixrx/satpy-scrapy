@@ -30,8 +30,8 @@ GOES-17, GOES-18, GOES-15, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, F
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.5
- @modified 8/12/22
+ @version 0.0.6
+ @modified 8/16/22
 """
 
 ASCII = 'ascii'
@@ -401,7 +401,7 @@ def handle_arguments(argv):
                 elif arg == '18':
                     return GOES_18(GOES_18.GOES_18_URL, GOES_18.GOES_18_NAME, resolution, img_types), img_types
             elif opt == '-m':
-                if arg == '8':
+                if arg == '9':
                     return METEOSAT_9(METEOSAT_9.METEOSAT_9_URL, METEOSAT_9.METEOSAT_9_NAME), img_types
                 elif arg == '11':
                     return METEOSAT_11(METEOSAT_11.METEOSAT_11_URL, METEOSAT_11.METEOSAT_11_NAME), img_types

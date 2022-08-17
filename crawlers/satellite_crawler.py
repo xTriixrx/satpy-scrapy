@@ -25,8 +25,8 @@ class SatelliteCrawler(Crawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.2
-    @modified 8/12/22
+    @version 0.0.3
+    @modified 8/16/22
     """
     
     # Supported satellite names
@@ -45,7 +45,7 @@ class SatelliteCrawler(Crawler):
     FENGYUN_2G_NAME = 'FENGYUN-2G'
     FENGYUN_2H_NAME = 'FENGYUN-2H'
     FENGYUN_4A_NAME = 'FENGYUN-4A'
-    METEOSAT_8_NAME = 'METEOSAT-8'
+    METEOSAT_9_NAME = 'METEOSAT-9'
     METEOSAT_11_NAME = 'METEOSAT-11'
     GEO_KOMPSAT_2A_NAME = 'GEO-KOMPSAT-2A'
     

@@ -192,7 +192,7 @@ The GK-2 program is to develop two geostationary orbit satellites, the meteorolo
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 </details>
 
-### METEOSAT-9
+### METEOSAT-9 (IODC)
 
 <p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-9 took over as prime IODC spacecraft on June 1st, 2022; replacing Meteosat 8.</p>
 <details>
@@ -200,7 +200,7 @@ The GK-2 program is to develop two geostationary orbit satellites, the meteorolo
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/METEOSAT-9-2022-08-16%2023-00%20UTC.jpg" /></p>
 </details>
 
-### METEOSAT-11
+### METEOSAT-11 (PRIME)
 
 <p align="center">Meteosat-11 is the prime operational geostationary satellite, positioned at 0º and providing full disc imagery every 15 minutes. It also provides Search and Rescue monitoring and Data Collection Platform Relay Service.</p>
 <details>

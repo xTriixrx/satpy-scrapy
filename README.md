@@ -2,7 +2,7 @@
 
 <p align="center">
 
-satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ARKTIKA-M1, FENGYUN-4A, and FENGYUN-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2 and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FENGYUN-4A and FENGYUN-2H satellites requires a VPN connection due to China's network blocking Tor requests.
+satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2 and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
 
 The --images= argument should not be used for the ELEKTRO-L2 satellite and the --utcrange=/--day= arguments should only be used for the ELEKTRO-L2 and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
 
@@ -22,22 +22,22 @@ The merge-img program is a utility program which will merge together patches of 
  * python3 merge-img.py --destination="\\\"HIMAWARI-8/2021-02-08/22-30 UTC/GeoColor\\\"" --dimension="16"
  * python3 merge-img.py --destination="\\\"HIMAWARI-8/2021-02-08/22-30 UTC/RGB AirMass\\\"" --dimension="8"
 
-It is highly recommended to target a single image type at a time for a given scraping run as each image requires 256 (16x16) or 64 (8x8) web scraping runs for each image patch. As the number of images increase, the risk of failure exponentially increases along with the number of web scrape requests. It can also be said that the more images scraped in a single run the longer the run will take, so if this is to be automated the chance of missing images increases. Optimally, this would benefit from a mulithreaded, multisystem environment such as a Beowulf cluster.
+It is highly recommended to target a single image type at a time for a given scraping run as each image requires 256 (16x16) or 64 (8x8) web scraping runs for each image patch. Please be mindful of your scraping.
 
-Below is a .gif file created by ELEKTRO-L2 satellite images scraped by this program from January 26th, 2021 - January 27th, 2021.
+Below are some .gif's created by a few of the satellites that are supported by satpy-scrapy:
 </p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/elektro-l2.gif" /> </p>
 
-<p align="center">Below is a .gif file created by EWS-G1 satellite images scraped by this program from February 16th, 2021 - February 17th, 2021.</p>
+<p align="center">Created by EWS-G1 satellite images scraped by this program from February 16th, 2021 - February 17th, 2021.</p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1.gif" /> </p>
 
-<p align="center">Below is a .gif file created by FY-4A satellite images scraped by this program from February 12th, 2022 - February 13th, 2022.</p>
+<p align="center">Created by FY-4A satellite images scraped by this program from February 12th, 2022 - February 13th, 2022.</p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A_20220212160000_20220212161459_TO_20220213160000_20220213161459.gif" /> </p>
 
-<p align="center">Below is a .gif file created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2021. The composite color mapping was created by blending the first 3 bands (1-BLUE, 2-RED, 3-GREEN) into a false color composite. For more information on how to do this a quick tutorial with GIMP can be found here: <a href="https://remoteastrophotography.com/2020/03/using-gimp-to-combine-three-mono-images-into-one-rgb">Using GIMP to Combine Three Mono Images Into One RGB</a>
+<p align="center">Created by ARKTIKA-M1 satellite images scraped by this program from February 12th, 2022 - February 13th, 2022. The composite color mapping was created by blending the first 3 bands (1-BLUE, 2-RED, 3-GREEN) into a false color composite. For more information on how to do this a quick tutorial with GIMP can be found here: <a href="https://remoteastrophotography.com/2020/03/using-gimp-to-combine-three-mono-images-into-one-rgb">Using GIMP to Combine Three Mono Images Into One RGB</a>
 </p>
 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ARKTIKA-M1-20220211024502121945.gif" /> </p>
@@ -78,7 +78,13 @@ python3 -m pip install -r requirements.txt
 ```
 
 <p align="center">
-You can test your Tor client configuration by running the tor_check.py program with your tor password by editing line 37 of the program. After you run the program you should see 2 different IP addresses which are not your own IP address. Now we just need to set up the config file and secret file containing a hashed string. This hashed string should be the hash for your tor password that you have defined for the ControlPort. To generate a hash, use the hasher.py program to produce a hash. Once a hash is produced, copy this and while as the root user create a file that should be only known to you and stored somewhere other than the satpy-scrapy directory location and paste the hash into this file. Once this file is saved, chmod this file as root into a readonly mode (400) such that only the root user can access this special file. Lastly, create a config.xml file within the satpy-scrapy directory as root and populate the fields templated in the example config.xml file. Once the config file is finished being written to, also as root chmod this file to be readonly (400) as well. Enforcing root privileges increases security of storing passwords on the file system and decentralizing the password from a single config file. It is recommended to remove the hasher.py program when finished with setting up the environment. With that taken care of you are now ready to use satpy-scrapy!
+You can test your Tor client configuration by running the tor_check.py program with your tor password by editing line 37 of the program. After you run the program you should see 2 different IP addresses which are not your own IP address. 
+
+We just need to set up the config file and secret file containing a hashed string. This hashed string should be the hash for your tor password that you have defined for the ControlPort.
+
+To generate a hash, use the hasher.py program to produce a hash. Once a hash is produced, copy this and while as the root user create a file that should be only known to you and stored somewhere other than the satpy-scrapy directory location and paste the hash into this file.Once this file is saved, chmod this file as root into a readonly mode (400) such that only the root user can access this special file.
+
+Lastly, create a config.xml file within the satpy-scrapy directory as root and populate the fields templated in the example config.xml file. Once the config file is finished being written to, also as root chmod this file to be readonly (400) as well. With that taken care of you are now ready to use satpy-scrapy!
 </p>
 
 ## Supported Satellites
@@ -155,7 +161,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 ### FY-4A
 
-<p align="center">Fengyun-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after Fengyun-2 satellite series.</p>
+<p align="center">FY-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after FY-2 satellite series.</p>
 <details>
 <summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4A-_AGRI--_N_DISK_1047E_L1C_MTCC_MULT_NOM_20220210050000_20220210051459_1000M_V0001.jpeg" /> </p>
@@ -163,7 +169,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 ### FY-2G
 
-<p align="center">FENGYUN 2G is a meteorological satellites to provide warnings of weather fronts and tropical cyclones across Asia. FENGYUN 2G will take over for the Fengyun 2E weather observatory at 105 degrees east longitude. China's fleet of Fengyun 2 spacecraft have a similar mission to NOAA's GOES weather satellites in geostationary orbit.</p>
+<p align="center">FY 2G is a meteorological satellites to provide warnings of weather fronts and tropical cyclones across Asia. FY 2G will take over for the FY 2E weather observatory at 105 degrees east longitude. China's fleet of FY 2 spacecraft have a similar mission to NOAA's GOES weather satellites in geostationary orbit.</p>
 <details>
 <summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/fy2g_2021048_0530_01_fd.gif" /> </p>
@@ -171,16 +177,16 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 ### FY-2H
 
-<p align="center">Fengyun-2H is the eighth and final of the Fengyun-2 series of spin-stabilized weather satellites for geostationary orbit, development of which began in the 1980s under CASC. The satellite is equipped with a Stretched Visible and Infrared Spin Scan Radiometer (S-VISSR) for multi-purpose weather satellite imagery, a Space Environment Monitor (SEM), a Solar X-ray Monitor (SXM) and Data Collection Service (DCS).</p>
+<p align="center">FY-2H is the eighth and final of the FY-2 series of spin-stabilized weather satellites for geostationary orbit, development of which began in the 1980s under CASC. The satellite is equipped with a Stretched Visible and Infrared Spin Scan Radiometer (S-VISSR) for multi-purpose weather satellite imagery, a Space Environment Monitor (SEM), a Solar X-ray Monitor (SXM) and Data Collection Service (DCS).</p>
 <details>
 <summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY2H_GLB_VIS_GRA_1KM_20220221_0700.jpg" /> </p>
 </details>
 
-### GEO-KOMPSAT-2A
+### GK-2A
 
-<p align="center">GEO-KOMPSAT 2A is a South Korean geostationary meteorological satellite developed by KARI. It is one component of the two satellite GEO-KOMPSAT 2 program.
-The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the meteorological GEO-KOMPSAT-2A (GK2A) and the ocean monitoring GEO-KOMPSAT-2B (GK2B) sharing the same satellite bus. The lifetime of both satellites will be no less than 10 years.</p>
+<p align="center">GK-2A is a South Korean geostationary meteorological satellite developed by KARI. It is one component of the two satellite GK 2 program.
+The GK-2 program is to develop two geostationary orbit satellites, the meteorological GK-2A (GEO-KOMPSAT-2A) and the ocean monitoring GK-2B (GEO-KOMPSAT-2B) sharing the same satellite bus. The lifetime of both satellites will be no less than 10 years.</p>
 <details>
 <summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
@@ -246,12 +252,12 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
 |**ELEKTRO-L2**|-k2|--images<br/>--day<br/>--utcrange|'Original RGB'|11136x11136|
 |**ELEKTRO-L3**|-k3|--images|'Synthesized Color'<br/>'Band 1'<br/>'Band 9'|2784x3418 (Band 9)<br/>11136x13672|
-|**FENGYUN-2G**|-fy2g|--images|Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1125x1125|
-|**FENGYUN-2H**|-fy2h|--images|'False Color'<br/>'Infared 1'<br/>'Infared 2'<br/>'Infared 3'<br/>'Infared 4'<br/>'Visible'|2288x2288<br/>9152x9152 (Visible)|
-|**FENGYUN-4A**|-fy4a|--images|'Visible' (11k)<br/>'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 9 Enhanced'<br/>'Band 10'<br/>'Band 10 Enhanced'<br/>'Band 11'<br/>'Band 11 Enhanced'<br/>'Band 12'<br/>'Band 12 Enhanced'<br/>'Band 13'<br/>'Band 13 Enhanced'<br/>'Band 14'<br/>'Band 14 Enhanced'<br/>|2748x2748<br/>5496x5496<br/>10992x10992<br/>21984x21984|
+|**FY-2G**|-fy2g|--images|Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1125x1125|
+|**FY-2H**|-fy2h|--images|'False Color'<br/>'Infared 1'<br/>'Infared 2'<br/>'Infared 3'<br/>'Infared 4'<br/>'Visible'|2288x2288<br/>9152x9152 (Visible)|
+|**FY-4A**|-fy4a|--images|'Visible' (11k)<br/>'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 9 Enhanced'<br/>'Band 10'<br/>'Band 10 Enhanced'<br/>'Band 11'<br/>'Band 11 Enhanced'<br/>'Band 12'<br/>'Band 12 Enhanced'<br/>'Band 13'<br/>'Band 13 Enhanced'<br/>'Band 14'<br/>'Band 14 Enhanced'<br/>|2748x2748<br/>5496x5496<br/>10992x10992<br/>21984x21984|
 |**METEOSAT-9**<br/>**METEOSAT-11**|-m9<br/>-m11|--images|'Band 1'<br/>'Band 2'<br/>'Band 3'<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'GeoColor'<br/>'ProxyVis'<br/>'Dust - DEBRA'<br/>'Split Window Difference'<br/>'Split Window Difference Dust'<br/>'Split Window Difference Grayscale'<br/>'Natural Color'<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction'<br/>'Nighttime Microphysics'<br/>'Dust'<br/>'Natural Color-Fire'<br/>'Ash'<br/>|3712x3712|
 |**ARKTIKA-M1**|-a1|--images<br/>--day<br/>--utcrange|'Band 01'<br/>'Band 02'<br/>'Band 03'<br/>'Band 04'<br/>'Band 05'<br/>'Band 06'<br/>'Band 07'<br/>'Band 08'<br/>'Band 09'<br/>'Band 10'<br/>|1392x1392|
-|**GEO-KOMPSAT-2A**|-gk2a|--images|'VIS 0.47µm'<br/>'VIS 0.51µm'<br/>'VIS 0.64µm' (22k)<br/>'VIS 0.86µm'<br/>'NIR 1.37µm'<br/>'NIR 1.6µm'<br/>'SWIR 3.8µm'<br/>'WV 6.3µm'<br/>'WV 6.9µm'<br/>'WV 7.3µm'<br/>'IR 8.7µm'<br/>'IR 9.6µm'<br/>'IR 10.5µm'<br/>'IR 11.2µm'<br/>'IR 12.3µm'<br/>'IR 13.3µm'<br/>'True Color'<br/>'Natural Color'<br/>'AirMass RGB'<br/>'Dust RGB'<br/>'Daynight RGB'<br/>'Fog RGB'<br/>'Storm RGB'<br/>'Snowfog RGB'<br/>'Cloud RGB'<br/>'Ash RGB'<br/>'Enhanced IR WV 6.3µm'<br/>'Enhanced IR WV 6.9µm'<br/>'Enhanced IR WV 7.3µm'<br/>'Enhanced IR 10.5µm'|5500x5637<br/>11000x11275 (partial)<br/>22000x22550|
+|**GK-2A**|-gk2a|--images|'VIS 0.47µm'<br/>'VIS 0.51µm'<br/>'VIS 0.64µm' (22k)<br/>'VIS 0.86µm'<br/>'NIR 1.37µm'<br/>'NIR 1.6µm'<br/>'SWIR 3.8µm'<br/>'WV 6.3µm'<br/>'WV 6.9µm'<br/>'WV 7.3µm'<br/>'IR 8.7µm'<br/>'IR 9.6µm'<br/>'IR 10.5µm'<br/>'IR 11.2µm'<br/>'IR 12.3µm'<br/>'IR 13.3µm'<br/>'True Color'<br/>'Natural Color'<br/>'AirMass RGB'<br/>'Dust RGB'<br/>'Daynight RGB'<br/>'Fog RGB'<br/>'Storm RGB'<br/>'Snowfog RGB'<br/>'Cloud RGB'<br/>'Ash RGB'<br/>'Enhanced IR WV 6.3µm'<br/>'Enhanced IR WV 6.9µm'<br/>'Enhanced IR WV 7.3µm'<br/>'Enhanced IR 10.5µm'|5500x5637<br/>11000x11275 (partial)<br/>22000x22550|
 |**INSAT-3D**|-insat3d|--images| |1260x1410|
 |**INSAT-3DR**|-insat3dr|--images| |1260x1410|
 </details>
@@ -274,7 +280,7 @@ Long Arguments
 
  * FY-2F 4k x 4k images (China/Asia Region)
  * Others potentially (FY-2, Elektro-L1 (FTP archive 2013-2016), Historical Archive at https://www.ncdc.noaa.gov/gibbs/)
- * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GEO-KOMPSAT-2B)
+ * Future satellites (HIMAWARI-9, ARKTIKA-M2, FY-4B, GK-2B)
 
 
 ## Retired Satellites

@@ -194,7 +194,17 @@ The GEO-KOMPSAT-2 program is to develop two geostationary orbit satellites, the 
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/gk2a_ami_le1b_rgb-true_fd010ge_202101300350.srv.png" /></p>
 </details>
 
-### METEOSAT-8
+### METEOSAT-8 (DEPRECATED)
+
+<p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022. As of June 2022, METEOSAT-8 has been decommissioned and placed into a "graveyard orbit".</p>
+<details>
+<summary></summary>
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 10-30 UTC_m8.jpg" /></p>
+
+<p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
+</details>
+
+### METEOSAT-9
 
 <p align="center">Meteosat 8 is a weather satellite, also known as MSG 1. The Meteosat series are operated by EUMETSAT under the Meteosat Transition Programme (MTP) and the Meteosat Second Generation (MSG) program. Meteosat-8 is expected to run out of fuel sometime in 2020 and it's availability lifetime will end in 2022.</p>
 <details>
@@ -236,7 +246,7 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 
 ### INSAT-3DR
 
-<p align="center">INSAT-3DR is an Indian weather satellite built by the Indian Space Research Organisation and operated by the Indian National Satellite System. It will provide meteorological services to India using a 6-channel imager and a 19-channel sounder, as well as search and rescue information and message relay for terrestrial data collection platforms. The satellite was launched on 8 September 2016, and is a follow-up to INSAT-3D.</p>
+<p align="center">INSAT-3DR is an Indian weather satellite built by the Indian Space Research Organization and operated by the Indian National Satellite System. It will provide meteorological services to India using a 6-channel imager and a 19-channel sounder, as well as search and rescue information and message relay for terrestrial data collection platforms. The satellite was launched on 8 September 2016, and is a follow-up to INSAT-3D.</p>
 <details>
 <summary></summary>
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/Image3d%3Fimagename3r%3D3RIMG*_L1B_STD_VIS.jpg" /></p>

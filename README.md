@@ -82,7 +82,7 @@ You can test your Tor client configuration by running the tor_check.py program w
 
 We just need to set up the config file and secret file containing a hashed string. This hashed string should be the hash for your tor password that you have defined for the ControlPort.
 
-To generate a hash, use the hasher.py program to produce a hash. Once a hash is produced, copy this and while as the root user create a file that should be only known to you and stored somewhere other than the satpy-scrapy directory location and paste the hash into this file.Once this file is saved, chmod this file as root into a readonly mode (400) such that only the root user can access this special file.
+To generate a hash, use the hasher.py program to produce a hash. Once a hash is produced, copy this and while as the root user create a file that should be only known to you and stored somewhere other than the satpy-scrapy directory location and paste the hash into this file. Once this file is saved, chmod this file as root into a readonly mode (400) such that only the root user can access this special file.
 
 Lastly, create a config.xml file within the satpy-scrapy directory as root and populate the fields templated in the example config.xml file. Once the config file is finished being written to, also as root chmod this file to be readonly (400) as well. With that taken care of you are now ready to use satpy-scrapy!
 </p>

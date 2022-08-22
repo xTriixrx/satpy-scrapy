@@ -19,7 +19,6 @@ class INSAT_3D(SatelliteCrawler):
     INSAT_3D_IMG = '3DIMG'
     GMT_TIME_ZONE = 'Etc/GMT'
     INSAT_3D_DIRECTORY = 'INSAT-3D'
-    INSAT_3D_REGEX = '(L1B_STD|L2B)'
     GMT_PRINT_FORMAT = '%Y-%m-%d %H:%M GMT'
     INSAT_3D_URL = 'http://satellite.imd.gov.in/ImageArchive/3DIMG'
     IMAGE_PATHS = {'Infrared 10.8µm': 'L1B_STD_IR1_V01R00', 'Visible': 'L1B_STD_VIS_V01R00',
@@ -107,17 +106,10 @@ class INSAT_3D(SatelliteCrawler):
         """
 
         gmt_time = datetime.fromtimestamp(mktime(gmtime()))
-        gmt_time -= timedelta(hours = 1)
+        gmt_time -= timedelta(hours = 1, minutes = gmt_time.minute)
         
-        # Always take off a half hour off time
-        if gmt_time.minute >= 0 and gmt_time.minute <= 30:
-            difference = timedelta(minutes = gmt_time.minute)
-            gmt_time -= difference
-        elif gmt_time.minute > 30 and gmt_time.minute <= 59:
-            difference = timedelta(minutes = gmt_time.minute)
-            gmt_time -= difference
-            difference = timedelta(minutes = 30)
-            gmt_time += difference
+        if gmt_time.minute > 30 and gmt_time.minute <= 59:
+            gmt_time += timedelta(minutes = 30)
         
         # Returns a GMT timezone based timestamp which is represented by the Mosdac imagery jpg's
         return gmt_time

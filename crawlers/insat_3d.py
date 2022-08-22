@@ -1,7 +1,5 @@
 import re
 import os
-import pytz
-from bs4 import BeautifulSoup
 from time import mktime, gmtime
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler

@@ -255,9 +255,10 @@ def filter_logger():
 
     insat_filter_options = \
     [
-        'Visible', 'Shortwave', 'Mid-Infrared', 'Water Vapour', 'Infra-red1', 'Infra-red2', 'Colour Composite', 'Day Microphysics(RGB)', 
-        'Night Microphysics(RGB)', 'Land Surface Temperature', 'Outgoing Longwave Radiation', 'Sea Suface Temperature', 
-        'Upper Tropospheric Humidity', 'Hydro-Estimator Rain', 'Cloud Mask'
+        'Infrared 10.8µm', 'Visible', 'Shortwave Infrared 1.625µm', 'Middlewave Infrared 3.9µm', 'Middlewave Infrared Temperature 3.9µm', 'Water Vapor',
+        'Water Vapor Temperature', 'Infrared Temperature 10.8µm', 'Infrared 12.0µm', 'Infrared Temperature 12.0µm', 'Day Night Microphysics',
+        'Outgoing Longwave Radiation', 'SST Regression', 'Land Surface Temperature', 'Upper Troposphere Humidity', 'Hydro Estimator Precipitation',
+        'IMSRA (Improved)', 'Cloud Top Temperature', 'Cloud Top Pressure', 'Total Precipitable Water', 'Cloud Mask'
     ]
 
     arktika_m1_options = \

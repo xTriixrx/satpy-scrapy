@@ -2,6 +2,7 @@ import re
 import os
 import pytz
 from bs4 import BeautifulSoup
+from time import mktime, gmtime
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler
 
@@ -13,15 +14,26 @@ class INSAT_3D(SatelliteCrawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 2/5/22
+    @version 0.0.2
+    @modified 8/21/22
     """
 
+    INSAT_3D_IMG = '3DIMG'
     GMT_TIME_ZONE = 'Etc/GMT'
     INSAT_3D_DIRECTORY = 'INSAT-3D'
     INSAT_3D_REGEX = '(L1B_STD|L2B)'
-    INSAT_3D_BASE_URL = 'https://mosdac.gov.in'
-    INSAT_3D_URL = 'https://mosdac.gov.in/data/weather.do?mode=diplay3DImage'
+    GMT_PRINT_FORMAT = '%Y-%m-%d %H:%M GMT'
+    INSAT_3D_URL = 'http://satellite.imd.gov.in/ImageArchive/3DIMG'
+    IMAGE_PATHS = {'Infrared 10.8µm': 'L1B_STD_IR1_V01R00', 'Visible': 'L1B_STD_VIS_V01R00',
+    'Shortwave Infrared 1.625µm': 'L1B_STD_SWIR_V01R00', 'Middlewave Infrared 3.9µm': 'L1B_STD_MIR_V01R00',
+    'Middlewave Infrared Temperature 3.9µm': 'L1B_STD_MIR_TEMP_V01R00', 'Water Vapor': 'L1B_STD_WV_V01R00',
+    'Water Vapor Temperature': 'L1B_STD_WV_TEMP_V01R00', 'Infrared Temperature 10.8µm': 'L1B_STD_IR1_TEMP_V01R00',
+    'Infrared 12.0µm': 'L1B_STD_IR2_V01R00', 'Infrared Temperature 12.0µm': 'L1B_STD_IR2_TEMP_V01R00',
+    'Day Night Microphysics': 'L1B_STD_MP_V01R00', 'Outgoing Longwave Radiation': 'L2B_OLR_V01R00',
+    'SST Regression': 'L2B_SST_REG_V02R00', 'Land Surface Temperature': 'L2B_LST_V01R00',
+    'Upper Troposphere Humidity': 'L2B_UTH_V01R00', 'Hydro Estimator Precipitation': 'L2B_HEM_V01R00',
+    'IMSRA (Improved)': 'L2B_IMC_V01R00', 'Cloud Top Temperature': 'L2B_CTT_V01R00', 'Cloud Top Pressure': 'L2B_CTP_V01R00',
+    'Total Precipitable Water': 'L2B_TPW_V01R00', 'Cloud Mask': 'L2B_CMK_V01R00'}
 
     def __init__(self, url, satellite):
         """
@@ -44,26 +56,28 @@ class INSAT_3D(SatelliteCrawler):
         """
         links = {}
 
-        # Get an adjusted GMT time that is about a half hour behind the current
-        gmt_time = self.__get_adjusted_gmttime()
-        date_fields = self.__get_date_fields(gmt_time)
+        # Get an adjusted GMT time that is about 1 hour behind the current
+        max_gmt_time = self.__get_adjusted_gmttime()
+        min_gmt_time = max_gmt_time
+        min_gmt_time -= timedelta(hours = 12)
 
-        # Extract the web page with the set of full disk links & titles
-        page = self._extract_content(self.get_url(), pw)
-        
-        soup = BeautifulSoup(page.text, self.SOUP_PARSER)
+        self._logger.debug("Max GMT Time: " + max_gmt_time.strftime(self.GMT_PRINT_FORMAT))
+        self._logger.debug("Min GMT Time: " + min_gmt_time.strftime(self.GMT_PRINT_FORMAT))
 
-        # Get every <a> element that has an href that matches the classes' regex, then keep only even numbered links as the
-        # captured <a> elements are doubled, the first in each pair contains a title within the elements' text
-        a_elements = soup.findAll(self.A_ELEMENT, {self.HREF_ATTRIBUTE: re.compile(self.INSAT_3D_REGEX)})[::2]
+        while min_gmt_time < max_gmt_time:
+            # Get tuple of date fields needed for generating links
+            date_fields = self.__get_date_fields(min_gmt_time)
+            
+            # Create link for each image type for current min gmt time
+            for type, sublink in self.IMAGE_PATHS.items():
+                title = self.__generate_title(type, date_fields)
+                links[title] = self.get_url() + '/' + date_fields[0] + '/' + date_fields[1].upper() + '/' + \
+                    self.INSAT_3D_IMG + '_' + date_fields[2] + date_fields[1].upper() + date_fields[0] + '_' + \
+                    date_fields[3] + date_fields[4] + '_' + sublink + '.jpg'
+            
+            # Add 30 minutes to min time
+            min_gmt_time += timedelta(minutes = 30)
 
-        # Iterate over each <a> element, extract the href link, append to the base Mosdac gov link, get the image type for the title & add to links
-        for a_element in a_elements:
-            link = self.INSAT_3D_BASE_URL + a_element.get(self.HREF_ATTRIBUTE)
-            image_type = a_element.text.strip()
-            title = self.__generate_title(image_type, date_fields)
-            links[title] = link
-        
         return links
 
 
@@ -77,7 +91,7 @@ class INSAT_3D(SatelliteCrawler):
         """
 
         year = utctime.strftime('%Y') # YYYY
-        month= utctime.strftime('%m') # 01
+        month = utctime.strftime('%b') # Aug
         day = utctime.strftime('%d') # 26
         hour = utctime.strftime('%H') # 03
         minute = utctime.strftime('%M') # 30
@@ -87,31 +101,28 @@ class INSAT_3D(SatelliteCrawler):
 
     def __get_adjusted_gmttime(self):
         """
-        Creates a GMT time that is an hour behind the current time to estimate the image that is stored on the
+        Creates a GMT time that is at least 1 hour behind the current time to estimate the image that is stored on the
         Mosdac gov site; further time analysis would have to be extrapolated from the actual image once it is processed
         as the Mosdac gov site does not include timestamps along with the images currently.
         
         @return gmt_time: datetime - A datetime object containing the current GMT time behind by a half hour.
         """
-        
-        time = datetime.now()
-        utctime = time.utcnow()
-        utctime -= timedelta(hours = 1)
+
+        gmt_time = datetime.fromtimestamp(mktime(gmtime()))
+        gmt_time -= timedelta(hours = 1)
         
         # Always take off a half hour off time
-        if utctime.minute >= 0 and utctime.minute <= 30:
-            difference = timedelta(minutes = utctime.minute)
-            utctime -= difference
-            difference = timedelta(minutes = 00)
-            utctime += difference
-        elif utctime.minute > 30 and utctime.minute <= 59:
-            difference = timedelta(minutes = utctime.minute)
-            utctime -= difference
+        if gmt_time.minute >= 0 and gmt_time.minute <= 30:
+            difference = timedelta(minutes = gmt_time.minute)
+            gmt_time -= difference
+        elif gmt_time.minute > 30 and gmt_time.minute <= 59:
+            difference = timedelta(minutes = gmt_time.minute)
+            gmt_time -= difference
             difference = timedelta(minutes = 30)
-            utctime += difference
+            gmt_time += difference
         
         # Returns a GMT timezone based timestamp which is represented by the Mosdac imagery jpg's
-        return utctime.replace(tzinfo=pytz.timezone(self.GMT_TIME_ZONE))
+        return gmt_time
 
 
     def _create_img_dir(self, title):
@@ -133,6 +144,8 @@ class INSAT_3D(SatelliteCrawler):
 
         dir_path = self.INSAT_3D_DIRECTORY + os.sep + str(today) + os.sep + time + os.sep + title
         
+        self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
+
         return dir_path
 
 
@@ -152,6 +165,8 @@ class INSAT_3D(SatelliteCrawler):
 
         title += my_type + ' - ' + date + ' - ' + time
         
+        self._logger.debug("Generated title \"" + title + "\" with parameters: " + my_type + ", " + str(date_fields) + ".")
+
         return title
 
 
@@ -161,4 +176,5 @@ class INSAT_3D(SatelliteCrawler):
         """
 
         if not os.path.exists(self.INSAT_3D_DIRECTORY):
+            self._logger.debug("Creating directory at path: " + self.INSAT_3D_DIRECTORY)
             os.makedirs(self.INSAT_3D_DIRECTORY)

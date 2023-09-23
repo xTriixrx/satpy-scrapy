@@ -101,16 +101,6 @@ Lastly, create a config.xml file within the satpy-scrapy directory as root and p
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260420_GOES16-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
 </details>
 
-### GOES-17
-
-<p align="center">GOES-17 (formerly GOES-S) is the second of the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA).</p>
-<details>
-<summary></summary>
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
-
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
-</details>
-
 ### GOES-18
 
 <p align="center">GOES-18 (formerly GOES-T) is the third of the "GOES-R Series", the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA).</p>
@@ -248,7 +238,7 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |---|---|---|---|---|
 |**DSCOVR**|-d|--images|'Natural Color'<br/>'Enhanced Color'|2048x2048|
 |**EWS-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
-|**GOES-16**<br/>**GOES-17**<br/>**GOES-18**|-g16<br/>-g17<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
+|**GOES-16**<br/>**GOES-18**|-g16<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
 |**ELEKTRO-L2**|-k2|--images<br/>--day<br/>--utcrange|'Original RGB'|11136x11136|
 |**ELEKTRO-L3**|-k3|--images|'Synthesized Color'<br/>'Band 1'<br/>'Band 9'|2784x3418 (Band 9)<br/>11136x13672|
@@ -271,7 +261,7 @@ Long Arguments
    * '--help': Triggers help logging function.
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
-   * '--resolution=': Accepts some resolution such as '10848 or 678', currently only used by GOES-16, GOES-17, and GOES-18 scrapers. 
+   * '--resolution=': Accepts some resolution such as '10848 or 678', currently only used by GOES-16 and GOES-18 scrapers. 
    * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by ARKTIKA-M1 crawler in half hour increments.
    * '--day=': Accepts a day of the current month to query for the ELEKTRO-L2 or ARKTIKA-M1 FTP server.
 
@@ -284,7 +274,15 @@ Long Arguments
 
 ## Retired Satellites
 
-<details><summary></summary>
+### GOES-17
+
+<p align="center">GOES-17 (formerly GOES-S) is the second of the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA). Due to a cooling problem with the satellite's main imager, GOES-17 entered early retirement and was placed in on-orbit storage on January 4th 2023.</p>
+<details>
+<summary></summary>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210260140_GOES17-ABI-FD-GEOCOLOR-10848x10848.jpg" /></p>
+
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20210300530_GOES17-ABI-FD-NightMicrophysics-10848x10848.jpg" /></p>
+</details>
 
 ### GOES-15
 

@@ -8,7 +8,6 @@ from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
 from crawlers.ews_g1 import EWS_G1
 from crawlers.goes_16 import GOES_16
-from crawlers.goes_17 import GOES_17
 from crawlers.goes_18 import GOES_18
 from crawlers.insat_3d import INSAT_3D
 from crawlers.insat_3dr import INSAT_3DR
@@ -25,11 +24,11 @@ from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
-GOES-17, GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
+GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.6
+ @version 0.0.7
  @modified 8/16/22
 """
 
@@ -137,9 +136,6 @@ def help_logger():
     print("")
     print("To extract all the latest GOES-16 images")
     print("\tsudo python3 satpy-scrapy.py -g16")
-    print("")
-    print("To extract all the latest GOES-17 images")
-    print("\tsudo python3 satpy-scrapy.py -g17")
     print("")
     print("To extract all the latest GOES-18 images")
     print("\tsudo python3 satpy-scrapy.py -g18")
@@ -266,7 +262,7 @@ def filter_logger():
         'Band 01', 'Band 02', 'Band 03', 'Band 04', 'Band 05', 'Band 06', 'Band 07', 'Band 08', 'Band 99', 'Band 10'
     ]
 
-    print('Filter options for GOES-16 & GOES-17, & GOES-18')
+    print('Filter options for GOES-16, & GOES-18')
     print(*goes_filter_options, sep='\n')
     print('')
     print('Filter options for GEO-KOMPSAT-2A')
@@ -391,8 +387,6 @@ def handle_arguments(argv):
                     return EWS_G1(EWS_G1.EWS_G1_URL, EWS_G1.EWS_G1_NAME), img_types
                 elif arg == '16':
                     return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
-                elif arg == '17':
-                    return GOES_17(GOES_17.GOES_17_URL, GOES_17.GOES_17_NAME, resolution, img_types), img_types
                 elif arg == '18':
                     return GOES_18(GOES_18.GOES_18_URL, GOES_18.GOES_18_NAME, resolution, img_types), img_types
             elif opt == '-m':
@@ -461,7 +455,7 @@ def read_tor_secret():
 
 def main(argv):
     """
-    Main program which executes the anonymous extraction of GOES-16, GOES-17, HIMAWARI-8,
+    Main program which executes the anonymous extraction of GOES-16, HIMAWARI-8,
     FY-4A, GK2A, METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1 high resolution
     images. By default, the resolution for GOES vehicles is set to the 10848x10848 resolution, 
     FENGYUN-4A is typically just under 3k images, GK2A typically are under 1500x1500 and the HIMAWARI-8 

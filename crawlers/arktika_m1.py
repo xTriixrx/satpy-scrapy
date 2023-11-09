@@ -1,8 +1,9 @@
 import re
 import os
 import pytz
+import sys
 from ftplib import FTP
-from googletrans import Translator
+#from googletrans import Translator
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler
 
@@ -44,7 +45,7 @@ class ARKTIKA_M1(SatelliteCrawler):
         super().__init__(url, satellite)
         self.__day = day
         self.__utcrange = utcrange
-        self.__translator = Translator()
+        #self.__translator = Translator()
 
 
     def get_links(self, pw):
@@ -58,47 +59,47 @@ class ARKTIKA_M1(SatelliteCrawler):
 
         days = []
         links = {}
-        
-        # Get current utc time of russia
-        utctime = self.__get_russian_utc_time()
-        self._logger.debug("Approximate current russian utc time is: " + utctime.strftime("%x - %X"))
-        
-        # Extract each field required for run
-        year, month = self.__get_date_fields(utctime)
 
-        # Translate month from english to russian
-        translated_month = self.__translator.translate(month, src="en", dest="ru")
-        translated_month = translated_month.text
-        self._logger.debug('Translated english month ' + month + ' to russian month ' + translated_month + '.')
-        
-        if self.__utcrange != '' and self.__day != '':
+        if self.__utcrange != "" and self.__day != "":
             days.append(self.__day)
-            links = self.extract_links(year, translated_month, days, self.__utcrange)
-        elif self.__utcrange != '':
-            links = self.extract_links(year, translated_month, utc_range=self.__utcrange)
-        elif self.__day != '':
+            links = self.extract_links(utc_range=self.__utcrange, days=days)
+        elif self.__utcrange != "":
+            links = self.extract_links(utc_range=self.__utcrange)
+        elif self.__day != "":
             days.append(self.__day)
-            links = self.extract_links(year, translated_month, days)
+            links = self.extract_links(days)
         else:
-            links = self.extract_links(year, translated_month)
+            links = self.extract_links()
+
+        self._logger.debug("Generated links: ")
+        self._logger.debug(links)
 
         return links
     
     
-    def extract_links(self, year, translated_month, days=[], utc_range=[]):
+    def extract_links(self, days=[], utc_range=[]):
         """
         Extracts and retrieves the file links for a set of days, within a utc_range. This will initiate
         the FTP connection to the ARKTIKA_M1 server and begin traversing the directories for the current
         month.
 
         @param year: str - The current year.
-        @param translated_month: str - A string in Russian representing the current month.
+        @param month: str - A string in Russian representing the current month.
         @param days: [] - A list representing a single day; if empty it means retrieve all days.
         @param utc_range: [] - A list of utc times in HHMM format to set the time range of returned links.
         @return links: {} - A key-value mapping of a title key in a standard format and its appropriate image link.
         """
         
         links = {}
+
+        # Get current utc time of russia
+        utctime = self.__get_russian_utc_time()
+        self._logger.debug("Approximate current russian utc time is: " + utctime.strftime("%x - %X"))
+
+        # Extract each field required for run
+        year, month = self.__get_date_fields(utctime)
+        self._logger.debug("Current year: " + year)
+        self._logger.debug("Current month: " + month)
 
         # Initiate FTP connection
         with FTP() as ftp:
@@ -110,7 +111,7 @@ class ARKTIKA_M1(SatelliteCrawler):
             self._logger.debug("Logging into FTP server with credentials: " + self.ARKTIKA_M1_USERNAME \
                 + ":" + self.ARKTIKA_M1_PASSWORD + ".")
 
-            base_dir = self.ARKTIKA_M1_FTP_BASE_DIRECTORY + '/' + year + '/' + translated_month
+            base_dir = self.ARKTIKA_M1_FTP_BASE_DIRECTORY + '/' + year + '/' + month
             ftp.cwd(base_dir)
             self._logger.debug("Changed directory to: " + base_dir + ".")
 
@@ -120,7 +121,7 @@ class ARKTIKA_M1(SatelliteCrawler):
             
             # Iterate over each day and get the links for each day, aggregating them into the links map
             for day in days:
-                tmp_links = self.extract_links_for_day(ftp, year, translated_month, day, utc_range)
+                tmp_links = self.extract_links_for_day(ftp, year, month, day, utc_range)
                 self._logger.debug("Changed directory back to: " + base_dir + ".")
                 links = {**tmp_links, **links}
         self._logger.debug("Closing connection to FTP server at: " + self.ARKTIKA_M1_URL_HOSTNAME \
@@ -129,7 +130,7 @@ class ARKTIKA_M1(SatelliteCrawler):
         return links
 
 
-    def extract_links_for_day(self, ftp, year, translated_month, day, utc_range=[]):
+    def extract_links_for_day(self, ftp, year, month, day, utc_range=[]):
         """
         Extracts and retrieves the file links for a given day within a utc_range. If the utc_range
         is provided, each utc_time will be compared to determine whether the time is within the range.
@@ -137,8 +138,8 @@ class ARKTIKA_M1(SatelliteCrawler):
 
         @param ftp: FTP - An FTP object to traverse the ARKTIKA_M1 FTP share.
         @param year: str - The current year.
-        @param translated_month: str - A string in Russian representing the current month.
-        @param days: str - A string representing some day of the month. 
+        @param month: str - A string representing the current month.
+        @param day: str - A string representing some day of the month.
         @param utc_range: [] - A list of utc times in HHMM format to set the time range of returned links.
         @return links: {} - A key-value mapping of a title key in a standard format and its appropriate image link.
         """
@@ -149,39 +150,51 @@ class ARKTIKA_M1(SatelliteCrawler):
         ftp.cwd(day)
         self._logger.debug("Changed directory to: " + day + ".")
         utc_times = ftp.nlst()
-        
+
         # For each utc_time if its within range get the files & create links
         for utc_time in utc_times:
             files = []
-            time_map = utc_time.split('.')
-            curr_time = time_map[0] + time_map[1]
             
             # If the current time is not within the utc_range, skip over it
-            if curr_time not in utc_range and utc_range:
-                self._logger.debug("UTC time " + time_map[0] + "-" + time_map[1] + " UTC is not within provided UTC range.")
+            if utc_time not in utc_range and utc_range:
+                self._logger.debug("UTC time " + utc_time[0:2] + "-" + utc_time[2:4] + " UTC is not within provided UTC range.")
                 continue
+
+            self._logger.debug("Generating titles and links for files captured for UTC Time: " + utc_time)
 
             # Enter the valid utc directory and get the list of all the files
             ftp.cwd(utc_time)
             self._logger.debug("Changed directory to: " + utc_time + ".")
 
             files = ftp.nlst()
-            
+
             # For each file, generate the title and link & insert into links map
             for file in files:
+                self._logger.debug("Generating title and link for file: " + file)
+
                 # Get time from file and parse into datetime for better readability
-                time = file.split('_')[2]
-                fmt = '%Y%m%d%H%M%S'
-                date = datetime.strptime(time, fmt).date()
-                
+                time = file.split('_')[1]
+                self._logger.debug("Captured time value from file name: " + time)
+
+                # Insert captured string time into datetime object with associated time format
+                date = datetime.strptime(time, '%Y%m%d%H%M%S').date()
+
+                # Get image type in file name
+                img_type = file.split('.')[0]
+                img_type = img_type.split('_')[2:]
+                img_type = "_".join(img_type)
+                img_type = img_type.lower().replace("_", " ").title()
+
+                self._logger.debug("Generated image type of: " + img_type)
+
                 # Create title for given file
-                title = 'Band ' + file.split('.')[0][-2:] + ' - ' + date.strftime('%Y-%m-%d') + \
-                    ' - ' + time_map[0] + '-' + time_map[1] + ' UTC'
+                title = img_type + ' - ' + date.strftime('%Y-%m-%d') + \
+                    ' - ' + utc_time[0:2] + '-' + utc_time[2:4] + ' UTC'
                 
-                # Create latin-1 decoded link for file
-                link = (self.ARKTIKA_M1_URL + '/' + year + '/' + translated_month + '/' + day + \
+                # Create link for file
+                link = (self.ARKTIKA_M1_URL + '/' + year + '/' + month + '/' + day + \
                     '/' + utc_time + '/' + file)
-                
+
                 self._logger.debug("Scraped link " + link + " for image " + title + ".")
 
                 # Insert title and link into links map
@@ -193,7 +206,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         ftp.cwd('..')
 
         return links
-
 
     def __get_russian_utc_time(self):
         """

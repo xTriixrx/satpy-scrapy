@@ -109,14 +109,6 @@ Lastly, create a config.xml file within the satpy-scrapy directory as root and p
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/20222270200_GOES18-ABI-FD-GEOCOLOR-1808x1808.jpg" /></p>
 </details>
 
-### EWS-G1 (GOES-13)
-
-<p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system.</p>
-<details>
-<summary></summary>
-<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
-</details>
-
 ### ARKTIKA-M1
 
 <p align="center">Arktika-M (Russian Арктика-М) is a Russian multipurpose satellite constellation under construction. The main task of Arktika-M is weather observation in the northern part of Russian territory; in addition, the satellites are to be used there as data relays and for emergency communication. Other applications are the observation of space weather, the earth's magnetic field and the ionosphere. The first satellite in the constellation - Arktika-M1 - was launched on the 28th. February 2021 with a Soyuz 2.1b/Fregat rocket from Baikonur Cosmodrome. Another four satellites are to follow by 2025.</p>
@@ -245,7 +237,6 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |Satellite|Short-Arg|Long-Args|Supported Image Names|Supported Resolutions|
 |---|---|---|---|---|
 |**DSCOVR**|-d|--images|'Natural Color'<br/>'Enhanced Color'|2048x2048|
-|**EWS-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
 |**GOES-16**<br/>**GOES-18**|-g16<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
 |**ELEKTRO-L2**<br/>**ELEKTRO-L3**|-k2<br/>-k3|--images<br/>--day<br/>--utcrange|'Band 1'<br/>'Band 2'<br/>'Band 3'<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Rgb'<br/>'Rgb Vis'<br/>'Rgb Vis Ir'<br/>'Original Rgb'<br/>'Original Rgb Vis'<br/>'Original Rgb Vis Ir'<br/>|1080x1080<br/>11136x11136|
@@ -282,6 +273,16 @@ Long Arguments
 
 ## Retired Satellites
 
+<details><summary></summary>
+
+### EWS-G1 (GOES-13)
+
+<p align="center">EWS-G1 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-13 (also known as GOES-N before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system. EWS-G1 was placed into a graveyard orbit around October 31st 2023.</p>
+<details>
+<summary></summary>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g1_2021047_0845_01_fd.gif" /></p>
+</details>
+
 ### GOES-17
 
 <p align="center">GOES-17 (formerly GOES-S) is the second of the current generation of weather satellites operated by the National Oceanic and Atmospheric Administration (NOAA). Due to a cooling problem with the satellite's main imager, GOES-17 entered early retirement and was placed in on-orbit storage on January 4th 2023.</p>
@@ -310,3 +311,4 @@ Long Arguments
 <p align="center"><img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2021-02-09 00-45 UTC.jpg" /></p>
 </details>
 </details>
+<br/>

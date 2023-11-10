@@ -6,7 +6,6 @@ import hashlib
 import multitasking
 from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
-from crawlers.ews_g1 import EWS_G1
 from crawlers.goes_16 import GOES_16
 from crawlers.goes_18 import GOES_18
 from crawlers.insat_3d import INSAT_3D
@@ -26,7 +25,7 @@ from crawlers.meteosat_11 import METEOSAT_11
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
 GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
-METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L4, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
+METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L4, ARKTIKA-M1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
  @version 0.0.9
@@ -129,9 +128,6 @@ def help_logger():
     print("To extract all the latest DSCOVR images")
     print("\tsudo python3 satpy-scrapy.py -d")
     print("")
-    print("To extract all the latest EWS-G1 images")
-    print("\tsudo python3 satpy-scrapy.py -g1")
-    print("")
     print("To extract all the latest ARTIKA-M1 images")
     print("\tsudo python3 satpy-scrapy.py -a1")
     print("")
@@ -159,14 +155,14 @@ def help_logger():
     print("To extract the latest ELEKTRO-L3 image")
     print("\tsudo python3 satpy-scrapy.py -k3")
     print("")
+    print("To extract the latest ELEKTRO-L3 image")
+    print("\tsudo python3 satpy-scrapy.py -k4")
+    print("")
     print("To extract the latest INSAT-3D images")
     print("\tsudo python3 satpy-scrapy.py -insat3d")
     print("")
     print("To extract the latest INSAT-3DR images")
     print("\tsudo python3 satpy-scrapy.py -insat3dr")
-    print("")
-    print("To extract 'Visible' EWS-G1 images")
-    print("\tsudo python3 satpy-scrapy.py -g1 --images=\"Visible\"")
     print("")
     print("To extract 'Visible' FENGYUN-2H images")
     print("\tsudo python3 satpy-scrapy.py -fy2h --images=\"Visible\"")
@@ -212,8 +208,6 @@ def filter_logger():
     """
 
     dscovr_filter_options = ['Natural Color', 'Enhanced Color']
-
-    ews_g1_filter_options = ['Visible', 'Near IR', 'Water Vapor', 'Longwave IR', 'C02 Longwave IR']
 
     fy2g_g15_filter_options = ['Visible', 'Shortwave IR', 'Water Vapor', 'Longwave IR']
 
@@ -277,9 +271,6 @@ def filter_logger():
     print('')
     print('Filter options for DSCOVR')
     print(*dscovr_filter_options, sep='\n')
-    print('')
-    print('Filter options for EWS-G1')
-    print(*ews_g1_filter_options, sep='\n')
     print('')
     print('Filter options for FY2G')
     print(*fy2g_g15_filter_options, sep='\n')
@@ -398,8 +389,6 @@ def handle_arguments(argv):
             elif opt == '-g':
                 if arg == 'k2a':
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types
-                elif arg == '1':
-                    return EWS_G1(EWS_G1.EWS_G1_URL, EWS_G1.EWS_G1_NAME), img_types
                 elif arg == '16':
                     return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
                 elif arg == '18':
@@ -471,7 +460,7 @@ def read_tor_secret():
 def main(argv):
     """
     Main program which executes the anonymous extraction of GOES-16, HIMAWARI-8,
-    FY-4A, GK2A, METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, and EWS-G1 high resolution
+    FY-4A, GK2A, METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L3, and ELEKTRO-L4 high resolution
     images. By default, the resolution for GOES vehicles is set to the 10848x10848 resolution, 
     FENGYUN-4A is typically just under 3k images, GK2A typically are under 1500x1500 and the HIMAWARI-8 
     images are either 11000x11000 or 5500x5500.

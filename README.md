@@ -146,7 +146,7 @@ Lastly, create a config.xml file within the satpy-scrapy directory as root and p
 <p align="center">The fourth satellite in the series Elektro-L No.4, was launched from Baikonur Cosmodrome on 5 February 2023 at 9:12 UTC by a Proton-M rocket.</p>
 <details>
 <summary></summary>
-<p align="center"> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/EL4-231110_0500_RGB.jpg" /></p>
 </details>
 
 ### HIMAWARI-8
@@ -270,8 +270,8 @@ Long Arguments
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
    * '--resolution=': Accepts some resolution such as '10848 or 678', currently only used by GOES-16 and GOES-18 scrapers. 
-   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by the ELEKTRO-L3 & ARKTIKA-M1 crawler in half hour increments.
-   * '--day=': Accepts a day in the format of 'NN' where N is a number and the range is between 01-31. The day is used to query the provided day of the current month for the ELEKTRO-L2, ELEKTRO-L3 or ARKTIKA-M1 FTP server.
+   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by the ELEKTRO-L3, ELEKTRO-L4, & ARKTIKA-M1 crawler in half hour increments.
+   * '--day=': Accepts a day in the format of 'NN' where N is a number and the range is between 01-31. The day is used to query the provided day of the current month for the ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, or ARKTIKA-M1 FTP server.
 
 ### Future Satellite Support
 

@@ -1,9 +1,7 @@
 import re
 import os
 import pytz
-import sys
 from ftplib import FTP
-#from googletrans import Translator
 from datetime import datetime, timedelta
 from crawlers.satellite_crawler import SatelliteCrawler
 
@@ -16,8 +14,8 @@ class ARKTIKA_M1(SatelliteCrawler):
     FTP server.
 
     @author Vincent.Nigro
-    @version 0.0.2
-    @modified 8/12/22
+    @version 0.0.3
+    @modified 10/8/23
     """
     
     HALF_HOUR_MARK = 30
@@ -45,7 +43,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         super().__init__(url, satellite)
         self.__day = day
         self.__utcrange = utcrange
-        #self.__translator = Translator()
 
 
     def get_links(self, pw):
@@ -83,8 +80,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         the FTP connection to the ARKTIKA_M1 server and begin traversing the directories for the current
         month.
 
-        @param year: str - The current year.
-        @param month: str - A string in Russian representing the current month.
         @param days: [] - A list representing a single day; if empty it means retrieve all days.
         @param utc_range: [] - A list of utc times in HHMM format to set the time range of returned links.
         @return links: {} - A key-value mapping of a title key in a standard format and its appropriate image link.
@@ -222,15 +217,15 @@ class ARKTIKA_M1(SatelliteCrawler):
         utctime = country_time.utcnow()
         
         # Russia operates +3 hours ahead of UTC time.
-        difference = timedelta(hours = 3)
+        difference = timedelta(hours=3)
         utctime += difference
         
         # FTP server pushes files every half hourish in UTC time.
         if utctime.minute > self.HALF_HOUR_MARK:
-            difference = timedelta(minutes = (utctime.minute - self.HALF_HOUR_MARK))
+            difference = timedelta(minutes=(utctime.minute - self.HALF_HOUR_MARK))
             utctime -= difference
         else:
-            difference = timedelta(minutes = utctime.minute)
+            difference = timedelta(minutes=utctime.minute)
             utctime -= difference
         
         return utctime

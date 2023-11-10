@@ -11,8 +11,8 @@ class DSCOVR(SatelliteCrawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.1
-    @modified 2/10/21
+    @version 0.0.2
+    @modified 10/10/23
     """
 
     IMG_FIELD = 'image'
@@ -33,7 +33,6 @@ class DSCOVR(SatelliteCrawler):
         """
 
         super().__init__(url, satellite)
-
 
     def get_links(self, pw):
         """
@@ -62,7 +61,6 @@ class DSCOVR(SatelliteCrawler):
         
         return links
 
-
     def __generate_links_set(self, json_set, img_type):
         """
         Generates a subset of the final links dictionary by generating the title and link for each entry in a
@@ -88,7 +86,6 @@ class DSCOVR(SatelliteCrawler):
         
         return links
 
-
     def __generate_link(self, img_type, date, img):
         """
         Generates a link for a given entry by using the date field formatted as YYYY-MM-DD HH:MM:SS, an image
@@ -107,7 +104,6 @@ class DSCOVR(SatelliteCrawler):
             + date_fields[2] + '/png/' + img + '.png'
         
         return link
-
 
     def _create_img_dir(self, title):
         """
@@ -132,7 +128,6 @@ class DSCOVR(SatelliteCrawler):
 
         return dir_path
 
-
     def __generate_title(self, img_type, date):
         """
         Using a date provided by the EPIC API, performs the necessary formatting to generate the standardized
@@ -153,7 +148,6 @@ class DSCOVR(SatelliteCrawler):
         self._logger.debug("Created title for image type " + img_type + " and date " + date + ": " + title + ".")
 
         return title
-
 
     def create_satellite_directory(self):
         """

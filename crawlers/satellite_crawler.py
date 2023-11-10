@@ -25,8 +25,8 @@ class SatelliteCrawler(Crawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.3
-    @modified 8/16/22
+    @version 0.0.4
+    @modified 10/10/23
     """
     
     # Supported satellite names
@@ -108,8 +108,9 @@ class SatelliteCrawler(Crawler):
                 # Create full relative path including file name
                 path = os.path.join(dir_path, filename)
 
-                if (self.get_satellite_name() == self.ELEKTRO_L2_NAME) or \
-                (self.get_satellite_name() == self.ARKTIKA_M1_NAME): # FTP Download
+                if self.get_satellite_name() == self.ELEKTRO_L2_NAME or \
+                        self.get_satellite_name() == self.ELEKTRO_L3_NAME or \
+                        self.get_satellite_name() == self.ARKTIKA_M1_NAME: # FTP Download
                     try:
                         self._logger.info("Attempting to fetch FTP link at: " + link)
                         with closing(request.urlopen(link)) as r:

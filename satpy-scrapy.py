@@ -28,8 +28,8 @@ GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.7
- @modified 8/16/22
+ @version 0.0.8
+ @modified 10/10/23
 """
 
 ASCII = 'ascii'
@@ -307,6 +307,7 @@ def handle_arguments(argv):
     resolution = ''
     arktika1_pass = False
     elektro2_pass = False
+    elektro3_pass = False
     
     try:
         opts, args = getopt.getopt(argv, '-wehda:i:k:m:f:g:', 
@@ -322,10 +323,12 @@ def handle_arguments(argv):
             elif opt == '-k':
                 if arg == '2':
                     elektro2_pass = True
+                if arg == '3':
+                    elektro3_pass = True
             elif opt == '-a' and arg == '1':
                 arktika1_pass = True
                 
-        if (elektro2_pass or arktika1_pass):
+        if elektro2_pass or elektro3_pass or arktika1_pass:
             try:
                 day = [arg for opt, arg in opts if opt == '--day'][0]
             except Exception as e:
@@ -335,10 +338,12 @@ def handle_arguments(argv):
                 utc_range = [arg for opt, arg in opts if opt == '--utcrange'][0].split('-')
                 if elektro2_pass:
                     utc_range = generate_utc_range_30_step(utc_range)
+                elif elektro3_pass:
+                    utc_range = generate_utc_range_15_step(utc_range)
                 elif arktika1_pass:
                     utc_range = generate_utc_range_15_step(utc_range)
             except Exception as e:
-                no_range = 'No --utcrange parameter was given to Elektro-L2 image pull iteration.'
+                no_range = 'No --utcrange parameter was given to image pull iteration.'
                 logging.info(no_range)
 
         img_types = [arg for opt, arg in opts if opt == '--images']
@@ -372,7 +377,8 @@ def handle_arguments(argv):
                     return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, day, 
                         utc_range), img_types
                 elif arg == '3':
-                    return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME), img_types
+                    return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME, day,
+                        utc_range), img_types
             elif opt == '-f':
                 if arg == 'y4a':
                     return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME), img_types

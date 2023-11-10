@@ -2,9 +2,9 @@
 
 <p align="center">
 
-satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2 and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
+satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ELEKTRO-L3, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2, ELEKTRO-L3, and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
 
-The --images= argument should not be used for the ELEKTRO-L2 satellite and the --utcrange=/--day= arguments should only be used for the ELEKTRO-L2 and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
+The --utcrange=/--day= arguments should only be used for the ELEKTRO-L2, ELEKTRO-L3, and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
 
  * sudo python3 satpy-scrapy.py -h
  * sudo python3 satpy-scrapy.py --help
@@ -240,8 +240,7 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |**EWS-G1**|-g1|--images|'Visible'<br/>'Near IR'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'C02 Longwave IR'|1100x1100|
 |**GOES-16**<br/>**GOES-18**|-g16<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
-|**ELEKTRO-L2**|-k2|--images<br/>--day<br/>--utcrange|'Band 1'<br/>'Band 2'<br/>'Band 3'<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Rgb'<br/>'Rgb Vis'<br/>'Rgb Vis Ir'<br/>'Original Rgb'<br/>'Original Rgb Vis'<br/>'Original Rgb Vis Ir'<br/>|1080x1080<br/>11136x11136|
-|**ELEKTRO-L3**|-k3|--images|'Synthesized Color'<br/>'Band 1'<br/>'Band 9'|2784x3418 (Band 9)<br/>11136x13672|
+|**ELEKTRO-L2**<br/>**ELEKTRO-L3**|-k2<br/>-k3|--images<br/>--day<br/>--utcrange|'Band 1'<br/>'Band 2'<br/>'Band 3'<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Rgb'<br/>'Rgb Vis'<br/>'Rgb Vis Ir'<br/>'Original Rgb'<br/>'Original Rgb Vis'<br/>'Original Rgb Vis Ir'<br/>|1080x1080<br/>11136x11136|
 |**FY-2G**|-fy2g|--images|Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1125x1125|
 |**FY-2H**|-fy2h|--images|'False Color'<br/>'Infared 1'<br/>'Infared 2'<br/>'Infared 3'<br/>'Infared 4'<br/>'Visible'|2288x2288<br/>9152x9152 (Visible)|
 |**FY-4A**|-fy4a|--images|'Visible' (11k)<br/>'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 9 Enhanced'<br/>'Band 10'<br/>'Band 10 Enhanced'<br/>'Band 11'<br/>'Band 11 Enhanced'<br/>'Band 12'<br/>'Band 12 Enhanced'<br/>'Band 13'<br/>'Band 13 Enhanced'<br/>'Band 14'<br/>'Band 14 Enhanced'<br/>|2748x2748<br/>5496x5496<br/>10992x10992<br/>21984x21984|
@@ -262,8 +261,8 @@ Long Arguments
    * '--filters': Triggers image filter options function.
    * '--images=': Accepts a set of image filters to reduce number of images extracted on Tor requests.
    * '--resolution=': Accepts some resolution such as '10848 or 678', currently only used by GOES-16 and GOES-18 scrapers. 
-   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by ARKTIKA-M1 crawler in half hour increments.
-   * '--day=': Accepts a day in the format of 'NN' where N is a number and the range is between 01-31. The day is used to query the provided day of the current month for the ELEKTRO-L2 or ARKTIKA-M1 FTP server.
+   * '--utcrange=': Accepts a UTC range in the format of 'NNNN-NNNN' where N is a number and the range is between 0000 and 2330. The range should only be set in half hour increments to query a set of images in the ELEKTRO-L2 FTP server. Also is supported by the ELEKTRO-L3 & ARKTIKA-M1 crawler in half hour increments.
+   * '--day=': Accepts a day in the format of 'NN' where N is a number and the range is between 01-31. The day is used to query the provided day of the current month for the ELEKTRO-L2, ELEKTRO-L3 or ARKTIKA-M1 FTP server.
 
 ### Future Satellite Support
 

@@ -2,7 +2,7 @@
 
 <p align="center">
 
-satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2, ELEKTRO-L3, and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
+satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
 
 The --utcrange=/--day= arguments should only be used for the ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
 

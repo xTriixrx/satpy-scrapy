@@ -2,9 +2,9 @@
 
 <p align="center">
 
-satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ELEKTRO-L3, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2, ELEKTRO-L3, and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
+satpy-scrapy is a modular, multithreaded, protocol based high resolution satellite image scraper which utilizes the Tor network for HTTP/HTTPS web scraping capabilities as well as some FTP support. All satellites except the ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, ARKTIKA-M1, FY-4A, and FY-2H satellites utilize HTTP/HTTPS Tor requests. The ELEKTRO-L2, ELEKTRO-L3, and ARKTIKA-M1 satellites provide a direct FTP server connection to download images while the FY-4A and FY-2H satellites requires a VPN connection due to China's network blocking Tor requests.
 
-The --utcrange=/--day= arguments should only be used for the ELEKTRO-L2, ELEKTRO-L3, and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
+The --utcrange=/--day= arguments should only be used for the ELEKTRO-L2, ELEKTRO-L3, ELEKTRO-L4, and the ARKTIKA-M1 satellites. Here are some sample commands for this program:
 
  * sudo python3 satpy-scrapy.py -h
  * sudo python3 satpy-scrapy.py --help
@@ -141,6 +141,14 @@ Lastly, create a config.xml file within the satpy-scrapy directory as root and p
 <p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/2102110630_e3_295.jpg" /></p>
 </details>
 
+### ELEKTRO-L4
+
+<p align="center">The fourth satellite in the series Elektro-L No.4, was launched from Baikonur Cosmodrome on 5 February 2023 at 9:12 UTC by a Proton-M rocket.</p>
+<details>
+<summary></summary>
+<p align="center"> </p>
+</details>
+
 ### HIMAWARI-8
 
 <p align="center">Himawari 8 (ひまわり8号) is a Japanese weather satellite, the 8th of the Himawari geostationary weather satellites operated by the Japan Meteorological Agency. Himawari-8 will be succeeded by Himawari-9 which is currently in standby mode, until 2022.</p>
@@ -241,6 +249,7 @@ The DSCOVR mission succeeded NASA's Advanced Composition Explorer's (ACE) role i
 |**GOES-16**<br/>**GOES-18**|-g16<br/>-g18|--images<br/>--resolution|'Band 1' (22k)<br/>'Band 2' (22k)<br/>'Band 3' (22k)<br/>'Band 4'<br/>'Band 5' (22k)<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'AirMass RGB' (22k)<br/>'Derived Motion Winds'<br/>'Day Cloud Phase RGB' (22k)<br/>'Day Convection RGB' (22k)<br/>'Dust' (22k)<br/>'Fire Temperature' (22k)<br/>'GeoColor' (22k)<br/>'Nighttime Microphysics' (22k)<br/>'Split Window Differential'<br/>'Sandwich RGB' (22k)|339x339<br/>678x678<br/>1808x1808<br/>5424x5424<br/>10848x10848<br/>21696x21696 (partial)|
 |**HIMAWARI-8**|--i8|--images|'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4' (11k)<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Band 11'<br/>'Band 12'<br/>'Band 13'<br/>'Band 14'<br/>'Band 15'<br/>'Band 16'<br/>'GeoColor' (11k)<br/>'Shortwave Albedo'<br/>'Visible Albedo'<br/>'Split Window Difference'<br/>'Natural Color' (11k)<br/>'RGB AirMass'<br/>'Day Cloud Phase Distinction' (11k)<br/>'Dust'<br/>'Fire Temperature'<br/>'Natural Fire Color' (11k)<br/>'Ash'<br/>'Sulfur Dioxide'<br/>'Cloud-Top Height'<br/>'Cloud Geometric Thickness'<br/>'Cloud Layers'<br/>'Cloud Optical Thickness'<br/>'Cloud Effective Radius'<br/>'Cloud Phase'|5504x5504<br/>11008x11008|
 |**ELEKTRO-L2**<br/>**ELEKTRO-L3**|-k2<br/>-k3|--images<br/>--day<br/>--utcrange|'Band 1'<br/>'Band 2'<br/>'Band 3'<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 10'<br/>'Rgb'<br/>'Rgb Vis'<br/>'Rgb Vis Ir'<br/>'Original Rgb'<br/>'Original Rgb Vis'<br/>'Original Rgb Vis Ir'<br/>|1080x1080<br/>11136x11136|
+|**ELEKTRO-L4**|-k4|--images<br/>--day<br/>--utcrange|'Rgb'<br/>'Rgb Vis Ir'<br/>'Original Rgb'<br/>'Original Rgb Vis Ir'|1080x1080<br/>11136x11136|
 |**FY-2G**|-fy2g|--images|Visible'<br/>'Water Vapor'<br/>'Longwave IR'<br/>'Shortwave IR'|1125x1125|
 |**FY-2H**|-fy2h|--images|'False Color'<br/>'Infared 1'<br/>'Infared 2'<br/>'Infared 3'<br/>'Infared 4'<br/>'Visible'|2288x2288<br/>9152x9152 (Visible)|
 |**FY-4A**|-fy4a|--images|'Visible' (11k)<br/>'Band 1' (11k)<br/>'Band 2' (11k)<br/>'Band 3' (11k)<br/>'Band 4'<br/>'Band 5'<br/>'Band 6'<br/>'Band 7'<br/>'Band 8'<br/>'Band 9'<br/>'Band 9 Enhanced'<br/>'Band 10'<br/>'Band 10 Enhanced'<br/>'Band 11'<br/>'Band 11 Enhanced'<br/>'Band 12'<br/>'Band 12 Enhanced'<br/>'Band 13'<br/>'Band 13 Enhanced'<br/>'Band 14'<br/>'Band 14 Enhanced'<br/>|2748x2748<br/>5496x5496<br/>10992x10992<br/>21984x21984|

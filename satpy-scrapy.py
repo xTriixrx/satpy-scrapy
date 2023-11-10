@@ -16,6 +16,7 @@ from crawlers.arktika_m1 import ARKTIKA_M1
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.elektro_l3 import ELEKTRO_L3
+from crawlers.elektro_l4 import ELEKTRO_L4
 from crawlers.fengyun_4a import FENGYUN_4A
 from crawlers.fengyun_2g import FENGYUN_2G
 from crawlers.fengyun_2h import FENGYUN_2H
@@ -25,10 +26,10 @@ from crawlers.meteosat_11 import METEOSAT_11
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
 GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
-METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
+METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L4, ARKTIKA-M1, EWS-G1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.8
+ @version 0.0.9
  @modified 10/10/23
 """
 
@@ -308,6 +309,7 @@ def handle_arguments(argv):
     arktika1_pass = False
     elektro2_pass = False
     elektro3_pass = False
+    elektro4_pass = False
     
     try:
         opts, args = getopt.getopt(argv, '-wehda:i:k:m:f:g:', 
@@ -325,10 +327,12 @@ def handle_arguments(argv):
                     elektro2_pass = True
                 if arg == '3':
                     elektro3_pass = True
+                if arg == '4':
+                    elektro4_pass = True
             elif opt == '-a' and arg == '1':
                 arktika1_pass = True
                 
-        if elektro2_pass or elektro3_pass or arktika1_pass:
+        if elektro2_pass or elektro3_pass or elektro4_pass or arktika1_pass:
             try:
                 day = [arg for opt, arg in opts if opt == '--day'][0]
             except Exception as e:
@@ -339,6 +343,8 @@ def handle_arguments(argv):
                 if elektro2_pass:
                     utc_range = generate_utc_range_30_step(utc_range)
                 elif elektro3_pass:
+                    utc_range = generate_utc_range_15_step(utc_range)
+                elif elektro4_pass:
                     utc_range = generate_utc_range_15_step(utc_range)
                 elif arktika1_pass:
                     utc_range = generate_utc_range_15_step(utc_range)
@@ -378,6 +384,9 @@ def handle_arguments(argv):
                         utc_range), img_types
                 elif arg == '3':
                     return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME, day,
+                        utc_range), img_types
+                elif arg == '4':
+                    return ELEKTRO_L4(ELEKTRO_L4.ELEKTRO_L4_URL, ELEKTRO_L4.ELEKTRO_L4_NAME, day,
                         utc_range), img_types
             elif opt == '-f':
                 if arg == 'y4a':

@@ -41,6 +41,7 @@ class SatelliteCrawler(Crawler):
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     ELEKTRO_L3_NAME = 'ELEKTRO-L3'
+    ELEKTRO_L4_NAME = 'ELEKTRO-L4'
     FENGYUN_2G_NAME = 'FENGYUN-2G'
     FENGYUN_2H_NAME = 'FENGYUN-2H'
     FENGYUN_4A_NAME = 'FENGYUN-4A'
@@ -110,6 +111,7 @@ class SatelliteCrawler(Crawler):
 
                 if self.get_satellite_name() == self.ELEKTRO_L2_NAME or \
                         self.get_satellite_name() == self.ELEKTRO_L3_NAME or \
+                        self.get_satellite_name() == self.ELEKTRO_L4_NAME or \
                         self.get_satellite_name() == self.ARKTIKA_M1_NAME: # FTP Download
                     try:
                         self._logger.info("Attempting to fetch FTP link at: " + link)

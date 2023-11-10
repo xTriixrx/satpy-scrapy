@@ -35,6 +35,8 @@ class ELEKTRO_L3(SatelliteCrawler):
         
         @param url: str - A string containing a full URL path to some website to begin web crawl.
         @param satellite: str - A string containing a representative name for the ELEKTRO-L3 satellite crawler.
+        @param day: str - An optional string containing the day for which the scrape run should target.
+        @param utcrange: [] - An optional array of strings containing a range of utc times for which the scrape run should target.
         """
 
         super().__init__(url, satellite)
@@ -124,7 +126,7 @@ class ELEKTRO_L3(SatelliteCrawler):
         is provided, each utc_time will be compared to determine whether the time is within the range.
         Otherwise, all utc_times will be retrieved with all of the files associated in the share.
 
-        @param ftp: FTP - An FTP object to traverse the ELECTRO_L_2 FTP share.
+        @param ftp: FTP - An FTP object to traverse the ELECTRO_L_3 FTP share.
         @param year: str - The current year.
         @param month: str - A string representing the current month.
         @param day: str - A string representing some day of the month.

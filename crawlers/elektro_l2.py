@@ -35,6 +35,8 @@ class ELEKTRO_L2(SatelliteCrawler):
         
         @param url: str - A string containing a full URL path to some website to begin web crawl.
         @param satellite: str - A string containing a representative name for the ELEKTRO-L2 satellite crawler.
+        @param day: str - An optional string containing the day for which the scrape run should target.
+        @param utcrange: [] - An optional array of strings containing a range of utc times for which the scrape run should target.
         """
 
         super().__init__(url, satellite)

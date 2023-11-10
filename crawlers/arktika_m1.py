@@ -19,7 +19,6 @@ class ARKTIKA_M1(SatelliteCrawler):
     """
     
     HALF_HOUR_MARK = 30
-    FILE_PREFIX = 'V1_3720_'
     ARKTIKA_M1_FTP_PORT = 2121
     ARKTIKA_M1_USERNAME = 'electro'
     ARKTIKA_M1_PASSWORD = 'electro'
@@ -28,8 +27,6 @@ class ARKTIKA_M1(SatelliteCrawler):
     ARKTIKA_M1_URL_HOSTNAME = 'ntsomz.gptl.ru'
     ARKTIKA_M1_FTP_BASE_DIRECTORY = 'ARKTIKA_M_1'
     ARKTIKA_M1_URL = 'ftp://electro:electro@ntsomz.gptl.ru:2121/ARKTIKA_M_1'
-    ARKTIKA_M1_PREFIXES = ['Band 1', 'Band 2', 'Band 3', 'Band 4', 'Band 5', 'Band 6', 
-    'Band 7', 'Band 8', 'Band 9', 'Band 10']
 
     def __init__(self, url, satellite, day, utcrange):
         """
@@ -38,12 +35,13 @@ class ARKTIKA_M1(SatelliteCrawler):
         
         @param url: str - A string containing a full URL path to some website to begin web crawl.
         @param satellite: str - A string containing a representative name for the ARKTIKA-M1 satellite crawler.
+        @param day: str - An optional string containing the day for which the scrape run should target.
+        @param utcrange: [] - An optional list of strings containing a range of utc times for which the scrape run should target.
         """
 
         super().__init__(url, satellite)
         self.__day = day
         self.__utcrange = utcrange
-
 
     def get_links(self, pw):
         """
@@ -72,7 +70,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         self._logger.debug(links)
 
         return links
-    
     
     def extract_links(self, days=[], utc_range=[]):
         """
@@ -123,7 +120,6 @@ class ARKTIKA_M1(SatelliteCrawler):
                 + ":" + str(self.ARKTIKA_M1_FTP_PORT) + ".")
 
         return links
-
 
     def extract_links_for_day(self, ftp, year, month, day, utc_range=[]):
         """
@@ -230,7 +226,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         
         return utctime
 
-
     def __get_date_fields(self, utctime):
         """
         A private method which generates the necessary date fields required for building 
@@ -244,7 +239,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         month = utctime.strftime('%B') # January
         
         return year, month
-
 
     def _create_img_dir(self, title):
         """
@@ -268,7 +262,6 @@ class ARKTIKA_M1(SatelliteCrawler):
         self._logger.debug("Image directory path for title " + title + ": " + dir_path + ".")
 
         return dir_path
-
 
     def create_satellite_directory(self):
         """

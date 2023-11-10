@@ -54,7 +54,7 @@ class FENGYUN_2H(SatelliteCrawler):
         # Iterate over each XML file defining where images are located on server
         for xml_file in self.FENGYUN_2H_XML_FILES:
             # Extract xml page
-            page = self._extract_content(self.get_url() + xml_file, pw)
+            page = self._extract_content(self.get_url() + xml_file, pw, notor=True)
             soup = BeautifulSoup(page.text, self.SOUP_PARSER)
             
             # Extract all <image> elements (should be basically entire document)

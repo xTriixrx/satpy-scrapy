@@ -28,7 +28,7 @@ GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L4, ARKTIKA-M1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 0.0.9
+ @version 1.0.0
  @modified 10/10/23
 """
 
@@ -290,10 +290,11 @@ def handle_arguments(argv):
     Function which handles the command line arguments which had been presented during the start of the program.
 
     @param argv = [] - A list containing a set of arguments passed by the command line.
-    @return satellite, img_types: SatelliteCrawler, []
+    @return satellite, img_types: SatelliteCrawler, [], notor: bool
     """
 
     day = ''
+    notor = False
     img_types = []
     utc_range = ''
     resolution = ''
@@ -304,7 +305,7 @@ def handle_arguments(argv):
     
     try:
         opts, args = getopt.getopt(argv, '-wehda:i:k:m:f:g:', 
-            ['help', 'filters', 'day=', 'utcrange=', 'images=', 'resolution='])
+            ['help', 'filters', 'day=', 'utcrange=', 'images=', 'resolution=', 'notor'])
         
         for opt, arg in opts:
             if opt == '-h' or opt == '--help':
@@ -313,6 +314,8 @@ def handle_arguments(argv):
             elif opt == '--filters':
                 filter_logger()
                 sys.exit(0)
+            elif opt == '--notor':
+                notor = True
             elif opt == '-k':
                 if arg == '2':
                     elektro2_pass = True
@@ -359,52 +362,52 @@ def handle_arguments(argv):
         for opt, arg in opts:
             if opt == '-a':
                 if arg == '1':
-                    return ARKTIKA_M1(ARKTIKA_M1.ARKTIKA_M1_URL, ARKTIKA_M1.ARKTIKA_M1_NAME, day, utc_range), img_types
+                    return ARKTIKA_M1(ARKTIKA_M1.ARKTIKA_M1_URL, ARKTIKA_M1.ARKTIKA_M1_NAME, day, utc_range), img_types, notor
             elif opt == '-d':
-                return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types
+                return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types, notor
             elif opt == '-i':
                 if arg == 'nsat3d':
-                    return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types
+                    return INSAT_3D(INSAT_3D.INSAT_3D_URL, INSAT_3D.INSAT_3D_NAME), img_types, notor
                 elif arg == 'nsat3dr':
-                    return INSAT_3DR(INSAT_3DR.INSAT_3DR_URL, INSAT_3DR.INSAT_3DR_NAME), img_types
+                    return INSAT_3DR(INSAT_3DR.INSAT_3DR_URL, INSAT_3DR.INSAT_3DR_NAME), img_types, notor
                 elif arg == '8':
-                    return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types
+                    return HIMAWARI_8(HIMAWARI_8.HIMAWARI_8_URL, HIMAWARI_8.HIMAWARI_8_NAME), img_types, notor
             elif opt == '-k':
                 if arg == '2':
-                    return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, day, 
-                        utc_range), img_types
+                    return ELEKTRO_L2(ELEKTRO_L2.ELEKTRO_L2_URL, ELEKTRO_L2.ELEKTRO_L2_NAME, day,
+                        utc_range), img_types, notor
                 elif arg == '3':
                     return ELEKTRO_L3(ELEKTRO_L3.ELEKTRO_L3_URL, ELEKTRO_L3.ELEKTRO_L3_NAME, day,
-                        utc_range), img_types
+                        utc_range), img_types, notor
                 elif arg == '4':
                     return ELEKTRO_L4(ELEKTRO_L4.ELEKTRO_L4_URL, ELEKTRO_L4.ELEKTRO_L4_NAME, day,
-                        utc_range), img_types
+                        utc_range), img_types, notor
             elif opt == '-f':
                 if arg == 'y4a':
-                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME), img_types
+                    return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME), img_types, notor
                 elif arg == 'y2g':
-                    return FENGYUN_2G(FENGYUN_2G.FENGYUN_2G_URL, FENGYUN_2G.FENGYUN_2G_NAME), img_types
+                    return FENGYUN_2G(FENGYUN_2G.FENGYUN_2G_URL, FENGYUN_2G.FENGYUN_2G_NAME), img_types, notor
                 elif arg == 'y2h':
-                    return FENGYUN_2H(FENGYUN_2H.FENGYUN_2H_URL, FENGYUN_2H.FENGYUN_2H_NAME), img_types
+                    return FENGYUN_2H(FENGYUN_2H.FENGYUN_2H_URL, FENGYUN_2H.FENGYUN_2H_NAME), img_types, notor
             elif opt == '-g':
                 if arg == 'k2a':
-                    return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types
+                    return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types, notor
                 elif arg == '16':
-                    return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
+                    return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types, notor
                 elif arg == '18':
-                    return GOES_18(GOES_18.GOES_18_URL, GOES_18.GOES_18_NAME, resolution, img_types), img_types
+                    return GOES_18(GOES_18.GOES_18_URL, GOES_18.GOES_18_NAME, resolution, img_types), img_types, notor
             elif opt == '-m':
                 if arg == '9':
-                    return METEOSAT_9(METEOSAT_9.METEOSAT_9_URL, METEOSAT_9.METEOSAT_9_NAME), img_types
+                    return METEOSAT_9(METEOSAT_9.METEOSAT_9_URL, METEOSAT_9.METEOSAT_9_NAME), img_types, notor
                 elif arg == '11':
-                    return METEOSAT_11(METEOSAT_11.METEOSAT_11_URL, METEOSAT_11.METEOSAT_11_NAME), img_types
+                    return METEOSAT_11(METEOSAT_11.METEOSAT_11_URL, METEOSAT_11.METEOSAT_11_NAME), img_types, notor
         
     except getopt.GetoptError as e:
         logging.exception(e)
         print(e)
         sys.exit(1)
 
-    return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types
+    return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types, notor
 
 
 def read_tor_secret():
@@ -469,16 +472,18 @@ def main(argv):
     view the help_logger() function above which describes examples and how to use this
     software.
     """
-    
-    satellite, img_titles = handle_arguments(argv)
-    
-    tor_pw = read_tor_secret()
+    tor_pw = ''
 
-    if tor_pw == '':
-        err = 'No password was read in from the configuration file, exiting now.'
-        logging.error(err)
-        print(err)
-        sys.exit(1)
+    satellite, img_titles, notor = handle_arguments(argv)
+
+    if not notor:
+        tor_pw = read_tor_secret()
+
+        if tor_pw == '':
+            err = 'No password was read in from the configuration file, exiting now.'
+            logging.error(err)
+            print(err)
+            sys.exit(1)
     
     try:
         satellite.create_satellite_directory()
@@ -506,7 +511,7 @@ def main(argv):
             # download_images() implicitly spawns threads using @multitasking.task decorator
             for dictionary in dict_list:
                 # Performs either Tor HTTP/HTTPs web scrape or FTP protocol to extract image from FTP server
-                satellite.download_images(dictionary, tor_pw)
+                satellite.download_images(dictionary, tor_pw, notor)
         else:
             err = "No image links were provided to be pulled down."
             logging.info(err)

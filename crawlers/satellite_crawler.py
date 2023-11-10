@@ -25,7 +25,7 @@ class SatelliteCrawler(Crawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.4
+    @version 0.0.5
     @modified 10/10/23
     """
     
@@ -69,7 +69,7 @@ class SatelliteCrawler(Crawler):
 
 
     @multitasking.task
-    def download_images(self, links, pw):
+    def download_images(self, links, pw, notor=False):
         """
         A generic function which accepts a dictionary of links where each entry is a key-value mapping of 
         a standardized title as the key, and a link containing the high resolution image that needs to be
@@ -82,6 +82,7 @@ class SatelliteCrawler(Crawler):
 
         @param links: {} - A key-value mapping of a title key in a standard format and its appropriate image link
         @param pw: str - A string containing the Tor password for the given system configuration.
+        @param notor: bool - An optional parameter for not using the Tor network.
         """
 
         # For each link, extract and name img dir as title
@@ -123,7 +124,7 @@ class SatelliteCrawler(Crawler):
                         sys.exit(1)
                 else: # HTTP/HTTPS download
                     # Create new tor session to extract page
-                    page = self._extract_content(link, pw, True)
+                    page = self._extract_content(link, pw, True, notor)
                     
                     # proceed processing if image page was extracted
                     if (page.status_code == self.OK_STATUS):
@@ -165,7 +166,7 @@ class SatelliteCrawler(Crawler):
                 print(already_downloaded_log)
 
 
-    def _extract_content(self, link, pw='', streaming=False):
+    def _extract_content(self, link, pw='', streaming=False, notor=False):
         """
         A generic page extraction function utilizing the Tor session and recycling the current IP
         to another once the GET request has been fufilled and returned.
@@ -173,13 +174,14 @@ class SatelliteCrawler(Crawler):
         @param link: str - A string containing a URL to some HTML page.
         @param pw: str - A string containing the Tor password for the given system configuration.
         @param streaming: bool - Defaults to false, set to True when dealing with a binary file like an image.
+        @param notor: bool - An optional parameter for not using the Tor network.
         @return page: Response - Returns a requests.Response object
         """
 
         page = None
 
         # Create new tor session to extract page
-        s = self._get_tor_session()
+        s = self._get_tor_session(notor)
         
         # Extract html archive page
         self._logger.info("Extracting page content at link: " + link)
@@ -189,17 +191,18 @@ class SatelliteCrawler(Crawler):
             page = s.get(link)
         s.close()
 
-        if pw != '':
+        if pw != '' and not notor:
             # Generate a new Tor IP
             self._renew_connection(pw)
 
         return page
 
 
-    def _get_tor_session(self):
+    def _get_tor_session(self, notor=False):
         """
         Creates a requests session using the standard SOCKS5 localhost ports used by Tor.
 
+        @param notor: bool - An optional parameter for not using the Tor network.
         @return session: Session - A requests.Session type containing static SOCK5 HTTP/HTTPS proxies configured 
         to default Tor output socket.
         """
@@ -211,8 +214,10 @@ class SatelliteCrawler(Crawler):
         
         # setting the proxy of both http & https to the localhost:9050 
         # this requires a running Tor service in your machine and listening on port 9050 (by default)
-        session.proxies = {"http": "socks5://localhost:9050", "https": "socks5://localhost:9050"}
-        
+        if not notor:
+            self._logger.info("Setting Tor SOCKS5 proxy information.")
+            session.proxies = {"http": "socks5://localhost:9050", "https": "socks5://localhost:9050"}
+
         return session
 
 

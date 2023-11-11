@@ -2,6 +2,7 @@ bs4
 pytz
 stem
 lxml
+Pillow
 PySocks
 requests
 multitasking

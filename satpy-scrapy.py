@@ -6,6 +6,7 @@ import hashlib
 import multitasking
 from xml.dom import minidom
 from crawlers.dscovr import DSCOVR
+from crawlers.ews_g2 import EWS_G2
 from crawlers.goes_16 import GOES_16
 from crawlers.goes_18 import GOES_18
 from crawlers.insat_3d import INSAT_3D
@@ -395,6 +396,8 @@ def handle_arguments(argv):
             elif opt == '-g':
                 if arg == 'k2a':
                     return GEO_KOMPSAT_2A(GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_URL, GEO_KOMPSAT_2A.GEO_KOMPSAT_2A_NAME), img_types, notor
+                elif arg == '2':
+                    return EWS_G2(EWS_G2.EWS_G2_URL, EWS_G2.EWS_G2_NAME), img_types, notor
                 elif arg == '16':
                     return GOES_16(GOES_16.GOES_16_URL, GOES_16.GOES_16_NAME, resolution, img_types), img_types, notor
                 elif arg == '18':

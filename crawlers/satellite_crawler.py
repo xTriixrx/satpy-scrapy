@@ -25,12 +25,13 @@ class SatelliteCrawler(Crawler):
     requires using the Tor network and using the default settings (including ControlPort) to access the network.
 
     @author Vincent.Nigro
-    @version 0.0.5
-    @modified 10/10/23
+    @version 0.0.6
+    @modified 10/11/23
     """
     
     # Supported satellite names
     DSCOVR_NAME = 'DSCOVR'
+    EWS_G2_NAME = 'EWS-G2'
     GOES_16_NAME = 'GOES-16'
     GOES_17_NAME = 'GOES-17'
     GOES_18_NAME = 'GOES-18'

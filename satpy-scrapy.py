@@ -17,6 +17,7 @@ from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.elektro_l3 import ELEKTRO_L3
 from crawlers.elektro_l4 import ELEKTRO_L4
 from crawlers.fengyun_4a import FENGYUN_4A
+from crawlers.fengyun_4b import FENGYUN_4B
 from crawlers.fengyun_2g import FENGYUN_2G
 from crawlers.fengyun_2h import FENGYUN_2H
 from crawlers.meteosat_9 import METEOSAT_9
@@ -24,12 +25,12 @@ from crawlers.meteosat_11 import METEOSAT_11
 
 """
 Scrapes multiple different websites for the latest high resolution imagery for satellites GOES-16,
-GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-2G, FENGYUN-2H,
+GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-4B, FENGYUN-2G, FENGYUN-2H,
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L4, ARKTIKA-M1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 1.0.0
- @modified 10/10/23
+ @version 1.0.1
+ @modified 10/11/23
 """
 
 ASCII = 'ascii'
@@ -385,6 +386,8 @@ def handle_arguments(argv):
             elif opt == '-f':
                 if arg == 'y4a':
                     return FENGYUN_4A(FENGYUN_4A.FENGYUN_4A_URL, FENGYUN_4A.FENGYUN_4A_NAME), img_types, notor
+                elif arg == 'y4b':
+                    return FENGYUN_4B(FENGYUN_4B.FENGYUN_4B_URL, FENGYUN_4B.FENGYUN_4B_NAME), img_types, notor
                 elif arg == 'y2g':
                     return FENGYUN_2G(FENGYUN_2G.FENGYUN_2G_URL, FENGYUN_2G.FENGYUN_2G_NAME), img_types, notor
                 elif arg == 'y2h':

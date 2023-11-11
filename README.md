@@ -115,7 +115,7 @@ Lastly, create a config.xml file within the satpy-scrapy directory as root and p
 <p align="center">EWS-G2 (Electro-optical Infrared Weather System Geostationary) is a weather satellite of the U.S. Space Force, formerly GOES-15 (also known as GOES-P before becoming operational) and part of the National Oceanic and Atmospheric Administration's Geostationary Operational Environmental Satellite system. EWS-G2 was accepted for operational use by the USSF in June of 2023 and reached it's operational orbit in November of 2023.</p>
 <details>
 <summary></summary>
-<p align="center"> <img src="" /></p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/ews-g2_2023315_0845_01_fd.gif" /></p>
 </details>
 
 ### ARKTIKA-M1

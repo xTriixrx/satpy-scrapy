@@ -163,7 +163,7 @@ Lastly, create a config.xml file within the satpy-scrapy directory as root and p
 <p align="center">FY-4 (Wind and Cloud) series is China’s second-generation geostationary meteorological satellites after FY-2 satellite series. FY-4B is the second installment of the FY-4 family and was launched on June 2nd, 2021.</p>
 <details>
 <summary></summary>
-<p align="center"> <img src="" /> </p>
+<p align="center"> <img src="https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4B-_AGRI--_N_DISK_1330https://github.com/xTriixrx/satpy-scrapy/blob/master/imgs/FY4B-_AGRI--_N_DISK_1330E_L2-_GCLR_MULT_NOM_20231111024500_20231111025959_1000M_V0001.jpg" /> </p>
 </details>
 
 ### FY-2G

@@ -13,6 +13,7 @@ from crawlers.insat_3d import INSAT_3D
 from crawlers.insat_3dr import INSAT_3DR
 from crawlers.gk_2a import GEO_KOMPSAT_2A
 from crawlers.arktika_m1 import ARKTIKA_M1
+from crawlers.arktika_m2 import ARKTIKA_M2
 from crawlers.himawari_8 import HIMAWARI_8
 from crawlers.elektro_l2 import ELEKTRO_L2
 from crawlers.elektro_l3 import ELEKTRO_L3
@@ -30,8 +31,8 @@ GOES-18, HIMAWARI-8, GEO-KOMPSAT-2A, FENGYUN-4A, FENGYUN-4B, FENGYUN-2G, FENGYUN
 METEOSAT-9, METEOSAT-11, DSCOVR, ELEKTRO-L3, ELEKTRO-L2, ELEKTRO-L4, ARKTIKA-M1, INSAT-3D, and INSAT-3DR.
 
  @author Vincent Nigro
- @version 1.0.1
- @modified 10/11/23
+ @version 1.0.2
+ @modified 11/27/24
 """
 
 ASCII = 'ascii'
@@ -300,7 +301,7 @@ def handle_arguments(argv):
     img_types = []
     utc_range = ''
     resolution = ''
-    arktika1_pass = False
+    arktika_pass = False
     elektro2_pass = False
     elektro3_pass = False
     elektro4_pass = False
@@ -325,10 +326,10 @@ def handle_arguments(argv):
                     elektro3_pass = True
                 if arg == '4':
                     elektro4_pass = True
-            elif opt == '-a' and arg == '1':
-                arktika1_pass = True
+            elif opt == '-a' and (arg == '1' or arg == '2'):
+                arktika_pass = True
                 
-        if elektro2_pass or elektro3_pass or elektro4_pass or arktika1_pass:
+        if elektro2_pass or elektro3_pass or elektro4_pass or arktika_pass:
             try:
                 day = [arg for opt, arg in opts if opt == '--day'][0]
             except Exception as e:
@@ -342,7 +343,7 @@ def handle_arguments(argv):
                     utc_range = generate_utc_range_15_step(utc_range)
                 elif elektro4_pass:
                     utc_range = generate_utc_range_15_step(utc_range)
-                elif arktika1_pass:
+                elif arktika_pass:
                     utc_range = generate_utc_range_15_step(utc_range)
             except Exception as e:
                 no_range = 'No --utcrange parameter was given to image pull iteration.'
@@ -365,6 +366,8 @@ def handle_arguments(argv):
             if opt == '-a':
                 if arg == '1':
                     return ARKTIKA_M1(ARKTIKA_M1.ARKTIKA_M1_URL, ARKTIKA_M1.ARKTIKA_M1_NAME, day, utc_range), img_types, notor
+                elif arg == '2':
+                    return ARKTIKA_M2(ARKTIKA_M2.ARKTIKA_M2_URL, ARKTIKA_M2.ARKTIKA_M2_NAME, day, utc_range), img_types, notor
             elif opt == '-d':
                 return DSCOVR(DSCOVR.DSCOVR_URL, DSCOVR.DSCOVR_NAME), img_types, notor
             elif opt == '-i':

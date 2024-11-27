@@ -38,6 +38,7 @@ class SatelliteCrawler(Crawler):
     INSAT_3D_NAME = 'INSAT-3D'
     INSAT_3DR_NAME = 'INSAT-3DR'
     ARKTIKA_M1_NAME = 'ARKTIKA-M1'
+    ARKTIKA_M2_NAME = 'ARKTIKA-M2'
     HIMAWARI_8_NAME = 'HIMAWARI-8'
     ELEKTRO_L2_NAME = 'ELEKTRO-L2'
     ELEKTRO_L3_NAME = 'ELEKTRO-L3'
@@ -114,7 +115,8 @@ class SatelliteCrawler(Crawler):
                 if self.get_satellite_name() == self.ELEKTRO_L2_NAME or \
                         self.get_satellite_name() == self.ELEKTRO_L3_NAME or \
                         self.get_satellite_name() == self.ELEKTRO_L4_NAME or \
-                        self.get_satellite_name() == self.ARKTIKA_M1_NAME: # FTP Download
+                        self.get_satellite_name() == self.ARKTIKA_M1_NAME or \
+                        self.get_satellite_name() == self.ARKTIKA_M2_NAME: # FTP Download
                     try:
                         self._logger.info("Attempting to fetch FTP link at: " + link)
                         with closing(request.urlopen(link)) as r:
